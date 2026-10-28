@@ -1579,6 +1579,11 @@ main {
   margin: 8px 0 24px;
 }
 
+/* A note after the install steps */
+.docs-note {
+  margin-top: 40px;
+}
+
 .docs-card {
   display: grid;
   align-content: start;
