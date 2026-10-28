@@ -271,6 +271,14 @@ function Cli() {
         <pre className="docs-terminal">{docsOutput}</pre>
       </Section>
 
+      <Section id="skills" title="skills">
+        <p>
+          Adds Halo&apos;s AI skills to the project: the skill files go to <code>.claude/skills</code> for Claude Code, and Halo&apos;s rules go into <code>AGENTS.md</code>, which Cursor, Copilot, Codex and others read. Running it again updates them. See <Link to="/docs/ai">AI and MCP server</Link>.
+        </p>
+        <CodeBlock code={`${x} halo-ds skills`} label="Copy command" />
+        <Options rows={[['--skip-agents', "Don't add Halo's rules to AGENTS.md."]]} />
+      </Section>
+
       <Section id="mcp" title="mcp">
         <p>
           Starts the MCP server that AI assistants use to look Halo up while they code. You don&apos;t run it yourself; you add it to your AI tool&apos;s settings. See <Link to="/docs/ai">AI and MCP server</Link>.
@@ -365,39 +373,18 @@ notification switches, and a delete account button that asks for confirmation.
 Use Halo tokens for spacing and colour, and check the page in light and dark mode.`;
 
 function Ai() {
-  const [tool, setTool] = useState<Tool>('cursor');
+  const [tool, setTool] = useState<Tool>('claude');
+  const site = 'https://chidindu06f.github.io/Halo-design-system';
   return (
     <>
       <Head
         title="AI and MCP server"
-        lede="Halo works with AI coding tools like Claude Code, Cursor, VS Code and Windsurf. Connect your tool once and it can look up every Halo component's import, props, examples and usage rules while it builds. There are three parts: an MCP server any tool can use, skills for Claude Code, and plain-text docs for any assistant. This page shows how to set up each."
+        lede="Halo works with AI coding tools like Claude Code, Cursor, VS Code and Windsurf. Connect your tool and it can look up every Halo component's import, props, examples and usage rules while it builds, instead of guessing. This page covers the four ways in: the MCP server, skills, the CLI, and plain-text docs any assistant can read."
       />
 
-      <Section id="plugin" title="Claude Code: install the plugin">
-        <p>One plugin adds the MCP server below and four skills. Run these in Claude Code:</p>
-        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
-        <div className="docs-table-wrap">
-          <table className="docs-table">
-            <thead>
-              <tr>
-                <th scope="col">Skill</th>
-                <th scope="col">What it does</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><code>/halo:build-ui</code></td><td>Builds screens with Halo: looks up each component first, uses tokens, follows the rules.</td></tr>
-              <tr><td><code>/halo:review-ui</code></td><td>Reviews code against Halo&apos;s rules and lists what to fix, file by file.</td></tr>
-              <tr><td><code>/halo:brand-theme</code></td><td>Applies your brand colour in light and dark mode.</td></tr>
-              <tr><td><code>/halo:migrate</code></td><td>Moves screens from shadcn/ui, Ant Design or Material UI to Halo.</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>Claude also uses them by itself when a task fits, so you rarely need to type them.</p>
-      </Section>
-
-      <Section id="mcp" title="Any AI tool: add the MCP server">
+      <Section id="mcp" title="Connect the MCP server">
         <p>
-          The MCP server lets your assistant look Halo up while it codes. Add it once in your tool&apos;s settings; it runs on your computer and needs nothing else installed.
+          The MCP server lets your assistant look Halo up while it codes. Add it once in your tool&apos;s settings. It runs on your computer through npx, with nothing else to install.
         </p>
         <Tabs value={tool} onValueChange={(v) => setTool(v as Tool)}>
           <TabList aria-label="AI tool">
@@ -412,23 +399,77 @@ function Ai() {
             </TabPanel>
           ))}
         </Tabs>
-      </Section>
-
-      <Section id="tools" title="What your assistant can look up">
         <div className="docs-table-wrap">
           <table className="docs-table">
             <thead>
               <tr>
                 <th scope="col">Tool</th>
-                <th scope="col">What it gives</th>
+                <th scope="col">What your assistant gets</th>
               </tr>
             </thead>
             <tbody>
               <tr><td><code>get_setup_and_rules</code></td><td>How to set Halo up, and the rules for using it well.</td></tr>
-              <tr><td><code>list_components</code></td><td>Every component, grouped, with one line each.</td></tr>
               <tr><td><code>find_component</code></td><td>The right component for a need, like &quot;confirm before deleting&quot;.</td></tr>
+              <tr><td><code>list_components</code></td><td>Every component, grouped, with one line each.</td></tr>
               <tr><td><code>get_component</code></td><td>Import line, every prop, working examples, when to use it, and do&apos;s and don&apos;ts.</td></tr>
               <tr><td><code>get_tokens</code></td><td>Colour, spacing and radius variables, with light and dark values.</td></tr>
+              <tr><td><code>get_skill</code></td><td>Any of the skill files below, by name.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="skills" title="Add the skills">
+        <p>
+          Skills teach your assistant how to work with Halo: which component fits which job, the design and writing rules, and a review checklist to run before finishing.
+        </p>
+        <p><strong>Claude Code:</strong> install the Halo plugin. It adds the MCP server and the skills together.</p>
+        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
+        <p>
+          <strong>Any other tool:</strong> run this in your project. It adds the skills to <code>.claude/skills</code> and Halo&apos;s rules to <code>AGENTS.md</code>, which Cursor, Copilot, Codex and others read.
+        </p>
+        <CodeBlock code="npx halo-ds skills" label="Copy command" />
+        <div className="docs-table-wrap">
+          <table className="docs-table">
+            <thead>
+              <tr>
+                <th scope="col">Skill</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><a href={`${site}/skills/build-ui/SKILL.md`}><code>build-ui</code></a></td><td>Builds screens with Halo, with topic guides for components, design, layout, words, accessibility, a checklist, and two worked examples.</td></tr>
+              <tr><td><a href={`${site}/skills/review-ui/SKILL.md`}><code>review-ui</code></a></td><td>Reviews code against Halo&apos;s rules and lists what to fix, file by file.</td></tr>
+              <tr><td><a href={`${site}/skills/brand-theme/SKILL.md`}><code>brand-theme</code></a></td><td>Applies your brand colour in light and dark mode.</td></tr>
+              <tr><td><a href={`${site}/skills/migrate/SKILL.md`}><code>migrate</code></a></td><td>Moves screens from shadcn/ui, Ant Design or Material UI to Halo.</td></tr>
+              <tr><td><a href={`${site}/INSTRUCTIONS.md`}><code>INSTRUCTIONS.md</code></a></td><td>Short rules to paste into AGENTS.md, CLAUDE.md or Cursor rules yourself.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="cli" title="Use the CLI">
+        <p>
+          Assistants that can run commands can also use the CLI: <code>init</code> to set a project up, <code>theme</code> for a brand colour, and <code>docs</code> to read about a component. The <Link to="/docs/cli">CLI page</Link> lists every command.
+        </p>
+        <CodeBlock code="npx halo-ds docs badge" label="Copy command" />
+      </Section>
+
+      <Section id="context" title="Readable docs">
+        <p>Plain text for assistants that read links, and for your own tools. No setup needed.</p>
+        <div className="docs-table-wrap">
+          <table className="docs-table">
+            <thead>
+              <tr>
+                <th scope="col">File</th>
+                <th scope="col">What it holds</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><a href={`${site}/llms.txt`}><code>llms.txt</code></a></td><td>An index of every component, the rules and the skills, with links to each as Markdown.</td></tr>
+              <tr><td><a href={`${site}/llms-full.txt`}><code>llms-full.txt</code></a></td><td>The rules, every component and the tokens in one file, for a single read.</td></tr>
+              <tr><td><code>/components/&lt;name&gt;.md</code></td><td>Any component as Markdown: add <code>.md</code> to its page address, like <a href={`${site}/components/badge.md`}><code>/components/badge.md</code></a>.</td></tr>
+              <tr><td><a href={`${site}/llms/tokens.md`}><code>llms/tokens.md</code></a></td><td>Every design token, with light and dark values.</td></tr>
             </tbody>
           </table>
         </div>
@@ -437,11 +478,6 @@ function Ai() {
       <Section id="try" title="Try a prompt">
         <p>Once your tool is connected, paste this to see it work:</p>
         <CodeBlock code={prompt} label="Copy prompt" plain />
-      </Section>
-
-      <Section id="without" title="Without MCP">
-        <p>Any assistant that can run commands can read the same docs from the terminal:</p>
-        <CodeBlock code="npx halo-ds docs badge" label="Copy command" />
       </Section>
     </>
   );

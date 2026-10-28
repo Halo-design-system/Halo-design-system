@@ -261,6 +261,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.1.1
         version: 6.1.1(vite@8.3.1(@types/node@22.20.5)(esbuild@0.28.2))
+      halo-ds:
+        specifier: workspace:*
+        version: link:../../packages/cli
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

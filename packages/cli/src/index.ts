@@ -8,6 +8,7 @@ import { all, groups } from '../../../apps/site/src/catalog';
 import { guides } from '../../../apps/site/src/guide';
 import { brandVariables, parseHex, themeCss, toHex } from './colour';
 import { runMcp } from './mcp';
+import { writeAgents, writeSkills } from './skills';
 import { addImport, installCommand, readProject, rel, setTheme } from './project';
 import type { Project } from './project';
 
@@ -43,6 +44,8 @@ ${bold('Commands')}
   theme <colour>       Make Halo your brand colour, for example: theme "#2F6BFF"
   docs [component]     When to use a component, how to import it, and its do's and don'ts
                        Leave the name out to list every component
+  skills               Add Halo's AI skills to this project: .claude/skills for Claude Code,
+                       and Halo's rules in AGENTS.md for Cursor, Copilot, Codex and others
   mcp                  Start the MCP server, so AI assistants can look up Halo while they code
                        (you add it to your AI tool's settings; see the docs)
 
@@ -53,6 +56,7 @@ ${bold('Options')}
       --brand <colour> init: a brand colour, like "#2F6BFF"
       --skip-install   init: don't install the package
       --print          theme: print the CSS instead of writing a file
+      --skip-agents    skills: don't add Halo's rules to AGENTS.md
   -h, --help           Show this help
   -v, --version        Show the version
 
@@ -192,6 +196,19 @@ function docs(name: string | undefined) {
   say(`Props:             ${SITE}/storybook/?path=/docs/${e.storybook}`);
 }
 
+// ---------- skills ----------
+
+function skillsCommand(cwd: string, skipAgents: boolean) {
+  const names = writeSkills(cwd);
+  done(`Added ${names.length} skills to ${bold('.claude/skills')}: ${names.join(', ')}`);
+  if (!skipAgents) {
+    const r = writeAgents(cwd);
+    const verb = { created: 'Created', updated: "Updated Halo's rules in", added: "Added Halo's rules to" }[r];
+    done(`${verb} ${bold('AGENTS.md')}`);
+  }
+  say(`\nFor props and examples while it codes, also connect the MCP server: ${SITE}/docs/ai`);
+}
+
 // ---------- Start ----------
 
 async function main() {
@@ -206,6 +223,7 @@ async function main() {
         brand: { type: 'string' },
         'skip-install': { type: 'boolean' },
         print: { type: 'boolean' },
+        'skip-agents': { type: 'boolean' },
         help: { type: 'boolean', short: 'h' },
         version: { type: 'boolean', short: 'v' },
       },
@@ -223,6 +241,7 @@ async function main() {
   if (command === 'theme') return theme(arg, cwd, Boolean(v.print));
   if (command === 'docs') return docs(arg);
   if (command === 'mcp') return runMcp();
+  if (command === 'skills') return skillsCommand(cwd, Boolean(v['skip-agents']));
   fail(`Unknown command "${command}".\n\n${help}`);
 }
 

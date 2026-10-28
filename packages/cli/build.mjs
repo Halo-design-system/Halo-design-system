@@ -19,3 +19,14 @@ await build({
   banner: { js: '#!/usr/bin/env node' },
   define: { __VERSION__: JSON.stringify(version) },
 });
+
+// The plain-text docs export, run by the website build. Kept out of the published package.
+await build({
+  entryPoints: ['src/export.ts'],
+  outfile: 'build/export.mjs',
+  bundle: true,
+  platform: 'node',
+  format: 'esm',
+  target: 'node18',
+  define: { __VERSION__: JSON.stringify(version) },
+});

@@ -17,9 +17,11 @@ interface Data {
   props: Record<string, Prop[]>;
   examples: Record<string, { title: string; description: string; code: string }[]>;
   tokens: { name: string; cssVar: string; group: string; values: Record<string, string | number> }[];
+  skills: Record<string, string>;
 }
 // The JSON is made by scripts/data.mjs at build time; this is its shape
-const { props, examples, tokens } = data as unknown as Data;
+const { props, examples, tokens, skills } = data as unknown as Data;
+export { skills };
 
 const shared: Record<string, string> = { 'event-calendar': 'calendar', 'tree-select': 'tree' };
 const guideFor = (slug: string) => guides[slug] ?? guides[shared[slug] ?? ''];
@@ -49,7 +51,7 @@ export const RULES = `# Using Halo
 
 Docs: ${SITE}/docs`;
 
-function listComponents() {
+export function listComponents() {
   return groups
     .map((g) => `## ${g.name}\n${g.items.map((e) => `- **${e.name}** (\`${e.slug}\`): ${e.description}`).join('\n')}`)
     .join('\n\n') + '\n\nGet one with the get_component tool.';
@@ -70,7 +72,7 @@ function propsTable(exportName: string) {
   return `### ${exportName} props\n| Prop | Type | What it does |\n| --- | --- | --- |\n${rows.join('\n')}\nIt also takes the usual HTML attributes for its element.`;
 }
 
-function getComponent(name: string, withExamples: boolean) {
+export function getComponent(name: string, withExamples: boolean) {
   const e = findEntry(name);
   if (!e) return `No component called "${name}". Use list_components to see them all.`;
   const g = guideFor(e.slug);
@@ -108,12 +110,30 @@ function findComponent(need: string) {
   return `Best matches for "${need}":\n${scored.map(({ e }) => `- **${e.name}** (\`${e.slug}\`): ${guides[e.slug]?.callout ?? e.description}`).join('\n')}\n\nCheck which fits with get_component; its "When to use it" and comparisons say when to pick another.`;
 }
 
-function getTokens(search?: string) {
+export function getTokens(search?: string) {
   const q = search?.trim().toLowerCase();
   const list = q ? tokens.filter((t) => t.name.toLowerCase().includes(q) || t.cssVar.includes(q)) : tokens;
   if (!list.length) return `No token matches "${search}". Try "text", "surface", "border", "spacing" or "radius".`;
   const rows = list.map((t) => `| \`${t.cssVar}\` | ${Object.entries(t.values).map(([k, v]) => `${k}: ${v}`).join(', ')} |`);
   return `Use these as \`var(--halo-...)\` in CSS or inline styles.\n\n| Variable | Values |\n| --- | --- |\n${rows.join('\n')}`;
+}
+
+/** The first line after the front matter or title, to describe a skill file in a list. */
+function summary(text: string) {
+  const desc = text.match(/^description:\s*(.+)$/m)?.[1];
+  if (desc) return desc;
+  const body = text.replace(/^---[\s\S]*?---/, '').split('\n').map((l) => l.trim());
+  return body.find((l) => l && !l.startsWith('#')) ?? '';
+}
+
+export function getSkill(file?: string) {
+  const paths = Object.keys(skills).sort();
+  if (!file) {
+    return `Halo's skill files. Get one with get_skill and its path.\n\n${paths.map((p) => `- \`${p}\`: ${summary(skills[p]!)}`).join('\n')}\n\nStart with \`skills/build-ui/SKILL.md\` when building UI. \`INSTRUCTIONS.md\` holds short rules for AGENTS.md, CLAUDE.md or Cursor rules.`;
+  }
+  const q = file.trim().toLowerCase().replace(/\.md$/, '');
+  const hit = paths.find((p) => p.toLowerCase() === `${q}.md`) ?? paths.find((p) => p.toLowerCase().endsWith(`/${q}.md`)) ?? paths.find((p) => p.toLowerCase().includes(q));
+  return hit ? skills[hit]! : `No skill file matches "${file}". Call get_skill with no file to list them.`;
 }
 
 // ---------- Tools ----------
@@ -149,6 +169,12 @@ const tools = [
       required: ['name'],
     },
     run: (a: Record<string, unknown>) => getComponent(String(a.name ?? ''), a.examples !== false),
+  },
+  {
+    name: 'get_skill',
+    description: "Halo's skill files: how to build, review, theme and migrate UI with Halo, with topic guides (components, design, layout, copy, accessibility, a review checklist) and worked examples. Call with no file to list them.",
+    inputSchema: { type: 'object', properties: { file: { type: 'string', description: 'A path or name from the list, like "skills/build-ui/SKILL.md" or "design"' } } },
+    run: (a: Record<string, unknown>) => getSkill(a.file as string | undefined),
   },
   {
     name: 'get_tokens',

@@ -1,2 +1,4 @@
 # Built from the React source and the website by scripts/data.mjs
 src/generated/
+# The website's AI docs export, built by build.mjs
+build/

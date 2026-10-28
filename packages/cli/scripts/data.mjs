@@ -80,14 +80,50 @@ function readExamples() {
 
 function readTokens() {
   const all = JSON.parse(readFileSync(join(root, 'packages/tokens/dist/tokens.json'), 'utf8'));
-  // Primitives are the raw palette; people should use the semantic names, so leave them out
+  // Leave out the raw colour palette: people should use the semantic colour names instead.
+  // The numbered spacing and radius scales are primitives too, but components use them, so they stay.
   return all
-    .filter((t) => t.collection !== 'Primitives')
+    .filter((t) => t.collection !== 'Primitives' || /^(spacing|radius)\//.test(t.name))
     .map((t) => ({ name: t.name, cssVar: t.cssVar, group: t.collection, values: t.values }));
 }
 
-const data = { props: readProps(), examples: readExamples(), tokens: readTokens() };
+// ---------- Skills ----------
+
+const plugin = join(root, 'plugins/halo');
+
+// The worked examples in the build-ui skill are copied from typechecked code on the website,
+// so every component and prop in them is real
+const workedExamples = [
+  ['SettingsPage.tsx', 'settings-page.md', 'Worked example: account settings page', 'A form in sections with a single primary action, notification switches that use `controlPosition="end"`, and a destructive action that asks first in a Modal. Breadcrumbs sit above the title because the page is one level deep.'],
+  ['Dashboard.tsx', 'dashboard.md', 'Worked example: dashboard', 'A page title with one primary action, a row of Statistic cards, a neutral BarChart, and a DataTable with Badge statuses and Avatar names. Status colours come from Badge, not custom styles.'],
+];
+
+function writeWorkedExamples() {
+  const dir = join(plugin, 'skills/build-ui/examples');
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  for (const [source, file, title, intro] of workedExamples) {
+    const code = readFileSync(join(site, 'skill-examples', source), 'utf8').replace(/^(\/\/.*\r?\n)+/, '').trim();
+    writeFileSync(join(dir, file), `# ${title}\n\n${intro}\n\nThis code is checked against Halo's types, so every component and prop in it exists.\n\n\`\`\`tsx\n${code}\n\`\`\`\n`);
+  }
+}
+
+/** Every skill file, keyed by its path inside the plugin, like "skills/build-ui/references/design.md". */
+function readSkills() {
+  const out = { 'INSTRUCTIONS.md': readFileSync(join(plugin, 'INSTRUCTIONS.md'), 'utf8') };
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith('.md')) out[full.slice(plugin.length + 1).replace(/\\/g, '/')] = readFileSync(full, 'utf8');
+    }
+  };
+  walk(join(plugin, 'skills'));
+  return out;
+}
+
+writeWorkedExamples();
+const data = { props: readProps(), examples: readExamples(), tokens: readTokens(), skills: readSkills() };
 const outDir = join(dirname(fileURLToPath(import.meta.url)), '../src/generated');
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'data.json'), JSON.stringify(data));
-console.log(`data: props for ${Object.keys(data.props).length} components, examples for ${Object.keys(data.examples).length}, ${data.tokens.length} tokens`);
+console.log(`data: props for ${Object.keys(data.props).length} components, examples for ${Object.keys(data.examples).length}, ${data.tokens.length} tokens, ${Object.keys(data.skills).length} skill files`);
