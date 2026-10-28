@@ -43,7 +43,7 @@ const pages = [
   { to: '/components', label: 'Components' },
   { to: '/examples', label: 'Examples' },
   { to: '/figma', label: 'Figma' },
-  { to: '/installation', label: 'Installation' },
+  { to: '/docs', label: 'Docs' },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {

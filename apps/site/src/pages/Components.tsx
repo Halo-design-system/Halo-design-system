@@ -171,7 +171,7 @@ function Detail({ entry }: { entry: Entry }) {
         <SegmentedControl aria-label="Package manager" size="sm" value={pm} onValueChange={(v) => setPm(v as Manager)} options={Object.keys(managers).map((m) => ({ value: m, label: m }))} />
         <CodeBlock code={`${managers[pm]} @halo-ds/react`} label="Copy command" />
         <p>
-          First time? Add the styles once, as shown in <Link to="/installation">Installation</Link>.
+          First time? See <Link to="/docs/installation">Installation</Link>, or set everything up with <code>npx halo-ds init</code>.
         </p>
       </section>
 

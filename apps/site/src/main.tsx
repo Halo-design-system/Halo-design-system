@@ -8,7 +8,7 @@ import { Components } from './pages/Components';
 import { Examples } from './pages/Examples';
 import { Figma } from './pages/Figma';
 import { Home } from './pages/Home';
-import { Installation } from './pages/Installation';
+import { Docs } from './pages/Docs';
 import { Router, useRoute } from './router';
 
 function Pages() {
@@ -16,7 +16,7 @@ function Pages() {
   if (path.startsWith('/components')) return <Components />;
   if (path.startsWith('/examples')) return <Examples />;
   if (path.startsWith('/figma')) return <Figma />;
-  if (path.startsWith('/installation')) return <Installation />;
+  if (path.startsWith('/docs') || path === '/installation') return <Docs />;
   return <Home />;
 }
 

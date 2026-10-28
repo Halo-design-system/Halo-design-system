@@ -249,7 +249,7 @@ export function Home() {
           Halo gives designers a Figma library and developers React components built from the same tokens. Start with sixty components, light and dark mode, and seven example apps.
         </p>
         <div className="hero-actions">
-          <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/installation')}>Get started</Button>
+          <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Get started</Button>
           <Button size="lg" variant="secondary" onClick={() => go('/components')}>Browse components</Button>
           <Button size="lg" variant="ghost" iconLeft={<FigmaLogo />} onClick={() => go('/figma')}>Get the Figma file</Button>
         </div>
@@ -336,7 +336,7 @@ export function Home() {
         <h2>Start building</h2>
         <p>Install the package, or grab the Figma file and start designing.</p>
         <div className="hero-actions">
-          <Button iconRight={<ArrowRight />} onClick={() => go('/installation')}>Installation</Button>
+          <Button iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Installation</Button>
           <Button variant="secondary" iconLeft={<FigmaLogo />} onClick={() => go('/figma')}>Figma file</Button>
         </div>
       </section>
