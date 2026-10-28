@@ -423,8 +423,17 @@ function Ai() {
         <p>
           Skills teach your assistant how to work with Halo: which component fits which job, the design and writing rules, and a review checklist to run before finishing.
         </p>
-        <p><strong>Claude Code:</strong> install the Halo plugin. It adds the MCP server and the skills together.</p>
-        <CodeBlock code={'/plugin marketplace add Halo-design-system/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
+        <p><strong>Claude Code:</strong> install the Halo plugin. It adds the MCP server and the skills together. Open Claude Code in your project folder, then run these one at a time.</p>
+        <p>1. Add Halo to your list of plugin sources:</p>
+        <CodeBlock code="/plugin marketplace add Halo-design-system/Halo-design-system" label="Copy command" plain />
+        <p>
+          2. Install the plugin. Claude Code asks where: <strong>Install for you</strong> turns Halo on in every project you open, and <strong>in this repo only</strong> keeps it to this project, which is the better choice for trying it out.
+        </p>
+        <CodeBlock code="/plugin install halo@halo-design-system" label="Copy command" plain />
+        <p>3. Restart Claude Code so it loads the plugin: type <code>/exit</code>, then open it again in the same folder.</p>
+        <p>
+          4. Check it works: ask it to build a page with Halo. Before writing code it should use the <code>build-ui</code> skill and call <code>get_component</code>. To remove Halo later, open <code>/plugin</code> and go to Installed.
+        </p>
         <p>
           <strong>Any other tool:</strong> run this in your project. It adds the skills to <code>.claude/skills</code> and Halo&apos;s rules to <code>AGENTS.md</code>, which Cursor, Copilot, Codex and others read.
         </p>
