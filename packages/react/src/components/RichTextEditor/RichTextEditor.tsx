@@ -285,12 +285,12 @@ export const RichTextEditorField = forwardRef<RichTextEditorHandle, RichTextEdit
   { label, hint, error, optional, info, required, id, maxLength, fieldClassName, fieldClassNames, fieldStyles, onChange, defaultValue, ...rest },
   ref,
 ) {
-  const textOf = (html: string) => {
-    if (typeof document === 'undefined') return html;
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent ?? '';
-  };
+  // Counts the visible text without the DOM, so the server and the browser get the same number
+  const textOf = (html: string) =>
+    html
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&(lt|gt|quot|#39|amp);/g, (_, e: string) => ({ lt: '<', gt: '>', quot: '"', '#39': "'", amp: '&' })[e] ?? '');
   const [length, setLength] = useState(() => textOf(defaultValue ?? '').length);
   const tooLong = maxLength !== undefined && length > maxLength;
   const count: ReactNode = maxLength !== undefined ? `${length}/${maxLength}` : undefined;

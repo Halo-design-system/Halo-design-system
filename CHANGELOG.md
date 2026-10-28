@@ -18,6 +18,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ### Changes
 
+- **Server rendering (Next.js)**: ToastProvider, menus and other pop-ups, the colour picker's eyedropper button and the rich text character count now render the same on the server and in the browser, so Next.js no longer reports hydration errors. Tested in a new Next.js 16 app, in development and production.
 - **No setup**: install `@halo-ds/react` and import components. The styles, the design tokens and the Geist font now load by themselves, so there are no CSS or font imports to add. The tokens sit in a CSS layer, so your own brand variables win whatever order files load in. `@halo-ds/react/styles.css` and `@halo-ds/tokens` still exist for anyone who wants to load styles by hand.
 - **Card**: anything in `media` now fills the 4:3 box, not only images, videos and SVGs. Before, a gradient or your own block left an empty band under it.
 - **Badge**: solid Information, Success and Warning badges now have dark text, and solid Error sits on a deeper red, so their labels are readable. White text on those bright fills was too faint.

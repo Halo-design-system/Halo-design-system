@@ -15,6 +15,7 @@ import inputStyles from '../Input/Input.module.css';
 import { Select } from '../Select';
 import { clamp, hslToRgb, hsvToRgb, parseHex, rgbToHsl, rgbToHsv, toHex } from './color';
 import type { Hsva } from './color';
+import { useIsClient } from '../../internal/useIsClient';
 import styles from './ColorPicker.module.css';
 
 /* ---------- Swatch ---------- */
@@ -113,7 +114,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(function
     commit({ ...hsva, s: clamp(hsva.s + m[0]), v: clamp(hsva.v + m[1]) });
   };
 
-  const hasEyeDropper = showEyedropper && typeof window !== 'undefined' && 'EyeDropper' in window;
+  // Checked after hydration, so the server and the first browser render show the same buttons
+  const isClient = useIsClient();
+  const hasEyeDropper = showEyedropper && isClient && 'EyeDropper' in window;
   const pickFromScreen = async () => {
     try {
       const Ctor = (window as unknown as { EyeDropper: new () => { open: () => Promise<{ sRGBHex: string }> } }).EyeDropper;

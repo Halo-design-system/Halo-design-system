@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode, Ref, RefObject } from 'react';
 import { createPortal } from 'react-dom';
+import { useIsClient } from './useIsClient';
 
 export type Side = 'top' | 'bottom' | 'left' | 'right';
 export type Align = 'start' | 'center' | 'end';
@@ -107,8 +108,10 @@ export function useDismiss(open: boolean, onClose: () => void, refs: RefObject<H
   }, [open]);
 }
 
+/** Renders into document.body. Waits until after hydration, so server and browser HTML match. */
 export function Portal({ children }: { children: ReactNode }) {
-  if (typeof document === 'undefined') return null;
+  const isClient = useIsClient();
+  if (!isClient) return null;
   return createPortal(children, document.body);
 }
 
