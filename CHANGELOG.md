@@ -6,6 +6,10 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+### New
+
+- **CLI** (`halo-ds`): `npx halo-ds init` installs Halo in a Vite or Next.js app, sets light, dark or system mode and can apply a brand colour. `npx halo-ds theme "#2F6BFF"` makes Halo your brand colour in light and dark. `npx halo-ds docs badge` shows when to use a component, how to import it and its do's and don'ts.
+
 ### New components
 
 - **Nav group**: `NavGroup` holds NavItems under a parent, like Reports with Sales and Traffic inside. In a Sidebar they show indented below and open with the parent; the group opens by itself when one of its pages is selected, and a closed group holding the current page reads as active. In a collapsed Sidebar the icon opens them in a panel, and in a TopBar they open as a dropdown.
