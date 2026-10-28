@@ -108,7 +108,7 @@ function Installation() {
   const [way, setWay] = useState<'cli' | 'manual'>('cli');
   return (
     <>
-      <Head title="Installation" lede="How to add Halo to a React app: Vite, Next.js or any other React setup, with React 18 or 19. Use the CLI to set everything up in one command, or install the package yourself. Pick your package manager and framework below and follow the steps." />
+      <Head title="Installation" lede="This page shows how to add Halo to a React app built with Vite, Next.js or any other setup, on React 18 or 19. You can set everything up with one command, or install the package yourself. Pick your package manager and framework below, then follow the steps." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>
@@ -223,7 +223,7 @@ function Cli() {
   const x = run[pm];
   return (
     <>
-      <Head title="CLI" lede="Every command of halo-ds, the Halo command line tool. It sets Halo up in your app, applies your brand colour, shows component docs in the terminal and runs the MCP server for AI tools. Run it with npx; there is nothing to install first." />
+      <Head title="CLI" lede="halo-ds is a tool you run in your terminal. It sets Halo up in your app, applies your brand colour, shows component docs and starts the MCP server for AI tools. You run it with npx, so there is nothing to install first. This page explains each command." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>
@@ -326,7 +326,7 @@ function Theming() {
     <>
       <Head
         title="Theming"
-        lede="How to make Halo match your brand, and how to switch between light and dark mode. Every colour, space and corner in Halo is a CSS variable, so changing a few restyles every component."
+        lede="This page shows how to give Halo your brand colour and how to switch between light and dark mode. Every colour, spacing value and corner in Halo is a CSS variable, so changing a few of them restyles every component."
       />
       <Section id="brand" title="Brand colour">
         <p>The quick way: one command works out every brand colour from yours, for light and dark mode, and adds them to your app.</p>
