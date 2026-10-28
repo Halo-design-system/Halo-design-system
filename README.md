@@ -7,7 +7,7 @@
 
 An open-source design system for designers and developers: a Figma library and a React component library built from the same design tokens, with light and dark mode.
 
-**📖 Docs & component playground: https://chidindu06f.github.io/Halo-design-system/**
+**📖 Docs & component playground: https://halo-design-system.github.io/Halo-design-system/**
 
 > **Status:** early development. Foundations, 44 components, 40 illustrations and 20 awards are in place, in Figma and React. Not yet published to npm.
 
@@ -49,7 +49,7 @@ Every token is a CSS variable starting with `--halo-`, so your own styles can us
 - **Quick:** override a few brand variables in your own CSS, loaded after Halo's. No rebuild needed.
 - **Full:** change the variables in your copy of the Figma file, export them, and rebuild the tokens so design and code match.
 
-The **Theming** page in [Storybook](https://chidindu06f.github.io/Halo-design-system/) walks through both, with a live example.
+The **Theming** page in [Storybook](https://halo-design-system.github.io/Halo-design-system/) walks through both, with a live example.
 
 ## Working on Halo
 

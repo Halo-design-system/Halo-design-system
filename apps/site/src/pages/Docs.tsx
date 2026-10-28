@@ -374,7 +374,7 @@ Use Halo tokens for spacing and colour, and check the page in light and dark mod
 
 function Ai() {
   const [tool, setTool] = useState<Tool>('claude');
-  const site = 'https://chidindu06f.github.io/Halo-design-system';
+  const site = 'https://halo-design-system.github.io/Halo-design-system';
   return (
     <>
       <Head
@@ -424,7 +424,7 @@ function Ai() {
           Skills teach your assistant how to work with Halo: which component fits which job, the design and writing rules, and a review checklist to run before finishing.
         </p>
         <p><strong>Claude Code:</strong> install the Halo plugin. It adds the MCP server and the skills together.</p>
-        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
+        <CodeBlock code={'/plugin marketplace add Halo-design-system/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
         <p>
           <strong>Any other tool:</strong> run this in your project. It adds the skills to <code>.claude/skills</code> and Halo&apos;s rules to <code>AGENTS.md</code>, which Cursor, Copilot, Codex and others read.
         </p>

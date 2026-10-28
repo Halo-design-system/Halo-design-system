@@ -1,12 +1,12 @@
 {
   "name": "halo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Build, review and theme React UI with the Halo design system. Includes an MCP server with every component's props, examples and usage guidance.",
   "author": {
     "name": "Halo design system"
   },
-  "homepage": "https://chidindu06f.github.io/Halo-design-system/docs/ai",
-  "repository": "https://github.com/Chidindu06F/Halo-design-system",
+  "homepage": "https://halo-design-system.github.io/Halo-design-system/docs/ai",
+  "repository": "https://github.com/Halo-design-system/Halo-design-system",
   "license": "MIT",
   "keywords": [
     "design-system",

@@ -43,8 +43,8 @@ export function Link({ to, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchorEl
 }
 
 export const links = {
-  storybook: 'https://chidindu06f.github.io/Halo-design-system/storybook/',
-  github: 'https://github.com/Chidindu06F/Halo-design-system',
+  storybook: 'https://halo-design-system.github.io/Halo-design-system/storybook/',
+  github: 'https://github.com/Halo-design-system/Halo-design-system',
   npm: 'https://www.npmjs.com/package/@halo-ds/react',
   // Replace with the Figma Community link once the file is published
   figma: 'https://www.figma.com/community',

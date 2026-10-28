@@ -14,7 +14,7 @@ import type { Project } from './project';
 
 declare const __VERSION__: string;
 
-const SITE = 'https://chidindu06f.github.io/Halo-design-system';
+const SITE = 'https://halo-design-system.github.io/Halo-design-system';
 const THEMES = ['light', 'dark', 'system'] as const;
 
 // ---------- Output ----------

@@ -1,6 +1,6 @@
 {
   "name": "@halo-ds/tokens",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Design tokens for the Halo design system: CSS variables for light and dark mode, generated from Figma.",
   "license": "MIT",
   "type": "module",
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chidindu06F/Halo-design-system.git",
+    "url": "git+https://github.com/Halo-design-system/Halo-design-system.git",
     "directory": "packages/tokens"
   },
-  "homepage": "https://github.com/Chidindu06F/Halo-design-system#readme",
+  "homepage": "https://github.com/Halo-design-system/Halo-design-system#readme",
   "bugs": {
-    "url": "https://github.com/Chidindu06F/Halo-design-system/issues"
+    "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   },
   "publishConfig": {
     "access": "public"

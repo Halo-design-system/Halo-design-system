@@ -6,7 +6,7 @@ addons.setConfig({
     base: 'light',
     brandTitle: 'Halo Design System',
     brandImage: 'logo.svg',
-    brandUrl: 'https://github.com/Chidindu06F/Halo-design-system',
+    brandUrl: 'https://github.com/Halo-design-system/Halo-design-system',
     colorPrimary: '#CC1DD0',
     colorSecondary: '#8C148F',
   }),

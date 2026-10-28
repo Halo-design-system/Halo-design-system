@@ -30,10 +30,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chidindu06F/Halo-design-system.git"
+    "url": "git+https://github.com/Halo-design-system/Halo-design-system.git"
   },
-  "homepage": "https://github.com/Chidindu06F/Halo-design-system#readme",
+  "homepage": "https://github.com/Halo-design-system/Halo-design-system#readme",
   "bugs": {
-    "url": "https://github.com/Chidindu06F/Halo-design-system/issues"
+    "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   }
 }

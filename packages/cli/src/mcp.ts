@@ -9,7 +9,7 @@ import data from './generated/data.json';
 
 declare const __VERSION__: string;
 
-const SITE = 'https://chidindu06f.github.io/Halo-design-system';
+const SITE = 'https://halo-design-system.github.io/Halo-design-system';
 const VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
 interface Prop { name: string; type: string; required: boolean; description: string }

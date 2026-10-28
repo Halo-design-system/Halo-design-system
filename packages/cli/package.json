@@ -1,6 +1,6 @@
 {
   "name": "halo-ds",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Set up the Halo design system in a React app, make it your brand, and read the docs from the terminal.",
   "license": "MIT",
   "type": "module",
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chidindu06F/Halo-design-system.git",
+    "url": "git+https://github.com/Halo-design-system/Halo-design-system.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://chidindu06f.github.io/Halo-design-system/docs/cli",
+  "homepage": "https://halo-design-system.github.io/Halo-design-system/docs/cli",
   "bugs": {
-    "url": "https://github.com/Chidindu06F/Halo-design-system/issues"
+    "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   },
   "keywords": [
     "design-system",

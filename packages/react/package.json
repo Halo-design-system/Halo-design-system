@@ -1,6 +1,6 @@
 {
   "name": "@halo-ds/react",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "React components for the Halo design system.",
   "license": "MIT",
   "type": "module",
@@ -45,12 +45,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chidindu06F/Halo-design-system.git",
+    "url": "git+https://github.com/Halo-design-system/Halo-design-system.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/Chidindu06F/Halo-design-system#readme",
+  "homepage": "https://github.com/Halo-design-system/Halo-design-system#readme",
   "bugs": {
-    "url": "https://github.com/Chidindu06F/Halo-design-system/issues"
+    "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   },
   "publishConfig": {
     "access": "public"

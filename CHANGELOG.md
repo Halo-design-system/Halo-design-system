@@ -6,13 +6,17 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+## 0.3.1
+
+- Halo moved to the Halo-design-system organization on GitHub. The docs are now at https://halo-design-system.github.io/Halo-design-system/, and the CLI, MCP server, plugin and package pages link there. Old GitHub links redirect.
+
 ## 0.3.0
 
 ### New
 
 - **CLI** (`halo-ds`): `npx halo-ds init` installs Halo in a Vite or Next.js app, sets light, dark or system mode and can apply a brand colour. `npx halo-ds theme "#2F6BFF"` makes Halo your brand colour in light and dark. `npx halo-ds docs badge` shows when to use a component, how to import it and its do's and don'ts.
 - **MCP server**: `npx halo-ds mcp` lets AI assistants (Claude Code, Cursor, VS Code, Windsurf, Claude Desktop) look up Halo while they code: every component's props, working examples, when to use it, do's and don'ts, and the design tokens.
-- **Claude Code plugin**: `/plugin marketplace add Chidindu06F/Halo-design-system`, then `/plugin install halo@halo-design-system`. It adds the MCP server and four skills: build-ui, review-ui, brand-theme and migrate (from shadcn/ui, Ant Design or Material UI).
+- **Claude Code plugin**: `/plugin marketplace add Halo-design-system/Halo-design-system`, then `/plugin install halo@halo-design-system`. It adds the MCP server and four skills: build-ui, review-ui, brand-theme and migrate (from shadcn/ui, Ant Design or Material UI).
 - **Skills for any AI tool**: `npx halo-ds skills` adds Halo's skills to a project (`.claude/skills`) and Halo's rules to `AGENTS.md`, which Cursor, Copilot, Codex and others read. The build-ui skill now has topic guides (choosing components, design, layout, words on screen, accessibility, a review checklist) and two worked examples checked against Halo's types. The MCP server can hand out any of these files with `get_skill`.
 - **Plain-text docs**: the website now serves `llms.txt`, `llms-full.txt` and a Markdown page for every component (add `.md` to its address), so AI tools can read Halo from a link.
 
