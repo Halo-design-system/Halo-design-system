@@ -26,12 +26,12 @@ function useManager() {
   return { pm, picker };
 }
 
-function Head({ eyebrow, title, lede }: { eyebrow: string; title: string; lede: ReactNode }) {
+function Head({ eyebrow, title, lede }: { eyebrow: string; title: string; lede?: ReactNode }) {
   return (
     <header className="page-head">
       <p className="eyebrow">{eyebrow}</p>
       <h1>{title}</h1>
-      <p className="lede">{lede}</p>
+      {lede && <p className="lede">{lede}</p>}
     </header>
   );
 }
@@ -373,7 +373,6 @@ function Ai() {
       <Head
         eyebrow="Build with AI"
         title="Use with AI"
-        lede="AI assistants learned from code written before Halo existed, so on their own they guess. Connect them to Halo and they use the real components, props and rules instead."
       />
 
       <Section id="plugin" title="Claude Code: install the plugin">
