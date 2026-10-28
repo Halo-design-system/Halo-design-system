@@ -3,18 +3,10 @@
 React components for the Halo design system, with light and dark mode, built on the `@halo-ds/tokens` CSS variables.
 
 ```bash
-npm install @halo-ds/react @halo-ds/tokens @fontsource/geist
+npm install @halo-ds/react
 ```
 
-Load the tokens, the component styles and the font once, at the top of your app:
-
-```tsx
-import '@halo-ds/tokens/css';
-import '@halo-ds/react/styles.css';
-import '@fontsource/geist/400.css';
-import '@fontsource/geist/600.css';
-import '@fontsource/geist/700.css';
-```
+That is all the setup: the styles, the design tokens and the Geist font load by themselves when you use a component. Or set up a project in one step, with dark mode and your brand colour, using the CLI: `npx halo-ds init`.
 
 Then use the components:
 

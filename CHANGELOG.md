@@ -1,10 +1,12 @@
 # Changelog
 
-Changes to `@halo-ds/react` and `@halo-ds/tokens`. Both packages share one version number.
+Changes to `@halo-ds/react`, `@halo-ds/tokens` and the `halo-ds` CLI. They share one version number.
 
 New work collects under **Unreleased** and goes live in Storybook straight away. It only reaches npm when we choose to release a batch: then the Unreleased heading becomes the new version number (see Releasing in [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## Unreleased
+
+## 0.3.0
 
 ### New
 

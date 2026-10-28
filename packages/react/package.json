@@ -1,6 +1,6 @@
 {
   "name": "@halo-ds/react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React components for the Halo design system.",
   "license": "MIT",
   "type": "module",

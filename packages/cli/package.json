@@ -1,6 +1,6 @@
 {
   "name": "halo-ds",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Set up the Halo design system in a React app, make it your brand, and read the docs from the terminal.",
   "license": "MIT",
   "type": "module",

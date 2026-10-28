@@ -1,6 +1,6 @@
 {
   "name": "halo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Build, review and theme React UI with the Halo design system. Includes an MCP server with every component's props, examples and usage guidance.",
   "author": {
     "name": "Halo design system"
