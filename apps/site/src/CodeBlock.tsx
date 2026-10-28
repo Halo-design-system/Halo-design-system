@@ -13,9 +13,10 @@ function colour(code: string) {
 }
 
 /** Code with a copy button, colour-coded like an editor. */
-export function CodeBlock({ code, label = 'Copy code', compact = false }: { code: string; label?: string; compact?: boolean }) {
+/** `plain` shows text without colours, for things to copy that aren't code, like a prompt. */
+export function CodeBlock({ code, label = 'Copy code', compact = false, plain = false }: { code: string; label?: string; compact?: boolean; plain?: boolean }) {
   const [copied, setCopied] = useState(false);
-  const html = useMemo(() => colour(code), [code]);
+  const html = useMemo(() => (plain ? escape(code) : colour(code)), [code, plain]);
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(code);

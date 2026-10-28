@@ -26,12 +26,12 @@ function useManager() {
   return { pm, picker };
 }
 
-function Head({ eyebrow, title, lede }: { eyebrow: string; title: string; lede?: ReactNode }) {
+function Head({ title, lede }: { title: string; lede: ReactNode }) {
   return (
     <header className="page-head">
-      <p className="eyebrow">{eyebrow}</p>
+      <p className="eyebrow">Docs</p>
       <h1>{title}</h1>
-      {lede && <p className="lede">{lede}</p>}
+      <p className="lede">{lede}</p>
     </header>
   );
 }
@@ -73,22 +73,22 @@ export default function App() {
 function Introduction() {
   return (
     <>
-      <Head eyebrow="Docs" title="Introduction" lede="Halo is a design system for designers and developers: a Figma library and React components built from the same design tokens." />
+      <Head title="Introduction" lede="Halo is an open-source design system with two matching halves: a Figma library for designers and a React component library for developers, built from the same design tokens. This page lists what is included and where to start." />
       <Section id="what" title="What you get">
         <ul className="docs-list">
           <li><strong>56 React components</strong> that work with the keyboard and screen readers, in light and dark mode.</li>
           <li><strong>A Figma library</strong> with the same names, variants and tokens, so designs and code match.</li>
           <li><strong>One install.</strong> The styles, tokens and font load by themselves; there is nothing to import first.</li>
           <li><strong>A CLI</strong> that sets up a project, applies your brand colour and shows the docs in your terminal.</li>
-          <li><strong>Built for AI assistants.</strong> An MCP server and skills give Claude, Cursor and other tools the real components and rules, so they don&apos;t guess.</li>
+          <li><strong>Ready for AI coding tools.</strong> An MCP server and skills let Claude Code, Cursor and others look up every component&apos;s props, examples and rules while they build.</li>
         </ul>
       </Section>
       <Section id="start" title="Start here">
         <div className="docs-cards">
           <Link to="/docs/installation" className="docs-card"><strong>Installation</strong><span>Add Halo to a Vite or Next.js app.</span></Link>
           <Link to="/docs/cli" className="docs-card"><strong>CLI</strong><span>Set up, theme and read the docs from the terminal.</span></Link>
-          <Link to="/docs/theming" className="docs-card"><strong>Theming</strong><span>Use your brand colour everywhere.</span></Link>
-          <Link to="/docs/ai" className="docs-card"><strong>Use with AI</strong><span>Connect Claude, Cursor or VS Code to Halo.</span></Link>
+          <Link to="/docs/theming" className="docs-card"><strong>Theming</strong><span>Your brand colour, and light and dark mode.</span></Link>
+          <Link to="/docs/ai" className="docs-card"><strong>AI and MCP server</strong><span>Connect Claude Code, Cursor or VS Code to Halo.</span></Link>
           <Link to="/components" className="docs-card"><strong>Components</strong><span>Every component, live, with code.</span></Link>
         </div>
       </Section>
@@ -108,7 +108,7 @@ function Installation() {
   const [way, setWay] = useState<'cli' | 'manual'>('cli');
   return (
     <>
-      <Head eyebrow="Get started" title="Installation" lede="Add Halo to a React app. It works with React 18 and 19, in Vite, Next.js and any other React setup." />
+      <Head title="Installation" lede="How to add Halo to a React app: Vite, Next.js or any other React setup, with React 18 or 19. Use the CLI to set everything up in one command, or install the package yourself. Pick your package manager and framework below and follow the steps." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>
@@ -153,7 +153,7 @@ function Installation() {
             <Step n={3} title="Use a component">
               <p>
                 Import what you need. Every component is on the <Link to="/components">Components</Link> page.
-                {way === 'manual' && <> For dark mode, see <Link to="/docs/dark-mode">Dark mode</Link>.</>}
+                {way === 'manual' && <> For dark mode, see <Link to="/docs/theming">Theming</Link>.</>}
               </p>
               <CodeBlock code={usage} />
             </Step>
@@ -223,7 +223,7 @@ function Cli() {
   const x = run[pm];
   return (
     <>
-      <Head eyebrow="Get started" title="CLI" lede="Set up Halo, make it your brand and read the docs, all from the terminal. Run it with npx; there is nothing to install." />
+      <Head title="CLI" lede="Every command of halo-ds, the Halo command line tool. It sets Halo up in your app, applies your brand colour, shows component docs in the terminal and runs the MCP server for AI tools. Run it with npx; there is nothing to install first." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>
@@ -273,7 +273,7 @@ function Cli() {
 
       <Section id="mcp" title="mcp">
         <p>
-          Starts the MCP server that AI assistants use to look Halo up while they code. You don&apos;t run it yourself; you add it to your AI tool&apos;s settings. See <Link to="/docs/ai">Use with AI</Link>.
+          Starts the MCP server that AI assistants use to look Halo up while they code. You don&apos;t run it yourself; you add it to your AI tool&apos;s settings. See <Link to="/docs/ai">AI and MCP server</Link>.
         </p>
       </Section>
 
@@ -307,20 +307,40 @@ const brandCss = `/* In any CSS file of yours. Your values always win over Halo'
   --halo-border-focus: #183a85;
 }`;
 
+const toggle = `const html = document.documentElement;
+
+// Follow the device, or pick one
+html.dataset.theme = 'system'; // 'light' | 'dark' | 'system'`;
+
 function Theming() {
   const { pm } = useManager();
   return (
     <>
-      <Head eyebrow="Customising" title="Theming" lede="Every colour, space and corner in Halo is a CSS variable. Change a few to make Halo your brand." />
-      <Section id="cli" title="The quick way">
-        <p>One command works out every brand colour from yours, for light and dark mode.</p>
+      <Head
+        title="Theming"
+        lede="How to make Halo match your brand, and how to switch between light and dark mode. Every colour, space and corner in Halo is a CSS variable, so changing a few restyles every component."
+      />
+      <Section id="brand" title="Brand colour">
+        <p>The quick way: one command works out every brand colour from yours, for light and dark mode, and adds them to your app.</p>
         <CodeBlock code={`${run[pm]} halo-ds theme "#2F6BFF"`} label="Copy command" />
-      </Section>
-      <Section id="manual" title="By hand">
         <p>
-          Set the brand variables in any CSS file. Halo keeps its defaults in a CSS layer, so yours win whatever order the files load in. Buttons and filled controls each have their own variables, so you can change one without the other.
+          Or set the brand variables by hand in any CSS file. Halo keeps its defaults in a CSS layer, so yours win whatever order the files load in. Buttons and filled controls like checkboxes have their own variables, so you can change one without the other.
         </p>
         <CodeBlock code={brandCss} />
+      </Section>
+      <Section id="modes" title="Light and dark mode">
+        <p>Every component works in both. Choose with the <code>data-theme</code> attribute on the html element:</p>
+        <ul className="docs-list">
+          <li><code>light</code>: the default, when <code>data-theme</code> is not set.</li>
+          <li><code>dark</code>: always dark.</li>
+          <li><code>system</code>: follows the device setting, and changes when it does.</li>
+        </ul>
+        <CodeBlock code={`<html lang="en" data-theme="system">`} />
+        <p>To let people switch, change the attribute from anywhere, for example from a toggle in your settings:</p>
+        <CodeBlock code={toggle} />
+        <p>A section can use the other mode too: set <code>data-theme</code> on any element and everything inside it follows.</p>
+      </Section>
+      <Section id="more" title="More">
         <p>
           The <a href={`${links.storybook}?path=/docs/theming--docs`}>Theming guide</a> lists every variable, and the <a href={`${links.storybook}?path=/docs/customising--docs`}>Customising guide</a> shows how to restyle the parts inside a component.
         </p>
@@ -328,33 +348,6 @@ function Theming() {
     </>
   );
 }
-
-const toggle = `const html = document.documentElement;
-
-// Follow the device, or pick one
-html.dataset.theme = 'system'; // 'light' | 'dark' | 'system'`;
-
-function DarkMode() {
-  return (
-    <>
-      <Head eyebrow="Customising" title="Dark mode" lede={<>Every component works in light and dark. Choose with the <code>data-theme</code> attribute on the html element.</>} />
-      <Section id="values" title="The three modes">
-        <ul className="docs-list">
-          <li><code>light</code>: the default, when <code>data-theme</code> is not set.</li>
-          <li><code>dark</code>: always dark.</li>
-          <li><code>system</code>: follows the device setting, and changes when it does.</li>
-        </ul>
-        <CodeBlock code={`<html lang="en" data-theme="system">`} />
-      </Section>
-      <Section id="switch" title="Let people switch">
-        <p>Change the attribute from anywhere, for example from a toggle in your settings.</p>
-        <CodeBlock code={toggle} />
-        <p>Part of a section can use the other mode too: set <code>data-theme</code> on any element and everything inside it follows.</p>
-      </Section>
-    </>
-  );
-}
-
 
 const mcpCommand = 'npx -y halo-ds@latest mcp';
 const mcpConfigs = {
@@ -366,18 +359,23 @@ const mcpConfigs = {
 } as const;
 type Tool = keyof typeof mcpConfigs;
 
+const prompt = `Build an account settings page with Halo. Use the Halo MCP server to find the
+right components and check their props before writing code: profile fields,
+notification switches, and a delete account button that asks for confirmation.
+Use Halo tokens for spacing and colour, and check the page in light and dark mode.`;
+
 function Ai() {
   const [tool, setTool] = useState<Tool>('cursor');
   return (
     <>
       <Head
-        eyebrow="Build with AI"
-        title="Use with AI"
+        title="AI and MCP server"
+        lede="Halo works with AI coding tools like Claude Code, Cursor, VS Code and Windsurf. Connect your tool once and it can look up every Halo component's import, props, examples and usage rules while it builds. There are three parts: an MCP server any tool can use, skills for Claude Code, and plain-text docs for any assistant. This page shows how to set up each."
       />
 
       <Section id="plugin" title="Claude Code: install the plugin">
         <p>One plugin adds the MCP server below and four skills. Run these in Claude Code:</p>
-        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" />
+        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" plain />
         <div className="docs-table-wrap">
           <table className="docs-table">
             <thead>
@@ -436,13 +434,9 @@ function Ai() {
         </div>
       </Section>
 
-      <Section id="try" title="Try asking">
-        <ul className="docs-list">
-          <li>&quot;Build a settings page with Halo: profile fields, notification switches and a save button.&quot;</li>
-          <li>&quot;Which Halo component should I use to show that a payment failed?&quot;</li>
-          <li>&quot;Review this page against Halo&apos;s rules.&quot;</li>
-          <li>&quot;Move this dialog from shadcn to Halo.&quot;</li>
-        </ul>
+      <Section id="try" title="Try a prompt">
+        <p>Once your tool is connected, paste this to see it work:</p>
+        <CodeBlock code={prompt} label="Copy prompt" plain />
       </Section>
 
       <Section id="without" title="Without MCP">
@@ -455,27 +449,22 @@ function Ai() {
 
 // ---------- Layout ----------
 
-const pages = [
-  { group: 'Get started', items: [
-    { slug: '', title: 'Introduction', Page: Introduction },
-    { slug: 'installation', title: 'Installation', Page: Installation },
-    { slug: 'cli', title: 'CLI', Page: Cli },
-  ] },
-  { group: 'Customising', items: [
-    { slug: 'theming', title: 'Theming', Page: Theming },
-    { slug: 'dark-mode', title: 'Dark mode', Page: DarkMode },
-  ] },
-  { group: 'Build with AI', items: [
-    { slug: 'ai', title: 'Use with AI', Page: Ai },
-  ] },
+const flat = [
+  { slug: '', title: 'Introduction', Page: Introduction },
+  { slug: 'installation', title: 'Installation', Page: Installation },
+  { slug: 'cli', title: 'CLI', Page: Cli },
+  { slug: 'theming', title: 'Theming', Page: Theming },
+  { slug: 'ai', title: 'AI and MCP server', Page: Ai },
 ];
-const flat = pages.flatMap((g) => g.items);
+// Older links that now live on another page
+const moved: Record<string, string> = { 'dark-mode': 'theming' };
 const to = (slug: string) => (slug ? `/docs/${slug}` : '/docs');
 
 export function Docs() {
   const { path } = useRoute();
   // The old /installation link still opens Installation
-  const slug = path === '/installation' ? 'installation' : path.replace(/^\/docs\/?/, '');
+  const asked = path === '/installation' ? 'installation' : path.replace(/^\/docs\/?/, '');
+  const slug = moved[asked] ?? asked;
   const i = Math.max(0, flat.findIndex((p) => p.slug === slug));
   const page = flat[i]!;
   const prev = flat[i - 1];
@@ -484,15 +473,10 @@ export function Docs() {
     <div className="docs">
       <aside className="docs-side" aria-label="Docs">
         <nav className="docs-nav">
-          {pages.map((g) => (
-            <div key={g.group} className="docs-group">
-              <p className="docs-group-name">{g.group}</p>
-              {g.items.map((p) => (
-                <Link key={p.slug} to={to(p.slug)} className="docs-link" aria-current={p === page ? 'page' : undefined}>
-                  {p.title}
-                </Link>
-              ))}
-            </div>
+          {flat.map((p) => (
+            <Link key={p.slug} to={to(p.slug)} className="docs-link" aria-current={p === page ? 'page' : undefined}>
+              {p.title}
+            </Link>
           ))}
         </nav>
       </aside>
