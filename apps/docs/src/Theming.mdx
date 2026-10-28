@@ -85,7 +85,7 @@ The same components, with Halo's purple on the left and a blue brand on the righ
 Load your own CSS after Halo's, and set the brand variables on `:root`. Set them again for dark mode, where brand colours are usually lighter.
 
 ```css
-/* brand.css, loaded after '@halo-ds/react/styles.css' */
+/* brand.css, anywhere in your app: your values always win over Halo's */
 :root,
 [data-theme='light'] {
   --halo-button-primary: #2f6bff;           /* primary buttons */

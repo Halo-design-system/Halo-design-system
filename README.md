@@ -21,20 +21,13 @@ An open-source design system for designers and developers: a Figma library and a
 
 ## Using Halo
 
-> Halo is not on npm yet. The first release, 0.1.0, is being prepared; until then, clone this repository and run Storybook to explore it.
-
 ```bash
-npm install @halo-ds/react @fontsource/geist
+npm install @halo-ds/react
 ```
 
-Load the styles (they include the design tokens) and the font once, at the top of your app:
+That is all the setup: the styles, the design tokens and the Geist font load by themselves when you use a component.
 
 ```tsx
-import '@halo-ds/react/styles.css';
-import '@fontsource/geist/400.css';
-import '@fontsource/geist/600.css';
-import '@fontsource/geist/700.css';
-
 import { Button } from '@halo-ds/react';
 ```
 

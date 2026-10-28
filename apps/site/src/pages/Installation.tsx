@@ -6,43 +6,16 @@ import { Link, links } from '../router';
 const managers = ['npm', 'pnpm', 'yarn', 'bun'] as const;
 type Manager = (typeof managers)[number];
 const add: Record<Manager, string> = { npm: 'npm install', pnpm: 'pnpm add', yarn: 'yarn add', bun: 'bun add' };
-const packages = '@halo-ds/react @fontsource/geist';
-
-const styles = `import '@halo-ds/react/styles.css';
-import '@fontsource/geist/400.css';
-import '@fontsource/geist/600.css';
-import '@fontsource/geist/700.css';`;
+const packages = '@halo-ds/react';
 
 const frameworks = {
   vite: {
     label: 'Vite',
     create: { npm: 'npm create vite@latest my-app -- --template react-ts', pnpm: 'pnpm create vite my-app --template react-ts', yarn: 'yarn create vite my-app --template react-ts', bun: 'bun create vite my-app --template react-ts' },
-    file: 'src/main.tsx',
-    setup: `${styles}
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);`,
   },
   next: {
     label: 'Next.js',
     create: { npm: 'npx create-next-app@latest my-app', pnpm: 'pnpm create next-app my-app', yarn: 'yarn create next-app my-app', bun: 'bun create next-app my-app' },
-    file: 'app/layout.tsx',
-    setup: `${styles}
-import type { ReactNode } from 'react';
-
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en" data-theme="light">
-      <body>{children}</body>
-    </html>
-  );
-}`,
   },
 } as const;
 type Framework = keyof typeof frameworks;
@@ -58,7 +31,7 @@ export default function App() {
   );
 }`;
 
-const theming = `/* brand.css, loaded after the Halo styles */
+const theming = `/* In any CSS file of yours. Your values always win. */
 :root {
   --halo-button-primary: #2f6bff;
   --halo-button-primary-hover: #1f5fe0;
@@ -80,7 +53,6 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
 export function Installation() {
   const [pm, setPm] = useState<Manager>('npm');
   const [fw, setFw] = useState<Framework>('vite');
-  const f = frameworks[fw];
   return (
     <div className="page narrow">
       <header className="page-head">
@@ -109,18 +81,12 @@ export function Installation() {
               <CodeBlock code={frameworks[k].create[pm]} label="Copy command" />
             </Step>
             <Step n={2} title="Install Halo">
-              <p>The components, the design tokens and the Geist font.</p>
+              <p>That is all the setup. The styles, the design tokens and the Geist font load by themselves when you use a component.</p>
               <CodeBlock code={`${add[pm]} ${packages}`} label="Copy command" />
             </Step>
-            <Step n={3} title="Add the styles">
+            <Step n={3} title="Use a component">
               <p>
-                Import them once, in <code>{f.file}</code>. Set <code>data-theme</code> on the html element to <code>light</code>, <code>dark</code> or <code>system</code>.
-              </p>
-              <CodeBlock code={frameworks[k].setup} />
-            </Step>
-            <Step n={4} title="Use a component">
-              <p>
-                Every component comes from one package. See them all on the <Link to="/components">Components</Link> page.
+                Import what you need. See every component on the <Link to="/components">Components</Link> page. For dark mode, set <code>data-theme</code> on the html element to <code>dark</code>, or to <code>system</code> to follow the device.
               </p>
               <CodeBlock code={usage} />
             </Step>

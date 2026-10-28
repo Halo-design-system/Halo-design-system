@@ -28,6 +28,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@fontsource/geist": "^5.3.0",
     "@halo-ds/tokens": "workspace:*"
   },
   "devDependencies": {
