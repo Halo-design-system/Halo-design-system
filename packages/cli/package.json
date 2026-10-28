@@ -18,6 +18,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@halo-ds/react": "workspace:*",
+    "@halo-ds/tokens": "workspace:*",
     "@types/node": "^22.0.0",
     "esbuild": "0.28.2",
     "typescript": "^6.0.3"
