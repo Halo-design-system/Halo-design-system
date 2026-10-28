@@ -7,6 +7,7 @@ import { parseArgs } from 'node:util';
 import { all, groups } from '../../../apps/site/src/catalog';
 import { guides } from '../../../apps/site/src/guide';
 import { brandVariables, parseHex, themeCss, toHex } from './colour';
+import { runMcp } from './mcp';
 import { addImport, installCommand, readProject, rel, setTheme } from './project';
 import type { Project } from './project';
 
@@ -42,6 +43,8 @@ ${bold('Commands')}
   theme <colour>       Make Halo your brand colour, for example: theme "#2F6BFF"
   docs [component]     When to use a component, how to import it, and its do's and don'ts
                        Leave the name out to list every component
+  mcp                  Start the MCP server, so AI assistants can look up Halo while they code
+                       (you add it to your AI tool's settings; see the docs)
 
 ${bold('Options')}
   -y, --yes            Use the defaults and don't ask questions
@@ -219,6 +222,7 @@ async function main() {
   if (command === 'init') return init(cwd, { yes: Boolean(v.yes), theme: v.theme, brand: v.brand, skipInstall: Boolean(v['skip-install']) });
   if (command === 'theme') return theme(arg, cwd, Boolean(v.print));
   if (command === 'docs') return docs(arg);
+  if (command === 'mcp') return runMcp();
   fail(`Unknown command "${command}".\n\n${help}`);
 }
 

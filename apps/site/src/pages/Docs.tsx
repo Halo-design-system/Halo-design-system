@@ -80,6 +80,7 @@ function Introduction() {
           <li><strong>A Figma library</strong> with the same names, variants and tokens, so designs and code match.</li>
           <li><strong>One install.</strong> The styles, tokens and font load by themselves; there is nothing to import first.</li>
           <li><strong>A CLI</strong> that sets up a project, applies your brand colour and shows the docs in your terminal.</li>
+          <li><strong>Built for AI assistants.</strong> An MCP server and skills give Claude, Cursor and other tools the real components and rules, so they don&apos;t guess.</li>
         </ul>
       </Section>
       <Section id="start" title="Start here">
@@ -87,6 +88,7 @@ function Introduction() {
           <Link to="/docs/installation" className="docs-card"><strong>Installation</strong><span>Add Halo to a Vite or Next.js app.</span></Link>
           <Link to="/docs/cli" className="docs-card"><strong>CLI</strong><span>Set up, theme and read the docs from the terminal.</span></Link>
           <Link to="/docs/theming" className="docs-card"><strong>Theming</strong><span>Use your brand colour everywhere.</span></Link>
+          <Link to="/docs/ai" className="docs-card"><strong>Use with AI</strong><span>Connect Claude, Cursor or VS Code to Halo.</span></Link>
           <Link to="/components" className="docs-card"><strong>Components</strong><span>Every component, live, with code.</span></Link>
         </div>
       </Section>
@@ -269,6 +271,12 @@ function Cli() {
         <pre className="docs-terminal">{docsOutput}</pre>
       </Section>
 
+      <Section id="mcp" title="mcp">
+        <p>
+          Starts the MCP server that AI assistants use to look Halo up while they code. You don&apos;t run it yourself; you add it to your AI tool&apos;s settings. See <Link to="/docs/ai">Use with AI</Link>.
+        </p>
+      </Section>
+
       <Section id="help" title="Help">
         <CodeBlock code={`${x} halo-ds --help`} label="Copy command" />
       </Section>
@@ -347,6 +355,105 @@ function DarkMode() {
   );
 }
 
+
+const mcpCommand = 'npx -y halo-ds@latest mcp';
+const mcpConfigs = {
+  claude: { label: 'Claude Code', file: 'In your terminal', code: `claude mcp add halo -- ${mcpCommand}` },
+  cursor: { label: 'Cursor', file: '.cursor/mcp.json', code: JSON.stringify({ mcpServers: { halo: { command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
+  vscode: { label: 'VS Code', file: '.vscode/mcp.json', code: JSON.stringify({ servers: { halo: { type: 'stdio', command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
+  windsurf: { label: 'Windsurf', file: '~/.codeium/windsurf/mcp_config.json', code: JSON.stringify({ mcpServers: { halo: { command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
+  desktop: { label: 'Claude Desktop', file: 'claude_desktop_config.json', code: JSON.stringify({ mcpServers: { halo: { command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
+} as const;
+type Tool = keyof typeof mcpConfigs;
+
+function Ai() {
+  const [tool, setTool] = useState<Tool>('cursor');
+  return (
+    <>
+      <Head
+        eyebrow="Build with AI"
+        title="Use with AI"
+        lede="AI assistants learned from code written before Halo existed, so on their own they guess. Connect them to Halo and they use the real components, props and rules instead."
+      />
+
+      <Section id="plugin" title="Claude Code: install the plugin">
+        <p>One plugin adds the MCP server below and four skills. Run these in Claude Code:</p>
+        <CodeBlock code={'/plugin marketplace add Chidindu06F/Halo-design-system\n/plugin install halo@halo-design-system'} label="Copy commands" />
+        <div className="docs-table-wrap">
+          <table className="docs-table">
+            <thead>
+              <tr>
+                <th scope="col">Skill</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/halo:build-ui</code></td><td>Builds screens with Halo: looks up each component first, uses tokens, follows the rules.</td></tr>
+              <tr><td><code>/halo:review-ui</code></td><td>Reviews code against Halo&apos;s rules and lists what to fix, file by file.</td></tr>
+              <tr><td><code>/halo:brand-theme</code></td><td>Applies your brand colour in light and dark mode.</td></tr>
+              <tr><td><code>/halo:migrate</code></td><td>Moves screens from shadcn/ui, Ant Design or Material UI to Halo.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Claude also uses them by itself when a task fits, so you rarely need to type them.</p>
+      </Section>
+
+      <Section id="mcp" title="Any AI tool: add the MCP server">
+        <p>
+          The MCP server lets your assistant look Halo up while it codes. Add it once in your tool&apos;s settings; it runs on your computer and needs nothing else installed.
+        </p>
+        <Tabs value={tool} onValueChange={(v) => setTool(v as Tool)}>
+          <TabList aria-label="AI tool">
+            {(Object.keys(mcpConfigs) as Tool[]).map((k) => (
+              <Tab key={k} value={k}>{mcpConfigs[k].label}</Tab>
+            ))}
+          </TabList>
+          {(Object.keys(mcpConfigs) as Tool[]).map((k) => (
+            <TabPanel key={k} value={k} className="install-panel">
+              <p className="docs-file">{mcpConfigs[k].file}</p>
+              <CodeBlock code={mcpConfigs[k].code} label="Copy" />
+            </TabPanel>
+          ))}
+        </Tabs>
+      </Section>
+
+      <Section id="tools" title="What your assistant can look up">
+        <div className="docs-table-wrap">
+          <table className="docs-table">
+            <thead>
+              <tr>
+                <th scope="col">Tool</th>
+                <th scope="col">What it gives</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>get_setup_and_rules</code></td><td>How to set Halo up, and the rules for using it well.</td></tr>
+              <tr><td><code>list_components</code></td><td>Every component, grouped, with one line each.</td></tr>
+              <tr><td><code>find_component</code></td><td>The right component for a need, like &quot;confirm before deleting&quot;.</td></tr>
+              <tr><td><code>get_component</code></td><td>Import line, every prop, working examples, when to use it, and do&apos;s and don&apos;ts.</td></tr>
+              <tr><td><code>get_tokens</code></td><td>Colour, spacing and radius variables, with light and dark values.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="try" title="Try asking">
+        <ul className="docs-list">
+          <li>&quot;Build a settings page with Halo: profile fields, notification switches and a save button.&quot;</li>
+          <li>&quot;Which Halo component should I use to show that a payment failed?&quot;</li>
+          <li>&quot;Review this page against Halo&apos;s rules.&quot;</li>
+          <li>&quot;Move this dialog from shadcn to Halo.&quot;</li>
+        </ul>
+      </Section>
+
+      <Section id="without" title="Without MCP">
+        <p>Any assistant that can run commands can read the same docs from the terminal:</p>
+        <CodeBlock code="npx halo-ds docs badge" label="Copy command" />
+      </Section>
+    </>
+  );
+}
+
 // ---------- Layout ----------
 
 const pages = [
@@ -358,6 +465,9 @@ const pages = [
   { group: 'Customising', items: [
     { slug: 'theming', title: 'Theming', Page: Theming },
     { slug: 'dark-mode', title: 'Dark mode', Page: DarkMode },
+  ] },
+  { group: 'Build with AI', items: [
+    { slug: 'ai', title: 'Use with AI', Page: Ai },
   ] },
 ];
 const flat = pages.flatMap((g) => g.items);

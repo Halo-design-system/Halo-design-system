@@ -1,7 +1,11 @@
 // Bundles the CLI into one file with no runtime dependencies, so `npx halo-ds` starts fast.
 // The component list and usage guidance come from the website's data, so both stay in step.
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
+
+// Props, examples and tokens for the MCP server, gathered fresh from the source
+execFileSync(process.execPath, ['scripts/data.mjs'], { stdio: 'inherit' });
 
 const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
 

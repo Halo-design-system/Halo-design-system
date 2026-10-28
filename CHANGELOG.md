@@ -9,6 +9,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 ### New
 
 - **CLI** (`halo-ds`): `npx halo-ds init` installs Halo in a Vite or Next.js app, sets light, dark or system mode and can apply a brand colour. `npx halo-ds theme "#2F6BFF"` makes Halo your brand colour in light and dark. `npx halo-ds docs badge` shows when to use a component, how to import it and its do's and don'ts.
+- **MCP server**: `npx halo-ds mcp` lets AI assistants (Claude Code, Cursor, VS Code, Windsurf, Claude Desktop) look up Halo while they code: every component's props, working examples, when to use it, do's and don'ts, and the design tokens.
+- **Claude Code plugin**: `/plugin marketplace add Chidindu06F/Halo-design-system`, then `/plugin install halo@halo-design-system`. It adds the MCP server and four skills: build-ui, review-ui, brand-theme and migrate (from shadcn/ui, Ant Design or Material UI).
 
 ### New components
 

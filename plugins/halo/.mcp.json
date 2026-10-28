@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "halo": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "halo-ds@latest",
+        "mcp"
+      ]
+    }
+  }
+}
