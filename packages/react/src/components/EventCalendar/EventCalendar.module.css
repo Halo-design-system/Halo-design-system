@@ -240,7 +240,8 @@ button.tgDay:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--ha
   text-align: right;
 }
 
-.tgScroll { max-height: 640px; overflow-y: auto; }
+/* No scroll anchoring: when the fonts load and the header grows, the grid stays on the first hour instead of shifting a pixel. */
+.tgScroll { max-height: 640px; overflow-y: auto; overflow-anchor: none; }
 .tgSticky { position: sticky; top: 0; z-index: 3; background: var(--halo-surface-primary); }
 .tgBody {
   position: relative;
