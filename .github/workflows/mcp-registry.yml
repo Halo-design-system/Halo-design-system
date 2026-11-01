@@ -1,0 +1,28 @@
+name: Publish to the MCP Registry
+
+# Lists the Halo MCP server (server.json) in the official MCP Registry under
+# io.github.Halo-design-system/. GitHub vouches for this repository with OIDC, so no token is needed.
+# Run it from the Actions tab after a release is live on npm, or push a version tag.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install mcp-publisher
+        run: curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+
+      - name: Sign in with GitHub OIDC
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish server.json
+        run: ./mcp-publisher publish

@@ -9,3 +9,5 @@ Thumbs.db
 .claude/settings.local.json
 test-results/
 playwright-report/
+mcp-publisher.exe
+.mcpregistry_*
