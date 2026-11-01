@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+## 0.4.0
+
 ### New
 
 - **Blocks**: eight ready-made page sections built from Halo components: Sign in, Sign up, Dashboard, Customers table, Settings, Empty projects, Pricing and Page not found. Each has a live preview at desktop, tablet and phone widths at the end of the Components page, and copyable code.

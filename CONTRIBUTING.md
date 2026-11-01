@@ -73,7 +73,7 @@ Releases are batched. Pushing to `main` only updates Storybook; nothing goes to 
 Each release:
 
 1. In `CHANGELOG.md`, rename **Unreleased** to the new version and add a fresh empty **Unreleased** section above it.
-2. Set the same new version in `packages/tokens/package.json` and `packages/react/package.json` (for example `0.1.0`, then `0.1.1` for fixes and `0.2.0` for new components).
+2. Set the same new version in `packages/tokens/package.json`, `packages/react/package.json` and `packages/cli/package.json` (for example `0.1.0`, then `0.1.1` for fixes and `0.2.0` for new components). Also set it in the plugin: `version` in `plugins/halo/.claude-plugin/plugin.json`, the `halo-ds@` version in `plugins/halo/.mcp.json` and `plugins/halo/README.md` (the plugin directory needs an exact version, not `@latest`), and both `version` fields in `server.json`.
 3. Check what would be published, without publishing:
 
    ```bash
@@ -89,4 +89,5 @@ Each release:
    pnpm swaps the internal `workspace:*` link for the real version number, so `@halo-ds/react` depends on the matching `@halo-ds/tokens`.
 
 5. Tag the release in git: `git tag v0.1.0 && git push --tags`.
+6. Update the MCP Registry listing, from the repository root: `mcp-publisher login github`, then `mcp-publisher publish`. It reads `server.json`; the `mcpName` in `packages/cli/package.json` must match its `name`.
 
