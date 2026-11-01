@@ -40,7 +40,8 @@ export const ColorSwatch = forwardRef<HTMLButtonElement, ColorSwatchProps>(funct
     <button
       ref={ref}
       type="button"
-      aria-pressed={selected}
+      // In a group of swatches (role radio) the group says which is chosen; on its own it's a toggle
+      aria-pressed={rest.role ? undefined : selected}
       data-halo="color-swatch"
       data-part="root"
       className={cx(styles.swatch, styles[shape], styles[size], selected && styles.selected, className)}

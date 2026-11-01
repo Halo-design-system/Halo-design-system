@@ -309,6 +309,8 @@ export const RichTextEditorField = forwardRef<RichTextEditorHandle, RichTextEdit
       {(c) => (
         <RichTextEditor
           ref={ref}
+          // The label can't point at an editable div with htmlFor, so the editor carries its name itself
+          aria-label={typeof label === 'string' ? label : undefined}
           {...rest}
           {...c}
           defaultValue={defaultValue}

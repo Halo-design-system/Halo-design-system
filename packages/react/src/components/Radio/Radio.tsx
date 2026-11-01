@@ -112,17 +112,21 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(funct
   const autoName = useId();
   const [v, setV] = useControllable<string | undefined>(value, defaultValue, onValueChange as (v: string | undefined) => void);
   const hintId = `${autoName}-hint`;
+  const legendId = `${autoName}-legend`;
   const message = error ?? hint;
   return (
+    // role radiogroup lets the group say it is required; the legend still names it
     <fieldset
       ref={ref}
+      role="radiogroup"
+      aria-labelledby={legendId}
       disabled={disabled}
       aria-describedby={message ? hintId : undefined}
       aria-required={required || undefined}
       {...rest}
       {...part('root', [styles.group, className], rest.style)}
     >
-      <legend {...part('legend', hideLabel ? styles.srOnly : styles.legend)}>
+      <legend id={legendId} {...part('legend', hideLabel ? styles.srOnly : styles.legend)}>
         <FieldLabel required={required} optional={optional}>{label}</FieldLabel>
       </legend>
       <RadioGroupContext.Provider value={{ name: name ?? autoName, value: v, setValue: setV, size, invalid: error != null, disabled }}>

@@ -16,9 +16,17 @@ for (const story of stories) {
         // A story shows one piece of a page, so page-level rules (one main landmark, a level-one heading) don't apply
         .disableRules(['region', 'landmark-one-main', 'page-has-heading-one'])
         .analyze();
-      const problems = results.violations
-        .filter((v) => (v.impact === 'serious' || v.impact === 'critical') && !allowed.includes(v.id))
-        .map((v) => `${v.id}: ${v.help} (${v.nodes.length}x) ${v.nodes.slice(0, 2).map((n) => n.target.join(' ')).join(' | ')}`);
+      const problems: string[] = [];
+      for (const v of results.violations) {
+        if ((v.impact !== 'serious' && v.impact !== 'critical') || allowed.includes(v.id)) continue;
+        let nodes = v.nodes;
+        // WCAG doesn't ask disabled controls to meet contrast, and Halo marks them with data-disabled
+        if (v.id === 'color-contrast') {
+          const keep = await Promise.all(nodes.map((n) => page.locator(String(n.target[0])).first().evaluate((el) => !el.closest('[data-disabled]')).catch(() => true)));
+          nodes = nodes.filter((_, i) => keep[i]);
+        }
+        if (nodes.length) problems.push(`${v.id}: ${v.help} (${nodes.length}x) ${nodes.slice(0, 2).map((n) => n.target.join(' ')).join(' | ')}`);
+      }
       expect(problems, problems.join('\n')).toEqual([]);
     });
   }

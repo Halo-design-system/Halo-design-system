@@ -187,7 +187,8 @@ export const TreeSelect = forwardRef<HTMLButtonElement, TreeSelectProps | MultiT
           aria-expanded={open}
           aria-controls={open ? popId : undefined}
           aria-invalid={isInvalid || undefined}
-          aria-label={props['aria-label']}
+          // The name says what the field is and what it shows, like "Team, Design", so it matches what people see
+          aria-label={props['aria-label'] ? [props['aria-label'], typeof (chosen?.label ?? placeholder) === 'string' ? chosen?.label ?? placeholder : null].filter(Boolean).join(', ') : undefined}
           aria-describedby={props['aria-describedby']}
           aria-required={required || undefined}
           disabled={disabled}

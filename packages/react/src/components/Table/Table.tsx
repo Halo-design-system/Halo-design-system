@@ -51,7 +51,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
       <PartCtx.Provider value={part}>
         <div {...part('root', [styles.frame, bordered && styles.bordered, stickyHeader && styles.stickyHeader, stickyFirstColumn && styles.stickyFirst, className])}>
           {toolbar}
-          <div {...part('scroll', styles.scroll, maxHeight !== undefined ? { maxHeight, overflowY: 'auto' } : undefined)}>
+          {/* A scrolling table can be focused, so keyboard users can scroll it with the arrow keys */}
+          <div
+            tabIndex={maxHeight !== undefined || stickyFirstColumn ? 0 : undefined}
+            {...part('scroll', styles.scroll, maxHeight !== undefined ? { maxHeight, overflowY: 'auto' } : undefined)}
+          >
             <table ref={ref} {...rest} {...part('table', styles.table, rest.style)}>
               {caption && <caption {...part('caption', styles.caption)}>{caption}</caption>}
               {children}

@@ -106,7 +106,7 @@ export const CustomDays: Story = {
         onValueChange={setSelected}
         renderDay={(d) => {
           const price = 80 + ((d.getDate() * 37) % 60);
-          return <span style={{ color: price < 100 ? 'var(--halo-tag-green-text)' : 'var(--halo-text-secondary)' }}>₦{price}k</span>;
+          return <span style={{ color: price < 100 ? 'var(--halo-tag-green-text)' : 'var(--halo-text-contrast)' }}>₦{price}k</span>;
         }}
       />
     );

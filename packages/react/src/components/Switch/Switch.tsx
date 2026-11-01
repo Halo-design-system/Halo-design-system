@@ -56,7 +56,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch
   );
   if (!label && !description) return <span {...part('root', [styles[size], className])}>{control}</span>;
   return (
-    <div {...part('root', [styles.field, styles[size], styles[controlPosition], disabled && styles.disabled, className])}>
+    <div data-disabled={disabled || undefined} {...part('root', [styles.field, styles[size], styles[controlPosition], disabled && styles.disabled, className])}>
       <span {...part('control', styles.control)}>{control}</span>
       <span {...part('text', styles.text)}>
         {label && (

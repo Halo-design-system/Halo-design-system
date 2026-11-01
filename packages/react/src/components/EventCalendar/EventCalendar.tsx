@@ -278,7 +278,6 @@ export function EventCalendar({
         key={e.id}
         type="button"
         {...part('event', [styles.event, c.className, extra], { ...c.style, ...style })}
-        aria-label={`${e.title}, ${span(e)}`}
         onClick={() => onEventClick?.(e)}
       >
         {children ?? (
@@ -290,6 +289,8 @@ export function EventCalendar({
             </span>
           </>
         )}
+        {/* The name is what the button shows, then the day and time for screen readers, so voice control users can say what they see */}
+        <span className={styles.srOnly}>, {span(e)}</span>
       </button>
     );
   };
@@ -489,6 +490,8 @@ export function EventCalendar({
                       </div>
                     );
                   })}
+                  {/* The week's events sit in one cell of their own, since a grid row may only hold cells */}
+                  <div role="gridcell" style={{ display: 'contents' }}>
                   {placed
                     .filter((p) => p.row < maxEvents)
                     .map((p) =>
@@ -511,6 +514,7 @@ export function EventCalendar({
                       </span>
                     ) : null,
                   )}
+                  </div>
                 </div>
               );
             })}
@@ -591,8 +595,9 @@ function TimeGrid({ days, events, today, locale, hourHeight, startHour, maxEvent
               const label = formatDate(d, locale, { weekday: 'long', day: 'numeric', month: 'long' });
               const current = sameDay(d, today) ? 'date' : undefined;
               return onDayClick ? (
-                <button key={d.toISOString()} type="button" {...part('dayHeader', styles.tgDay)} aria-label={`Open ${label}`} aria-current={current} onClick={() => onDayClick(d)}>
+                <button key={d.toISOString()} type="button" {...part('dayHeader', styles.tgDay)} aria-current={current} onClick={() => onDayClick(d)}>
                   {content}
+                  <span className={styles.srOnly}>, open {label}</span>
                 </button>
               ) : (
                 <span key={d.toISOString()} {...part('dayHeader', styles.tgDay)} aria-current={current}>

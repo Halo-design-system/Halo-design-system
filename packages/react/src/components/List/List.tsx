@@ -1,4 +1,4 @@
-import { Children, createContext, forwardRef, Fragment, isValidElement, useContext } from 'react';
+import { Children, createContext, forwardRef, isValidElement, useContext } from 'react';
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { cx } from '../../internal/cx';
 import { parts } from '../../internal/parts';
@@ -8,6 +8,7 @@ import styles from './List.module.css';
 const SizeCtx = createContext<'md' | 'sm'>('md');
 
 /** Parts you can style with `classNames` and `styles`. */
+// 'divider' is kept so existing classNames still type-check; divided lists now draw their lines with borders
 export type ListPart = 'root' | 'divider';
 
 export interface ListProps extends HTMLAttributes<HTMLUListElement>, PartsProps<ListPart> {
@@ -24,12 +25,8 @@ export const List = forwardRef<HTMLUListElement, ListProps>(function List({ vari
   return (
     <SizeCtx.Provider value={size}>
       <ul ref={ref} {...rest} {...part('root', [styles.list, styles[variant], className], rest.style)}>
-        {items.map((child, i) => (
-          <Fragment key={child.key ?? i}>
-            {variant === 'divided' && i > 0 && <li role="presentation" {...part('divider', styles.divider)} />}
-            {child}
-          </Fragment>
-        ))}
+        {/* Divided lists draw their lines with borders, so the list holds only list items */}
+        {items}
       </ul>
     </SizeCtx.Provider>
   );

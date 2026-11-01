@@ -23,7 +23,8 @@
   border: 0;
   border-radius: var(--halo-radius-10);
   background: transparent;
-  color: var(--halo-text-secondary);
+  /* text/contrast, not text/secondary: secondary grey is too faint on the grey track */
+  color: var(--halo-text-contrast);
   font-family: var(--halo-font-family-label);
   font-size: var(--text-size);
   line-height: var(--text-height);

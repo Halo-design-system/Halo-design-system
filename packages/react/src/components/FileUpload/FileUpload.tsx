@@ -114,6 +114,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(function F
         take(e.dataTransfer.files);
       }}
       {...rest}
+      data-disabled={disabled || undefined}
       {...part('root', [styles.drop, over && styles.over, !!error && styles.error, disabled && styles.disabled, className], rest.style)}
     >
       <span {...part('icon', styles.iconWrap)} aria-hidden="true">

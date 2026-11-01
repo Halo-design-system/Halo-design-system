@@ -24,7 +24,8 @@
   padding: 0 var(--halo-spacing-7);
   border-bottom: 1px solid var(--halo-border-secondary);
   background: var(--halo-surface-minimal);
-  color: var(--halo-text-secondary);
+  /* text/contrast, not text/secondary: secondary grey is too faint on the grey header */
+  color: var(--halo-text-contrast);
   font-family: var(--halo-font-family-label);
   font-size: var(--halo-font-size-sm);
   font-weight: var(--halo-font-weight-semibold);
@@ -49,6 +50,7 @@
 }
 .right .sort { flex-direction: row-reverse; }
 .sort:hover, .sorted { color: var(--halo-text-primary); }
+.scroll:focus-visible { outline: 2px solid var(--halo-border-focus); outline-offset: -2px; }
 .sort:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--halo-surface-minimal), 0 0 0 4px var(--halo-border-focus); }
 .sortIcon { width: 16px; height: 16px; color: var(--halo-icon-disabled); }
 .sorted .sortIcon { color: var(--halo-icon-primary); }

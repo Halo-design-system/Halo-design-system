@@ -15,7 +15,8 @@
   background: var(--halo-surface-primary);
   box-shadow: inset 0 0 0 1px var(--halo-border-secondary);
 }
-.divider { height: 1px; background: var(--halo-border-secondary); }
+/* The line sits in the middle of the gap between items, as the divider row in Figma does */
+.divided > .item + .item { padding-top: var(--halo-spacing-1); border-top: 1px solid var(--halo-border-secondary); }
 
 .item { display: block; }
 

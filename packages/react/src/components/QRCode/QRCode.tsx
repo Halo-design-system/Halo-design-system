@@ -86,12 +86,19 @@ export const QRCode = forwardRef<HTMLDivElement, QRCodeProps>(function QRCode(
     <div
       ref={ref}
       {...part('root', [styles.qr, status !== 'active' && styles.covered, className], { width: size, height: size, ...colours, ...style })}
-      role="img"
-      aria-label={status === 'expired' ? `${label}. ${text.expired}.` : status === 'scanned' ? `${label}. ${text.scanned}. ${text.scannedHint}.` : label}
       aria-busy={status === 'loading' || undefined}
       {...rest}
     >
-      <svg {...part('code', styles.code)} viewBox={`0 0 ${path.count} ${path.count}`} width={size} height={size} shapeRendering="crispEdges" aria-hidden="true">
+      {/* The code is the image; buttons over it, like Refresh, stay outside the image so they can be reached */}
+      <svg
+        {...part('code', styles.code)}
+        viewBox={`0 0 ${path.count} ${path.count}`}
+        width={size}
+        height={size}
+        shapeRendering="crispEdges"
+        role="img"
+        aria-label={status === 'expired' ? `${label}. ${text.expired}.` : status === 'scanned' ? `${label}. ${text.scanned}. ${text.scannedHint}.` : label}
+      >
         <rect width={path.count} height={path.count} className={styles.light} />
         <path d={path.d} className={styles.dark} />
       </svg>

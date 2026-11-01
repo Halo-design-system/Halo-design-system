@@ -59,6 +59,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
 
   return (
     <label
+      data-disabled={disabled || undefined}
       {...part('root', [styles.field, styles[size], disabled && styles.disabled, className])}
       htmlFor={inputId}
     >

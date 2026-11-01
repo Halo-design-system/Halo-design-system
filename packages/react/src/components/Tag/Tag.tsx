@@ -42,6 +42,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag(
   return (
     <span
       ref={ref}
+      data-disabled={disabled || undefined}
       {...part('root', [styles.tag, styles[size], color !== 'neutral' && (preset ? styles[color] : styles.custom), disabled && styles.disabled, className], custom ? { ...custom, ...style } : style)}
       {...rest}
     >

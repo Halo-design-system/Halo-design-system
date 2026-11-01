@@ -17,6 +17,13 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 - **PasswordInput** shows dots as its placeholder by default, so an empty password field never looks blank. Pass `placeholder` to change it.
 - **ColorInput** and **ColorField** take a `placeholder`, shown while the hex box is empty.
 - Every text field in the examples, blocks and Storybook now has a placeholder with an example answer.
+- **Accessibility**: automatic checks now open every Storybook story in light and dark mode and run axe on it. They found, and these fixes cover:
+  - **Segmented control**, **Table** headers and the **Event calendar**'s days from other months use `text/contrast` instead of `text/secondary`, which was too faint on grey.
+  - **Radio group** is announced as a required radio group; **Rich text editor** takes its field label as its name; **Tree select** is read as its label and value, like "Team, Design".
+  - **QR code**: the code is the image, so a Refresh button over it can be reached. **List** (divided) draws its lines with borders, so it holds only list items; spacing is unchanged.
+  - **Color swatches** in a group say only "selected", not also "pressed". A **Table** that scrolls can be focused and scrolled with the keyboard.
+  - **Event calendar** events and day headers are read starting with what they show, and each week's events sit in their own grid cell.
+  - Disabled **Switch**, **Checkbox**, **Tag** and **File upload** carry `data-disabled`, for styling and for tools that check contrast.
 - **Table**: the rows-per-page picker no longer shows up empty when the table uses a page size other than 10, 25 or 50.
 
 ## 0.3.1
