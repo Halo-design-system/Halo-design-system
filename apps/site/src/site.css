@@ -1248,15 +1248,6 @@ main {
   box-shadow: inset 0 0 0 1px var(--halo-border-secondary);
 }
 
-/* A coloured line on top says which is which; the heading and icon say it too */
-.dodont-do {
-  box-shadow: inset 0 3px 0 var(--halo-state-success-primary), inset 0 0 0 1px var(--halo-border-secondary);
-}
-
-.dodont-dont {
-  box-shadow: inset 0 3px 0 var(--halo-state-error-primary), inset 0 0 0 1px var(--halo-border-secondary);
-}
-
 .dodont-card h4,
 .compare-card h4 {
   display: flex;
@@ -1266,12 +1257,23 @@ main {
   font-weight: var(--halo-font-weight-semibold);
 }
 
+/* The heading says which is which; a small soft circle behind its icon backs it up */
+.dodont-card h4 svg {
+  box-sizing: content-box;
+  width: 14px;
+  height: 14px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
 .dodont-do h4 svg {
-  color: var(--halo-state-success-primary);
+  background: var(--halo-state-success-secondary);
+  color: var(--halo-state-success-contrast);
 }
 
 .dodont-dont h4 svg {
-  color: var(--halo-state-error-primary);
+  background: var(--halo-state-error-secondary);
+  color: var(--halo-state-error-contrast);
 }
 
 .dodont-card ul,
