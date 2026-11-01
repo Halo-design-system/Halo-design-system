@@ -6,6 +6,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Figma plugin** in `packages/figma-plugin`: every Halo component, grouped like the website, with search. Click one to place it on the canvas, or inside the selected frame. Works in the Halo file, in a copy from the Community, and in any file that uses a published copy (choose **Use this file** in the copy once). Not on the Figma Community yet.
 - **Claude Code plugin** is now called `halo-ds` and lives in its own repository, so it can be listed in Claude's plugin directory. Install it with `/plugin marketplace add Halo-design-system/halo-claude-plugin`, then `/plugin install halo-ds@halo-design-system`. It is copied there from `plugins/halo-ds` in this repository on every release.
 
 ## 0.4.0

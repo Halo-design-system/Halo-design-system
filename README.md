@@ -17,6 +17,7 @@ An open-source design system for designers and developers: a Figma library and a
 | --- | --- |
 | [`@halo-ds/tokens`](packages/tokens) | Design tokens as CSS variables (light + dark), JSON and JS, generated from Figma |
 | [`@halo-ds/react`](packages/react) | React components |
+| [`figma-plugin`](packages/figma-plugin) | Figma plugin: search every component and place it on the canvas |
 | [`docs`](apps/docs) | Storybook: live documentation and component playground |
 
 ## Using Halo
