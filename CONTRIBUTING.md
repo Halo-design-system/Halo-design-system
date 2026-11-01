@@ -89,5 +89,5 @@ Each release:
    pnpm swaps the internal `workspace:*` link for the real version number, so `@halo-ds/react` depends on the matching `@halo-ds/tokens`.
 
 5. Tag the release in git: `git tag v0.1.0 && git push --tags`.
-6. Update the MCP Registry listing, from the repository root: `mcp-publisher login github`, then `mcp-publisher publish`. It reads `server.json`; the `mcpName` in `packages/cli/package.json` must match its `name`.
+6. The MCP Registry listing updates by itself: pushing the version tag runs the **Publish to the MCP Registry** workflow, which reads `server.json` and signs in through GitHub. Run it from the Actions tab if the tag went out before npm finished. The `mcpName` in `packages/cli/package.json` must match the `name` in `server.json`.
 
