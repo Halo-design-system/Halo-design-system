@@ -442,11 +442,11 @@ function Ai() {
         </p>
         <p><strong>Claude Code:</strong> install the Halo plugin. It adds the MCP server and the skills together. Open Claude Code in your project folder, then run these one at a time.</p>
         <p>1. Add Halo to your list of plugin sources:</p>
-        <CodeBlock code="/plugin marketplace add Halo-design-system/Halo-design-system" label="Copy command" plain />
+        <CodeBlock code="/plugin marketplace add Halo-design-system/halo-claude-plugin" label="Copy command" plain />
         <p>
           2. Install the plugin. Claude Code asks where: <strong>Install for you</strong> turns Halo on in every project you open, and <strong>in this repo only</strong> keeps it to this project, which is the better choice for trying it out.
         </p>
-        <CodeBlock code="/plugin install halo@halo-design-system" label="Copy command" plain />
+        <CodeBlock code="/plugin install halo-ds@halo-design-system" label="Copy command" plain />
         <p>3. Restart Claude Code so it loads the plugin: type <code>/exit</code>, then open it again in the same folder.</p>
         <p>
           4. Check it works: ask it to build a page with Halo. Before writing code it should use the <code>build-ui</code> skill and call <code>get_component</code>. To remove Halo later, open <code>/plugin</code> and go to Installed.

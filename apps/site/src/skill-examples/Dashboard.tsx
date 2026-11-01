@@ -1,4 +1,4 @@
-// The worked example in plugins/halo/skills/build-ui/examples. Edit it here: the website's typecheck
+// The worked example in plugins/halo-ds/skills/build-ui/examples. Edit it here: the website's typecheck
 // keeps every component and prop real, and the halo-ds build copies it into the skill.
 import { Avatar, BarChart, Badge, Button, Card, DataTable, Statistic, Text } from '@halo-ds/react';
 import type { DataTableColumn } from '@halo-ds/react';

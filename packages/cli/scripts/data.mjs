@@ -112,7 +112,7 @@ function readTokens() {
 
 // ---------- Skills ----------
 
-const plugin = join(root, 'plugins/halo');
+const plugin = join(root, 'plugins/halo-ds');
 
 // The worked examples in the build-ui skill are copied from typechecked code on the website,
 // so every component and prop in them is real

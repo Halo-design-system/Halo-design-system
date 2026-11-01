@@ -24,8 +24,8 @@ The package's source is public: [packages/cli](https://github.com/Halo-design-sy
 ## Install
 
 ```
-/plugin marketplace add Halo-design-system/Halo-design-system
-/plugin install halo@halo-design-system
+/plugin marketplace add Halo-design-system/halo-claude-plugin
+/plugin install halo-ds@halo-design-system
 ```
 
 Restart Claude Code after installing so the plugin loads. Docs: https://halo-design-system.github.io/Halo-design-system/docs/ai

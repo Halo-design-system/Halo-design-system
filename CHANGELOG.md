@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Claude Code plugin** is now called `halo-ds` and lives in its own repository, so it can be listed in Claude's plugin directory. Install it with `/plugin marketplace add Halo-design-system/halo-claude-plugin`, then `/plugin install halo-ds@halo-design-system`. It is copied there from `plugins/halo-ds` in this repository on every release.
+
 ## 0.4.0
 
 ### New
