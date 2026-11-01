@@ -243,9 +243,9 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <h1>One design system for Figma and React.</h1>
+        <h1>The design system built for AI-assisted frontend.</h1>
         <p className="lede">
-          Halo gives designers a Figma library and developers React components built from the same tokens. Start with sixty components, light and dark mode, and seven example apps.
+          Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.
         </p>
         <div className="hero-actions">
           <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Get started</Button>
