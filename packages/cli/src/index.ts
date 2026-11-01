@@ -1,13 +1,13 @@
 // npx halo-ds: set up Halo in a React app, make it your brand, and read the docs in the terminal.
 import { spawnSync } from 'node:child_process';
-import { existsSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { parseArgs } from 'node:util';
 import { all, groups } from '../../../apps/site/src/catalog';
 import { guides } from '../../../apps/site/src/guide';
 import { brandVariables, parseHex, themeCss, toHex } from './colour';
-import { runMcp } from './mcp';
+import { blocks, findBlock, runMcp } from './mcp';
 import { writeAgents, writeSkills } from './skills';
 import { addImport, installCommand, readProject, rel, setTheme } from './project';
 import type { Project } from './project';
@@ -42,6 +42,8 @@ ${bold('Usage')}
 ${bold('Commands')}
   init                 Install Halo in this app, pick light, dark or system mode, and a brand colour
   theme <colour>       Make Halo your brand colour, for example: theme "#2F6BFF"
+  add <block>          Add a ready-made page section, like sign-in or dashboard, to src/blocks
+                       Leave the name out to list every block
   docs [component]     When to use a component, how to import it, and its do's and don'ts
                        Leave the name out to list every component
   skills               Add Halo's AI skills to this project: .claude/skills for Claude Code,
@@ -54,7 +56,8 @@ ${bold('Options')}
   -c, --cwd <path>     The app's folder (defaults to the current folder)
       --theme <mode>   init: light, dark or system
       --brand <colour> init: a brand colour, like "#2F6BFF"
-      --skip-install   init: don't install the package
+      --skip-install   init and add: don't install packages
+      --overwrite      add: replace a block file that is already there
       --print          theme: print the CSS instead of writing a file
       --skip-agents    skills: don't add Halo's rules to AGENTS.md
   -h, --help           Show this help
@@ -196,6 +199,52 @@ function docs(name: string | undefined) {
   say(`Props:             ${SITE}/storybook/?path=/docs/${e.storybook}`);
 }
 
+// ---------- add ----------
+
+function listBlocks() {
+  for (const c of [...new Set(blocks.map((b) => b.category))]) {
+    say(bold(c));
+    for (const b of blocks.filter((x) => x.category === c)) say(`  ${b.slug.padEnd(20)}${dim(b.description)}`);
+    say();
+  }
+  say(`Add one: ${bold('npx halo-ds add sign-in')}\nSee them: ${SITE}/blocks`);
+}
+
+function add(name: string | undefined, cwd: string, opts: { skipInstall: boolean; overwrite: boolean }) {
+  if (!name) return listBlocks();
+  const block = findBlock(name);
+  if (!block) fail(`No block called "${name}". See them all with: npx halo-ds add`);
+  const b = block!;
+  const p = needProject(cwd);
+
+  // Blocks go next to the app's code: src/blocks, or blocks when there is no src folder
+  const dir = join(cwd, existsSync(join(cwd, 'src')) ? 'src' : '', 'blocks');
+  const file = join(dir, `${b.name}.tsx`);
+  if (existsSync(file) && !opts.overwrite) fail(`${rel(p, file)} is already there. Rename it, or replace it with: npx halo-ds add ${b.slug} --overwrite`);
+  mkdirSync(dir, { recursive: true });
+  // Blocks use state and click handlers, so in Next.js they are client components
+  const code = p.framework === 'next' ? `'use client';\n\n${b.code}\n` : `${b.code}\n`;
+  writeFileSync(file, code);
+  done(`Added the ${b.title} block to ${bold(rel(p, file))}`);
+
+  // The block needs Halo, and Phosphor for its icons
+  const needed = ['@halo-ds/react', '@phosphor-icons/react'].filter((d) => b.code.includes(`'${d}'`) && !p.deps[d]);
+  if (needed.length) {
+    const install = installCommand(p.manager, needed.join(' '));
+    if (opts.skipInstall) note(`It needs ${needed.join(' and ')}. Run: ${install}`);
+    else {
+      say(dim(`$ ${install}`));
+      const [cmd, ...args] = install.split(' ');
+      const run = spawnSync(cmd!, args, { cwd, stdio: 'inherit', shell: process.platform === 'win32' });
+      if (run.status !== 0) fail(`Installing didn't work. Run it yourself: ${install}`);
+      done(`Installed ${needed.join(' and ')}`);
+    }
+  }
+
+  const where = existsSync(join(cwd, 'src')) ? 'a file in src' : 'a file at the top of your app';
+  say(`\nUse it in a page (from ${where}):\n\n  ${magenta(`import ${b.name} from './blocks/${b.name}';`)}\n\nThen change the words, data and handlers to fit your app.`);
+}
+
 // ---------- skills ----------
 
 function skillsCommand(cwd: string, skipAgents: boolean) {
@@ -224,6 +273,7 @@ async function main() {
         'skip-install': { type: 'boolean' },
         print: { type: 'boolean' },
         'skip-agents': { type: 'boolean' },
+        overwrite: { type: 'boolean' },
         help: { type: 'boolean', short: 'h' },
         version: { type: 'boolean', short: 'v' },
       },
@@ -240,6 +290,7 @@ async function main() {
   if (command === 'init') return init(cwd, { yes: Boolean(v.yes), theme: v.theme, brand: v.brand, skipInstall: Boolean(v['skip-install']) });
   if (command === 'theme') return theme(arg, cwd, Boolean(v.print));
   if (command === 'docs') return docs(arg);
+  if (command === 'add') return add(arg, cwd, { skipInstall: Boolean(v['skip-install']), overwrite: Boolean(v.overwrite) });
   if (command === 'mcp') return runMcp();
   if (command === 'skills') return skillsCommand(cwd, Boolean(v['skip-agents']));
   fail(`Unknown command "${command}".\n\n${help}`);

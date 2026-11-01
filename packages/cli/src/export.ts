@@ -4,7 +4,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { all, groups } from '../../../apps/site/src/catalog';
-import { RULES, getComponent, getTokens, skills } from './mcp';
+import { RULES, blocks, getBlock, getComponent, getTokens, skills } from './mcp';
 
 const SITE = 'https://halo-design-system.github.io/Halo-design-system';
 const out = resolve(process.argv[2] ?? 'dist');
@@ -19,6 +19,9 @@ const intro = `Halo is an open-source design system: React components (\`@halo-d
 
 // One Markdown page per component, next to its web page: /components/badge -> /components/badge.md
 for (const e of all) write(`components/${e.slug}.md`, getComponent(e.slug, true));
+
+// Each block as Markdown, next to its web page: /blocks/sign-in -> /blocks/sign-in.md
+for (const b of blocks) write(`blocks/${b.slug}.md`, getBlock(b.slug));
 
 write('llms/rules.md', RULES);
 write('llms/tokens.md', `# Halo design tokens\n\n${getTokens()}`);
@@ -43,6 +46,12 @@ Before building UI with Halo, read the setup and rules. Look up each component's
 ${groups
   .map((g) => `## ${g.name}\n\n${g.items.map((e) => `- [${e.name}](${SITE}/components/${e.slug}.md): ${e.description}`).join('\n')}`)
   .join('\n\n')}
+
+## Blocks
+
+Whole page sections built from Halo components. Start a screen from one of these.
+
+${blocks.map((b) => `- [${b.title}](${SITE}/blocks/${b.slug}.md): ${b.description}`).join('\n')}
 
 ## Skills
 
@@ -76,4 +85,4 @@ ${getTokens()}
 `,
 );
 
-console.log(`AI docs: llms.txt, llms-full.txt and ${all.length} component pages in ${out}`);
+console.log(`AI docs: llms.txt, llms-full.txt, ${all.length} component pages and ${blocks.length} blocks in ${out}`);

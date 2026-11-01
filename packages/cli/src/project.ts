@@ -10,6 +10,8 @@ export interface Project {
   framework: Framework;
   manager: Manager;
   hasHalo: boolean;
+  /** Everything in dependencies and devDependencies. */
+  deps: Record<string, string>;
   /** The file that sets the html element: app/layout.tsx in Next.js, index.html in Vite. */
   htmlFile: string | null;
   /** Where the theme file is imported: the root layout in Next.js, src/main.tsx in Vite. */
@@ -36,7 +38,7 @@ export function readProject(dir: string): Project | null {
   const htmlFile = framework === 'next' ? layout : first(dir, ['index.html']);
   const entryFile = framework === 'next' ? layout : first(dir, ['src/main.tsx', 'src/main.jsx', 'src/index.tsx', 'src/index.jsx']);
 
-  return { dir, framework, manager, hasHalo: Boolean(deps['@halo-ds/react']), htmlFile, entryFile };
+  return { dir, framework, manager, hasHalo: Boolean(deps['@halo-ds/react']), deps, htmlFile, entryFile };
 }
 
 export const installCommand = (m: Manager, pkg: string) => (m === 'npm' ? `npm install ${pkg}` : `${m} add ${pkg}`);

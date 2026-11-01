@@ -76,6 +76,29 @@ function readExamples() {
   return out;
 }
 
+// ---------- Blocks ----------
+
+/** Ready-made page sections from the website, each a typechecked file: title, category, description, then the code. */
+function readBlocks() {
+  const dir = join(site, 'blocks');
+  return readdirSync(dir)
+    .sort()
+    .map((f) => {
+      const raw = readFileSync(join(dir, f), 'utf8');
+      const head = raw.match(/^\/\*\*([\s\S]*?)\*\/\r?\n/);
+      const lines = (head?.[1] ?? '').split('\n').map((l) => l.replace(/^\s*\* ?/, '').trim()).filter(Boolean);
+      const code = raw.slice(head?.[0].length ?? 0).trim();
+      return {
+        slug: f.replace(/^\d+-|\.tsx$/g, ''),
+        name: code.match(/export default function (\w+)/)?.[1] ?? 'Block',
+        title: lines[0] ?? '',
+        category: lines[1] ?? '',
+        description: lines.slice(2).join(' '),
+        code,
+      };
+    });
+}
+
 // ---------- Tokens ----------
 
 function readTokens() {
@@ -122,8 +145,8 @@ function readSkills() {
 }
 
 writeWorkedExamples();
-const data = { props: readProps(), examples: readExamples(), tokens: readTokens(), skills: readSkills() };
+const data = { props: readProps(), examples: readExamples(), blocks: readBlocks(), tokens: readTokens(), skills: readSkills() };
 const outDir = join(dirname(fileURLToPath(import.meta.url)), '../src/generated');
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'data.json'), JSON.stringify(data));
-console.log(`data: props for ${Object.keys(data.props).length} components, examples for ${Object.keys(data.examples).length}, ${data.tokens.length} tokens, ${Object.keys(data.skills).length} skill files`);
+console.log(`data: props for ${Object.keys(data.props).length} components, examples for ${Object.keys(data.examples).length}, ${data.blocks.length} blocks, ${data.tokens.length} tokens, ${Object.keys(data.skills).length} skill files`);

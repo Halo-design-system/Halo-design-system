@@ -263,6 +263,8 @@ export function TableFooter({
   const from = total === 0 ? 0 : (page - 1) * rowsPerPage + 1;
   const to = Math.min(page * rowsPerPage, total ?? page * rowsPerPage);
   const part = useContext(PartCtx);
+  // Keep the current page size in the picker, even when it isn't one of the usual choices
+  const sizes = rowsPerPageOptions.includes(rowsPerPage) ? rowsPerPageOptions : [...rowsPerPageOptions, rowsPerPage].sort((x, y) => x - y);
   return (
     <div {...rest} {...part('footer', [styles.footer, className], rest.style)}>
       {onRowsPerPageChange && (
@@ -273,7 +275,7 @@ export function TableFooter({
             size="sm"
             className={styles.rowsSelect}
             value={String(rowsPerPage)}
-            options={rowsPerPageOptions.map((n) => ({ value: String(n), label: String(n) }))}
+            options={sizes.map((n) => ({ value: String(n), label: String(n) }))}
             onValueChange={(v) => onRowsPerPageChange(Number(v))}
           />
         </div>

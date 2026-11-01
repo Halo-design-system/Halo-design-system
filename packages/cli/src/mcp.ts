@@ -16,12 +16,14 @@ interface Prop { name: string; type: string; required: boolean; description: str
 interface Data {
   props: Record<string, Prop[]>;
   examples: Record<string, { title: string; description: string; code: string }[]>;
+  blocks: Block[];
   tokens: { name: string; cssVar: string; group: string; values: Record<string, string | number> }[];
   skills: Record<string, string>;
 }
+export interface Block { slug: string; name: string; title: string; category: string; description: string; code: string }
 // The JSON is made by scripts/data.mjs at build time; this is its shape
-const { props, examples, tokens, skills } = data as unknown as Data;
-export { skills };
+const { props, examples, blocks, tokens, skills } = data as unknown as Data;
+export { blocks, skills };
 
 const shared: Record<string, string> = { 'event-calendar': 'calendar', 'tree-select': 'tree' };
 const guideFor = (slug: string) => guides[slug] ?? guides[shared[slug] ?? ''];
@@ -138,6 +140,24 @@ export function getSkill(file?: string) {
 
 // ---------- Tools ----------
 
+export function listBlocks() {
+  const cats = [...new Set(blocks.map((b) => b.category))];
+  return cats
+    .map((c) => `## ${c}\n${blocks.filter((b) => b.category === c).map((b) => `- **${b.title}** (\`${b.slug}\`): ${b.description}`).join('\n')}`)
+    .join('\n\n') + '\n\nGet one with the get_block tool, or add it to a project with `npx halo-ds add <name>`.';
+}
+
+export function findBlock(name: string) {
+  const q = name.toLowerCase().trim().replace(/\s+/g, '-');
+  return blocks.find((b) => b.slug === q || b.title.toLowerCase() === name.toLowerCase().trim()) ?? blocks.find((b) => b.slug.includes(q));
+}
+
+export function getBlock(name: string) {
+  const b = findBlock(name);
+  if (!b) return `No block called "${name}".\n\n${listBlocks()}`;
+  return `# ${b.title} block\n\n${b.description}\n\nA whole page section built from Halo components. Start from it, then change the words, data and handlers to fit the product. Keep its structure: one primary button, tokens for spacing and type, Field components in forms.\n\nAdd it to a project: \`npx halo-ds add ${b.slug}\` (saves src/blocks/${b.name}.tsx). Preview: ${SITE}/blocks/${b.slug}\n\n\`\`\`tsx\n${b.code}\n\`\`\``;
+}
+
 const tools = [
   {
     name: 'get_setup_and_rules',
@@ -171,6 +191,18 @@ const tools = [
     run: (a: Record<string, unknown>) => getComponent(String(a.name ?? ''), a.examples !== false),
   },
   {
+    name: 'list_blocks',
+    description: 'Ready-made page sections built from Halo components, like sign in, a dashboard, a settings page or pricing. Start a screen from one of these instead of from scratch.',
+    inputSchema: { type: 'object', properties: {} },
+    run: () => listBlocks(),
+  },
+  {
+    name: 'get_block',
+    description: 'The full, working code of one Halo block, like "sign-in", "dashboard" or "settings", to start a screen from.',
+    inputSchema: { type: 'object', properties: { name: { type: 'string', description: 'The block, like "sign-in" or "Customers table"' } }, required: ['name'] },
+    run: (a: Record<string, unknown>) => getBlock(String(a.name ?? '')),
+  },
+  {
     name: 'get_skill',
     description: "Halo's skill files: how to build, review, theme and migrate UI with Halo, with topic guides (components, design, layout, copy, accessibility, a review checklist) and worked examples. Call with no file to list them.",
     inputSchema: { type: 'object', properties: { file: { type: 'string', description: 'A path or name from the list, like "skills/build-ui/SKILL.md" or "design"' } } },
@@ -202,7 +234,7 @@ function handle(msg: Message) {
         protocolVersion: VERSIONS.includes(asked) ? asked : VERSIONS[0],
         capabilities: { tools: {} },
         serverInfo: { name: 'halo', title: 'Halo design system', version: __VERSION__ },
-        instructions: 'Halo is a React design system (@halo-ds/react). Before building UI with it, call get_setup_and_rules. Use find_component to pick components and get_component for props and examples; never guess prop names.',
+        instructions: 'Halo is a React design system (@halo-ds/react). Before building UI with it, call get_setup_and_rules. For a whole screen, check list_blocks for a block to start from. Use find_component to pick components and get_component for props and examples; never guess prop names.',
       });
     }
     case 'ping':

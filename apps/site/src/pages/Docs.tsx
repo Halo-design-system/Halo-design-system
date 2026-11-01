@@ -266,6 +266,20 @@ function Cli() {
         />
       </Section>
 
+      <Section id="add" title="add">
+        <p>
+          Adds a <Link to="/blocks">block</Link>, a whole page section like a sign-in screen or a dashboard, to your app as a file in <code>src/blocks</code>. It installs anything the block needs. Leave the name out to list every block.
+        </p>
+        <CodeBlock code={`${x} halo-ds add sign-in`} label="Copy command" />
+        <Options
+          rows={[
+            ['--overwrite', 'Replace the block file if it is already there.'],
+            ['--skip-install', "Don't install packages the block needs; print the command instead."],
+            ['-c, --cwd <path>', "The app's folder, if it isn't the current one."],
+          ]}
+        />
+      </Section>
+
       <Section id="docs" title="docs">
         <p>Shows when to use a component, how to import it, and its do's and don'ts. Leave the name out to list every component.</p>
         <CodeBlock code={`${x} halo-ds docs badge`} label="Copy command" />
@@ -413,6 +427,8 @@ function Ai() {
               <tr><td><code>find_component</code></td><td>The right component for a need, like &quot;confirm before deleting&quot;.</td></tr>
               <tr><td><code>list_components</code></td><td>Every component, grouped, with one line each.</td></tr>
               <tr><td><code>get_component</code></td><td>Import line, every prop, working examples, when to use it, and do&apos;s and don&apos;ts.</td></tr>
+              <tr><td><code>list_blocks</code></td><td>Ready-made page sections, like sign in, a dashboard or pricing, to start a screen from.</td></tr>
+              <tr><td><code>get_block</code></td><td>The full working code of one block.</td></tr>
               <tr><td><code>get_tokens</code></td><td>Colour, spacing and radius variables, with light and dark values.</td></tr>
               <tr><td><code>get_skill</code></td><td>Any of the skill files below, by name.</td></tr>
             </tbody>
@@ -460,7 +476,7 @@ function Ai() {
 
       <Section id="cli" title="Use the CLI">
         <p>
-          Assistants that can run commands can also use the CLI: <code>init</code> to set a project up, <code>theme</code> for a brand colour, and <code>docs</code> to read about a component. The <Link to="/docs/cli">CLI page</Link> lists every command.
+          Assistants that can run commands can also use the CLI: <code>init</code> to set a project up, <code>theme</code> for a brand colour, <code>add</code> to add a block, and <code>docs</code> to read about a component. The <Link to="/docs/cli">CLI page</Link> lists every command.
         </p>
         <CodeBlock code="npx halo-ds docs badge" label="Copy command" />
       </Section>
@@ -479,6 +495,7 @@ function Ai() {
               <tr><td><a href={`${site}/llms.txt`}><code>llms.txt</code></a></td><td>An index of every component, the rules and the skills, with links to each as Markdown.</td></tr>
               <tr><td><a href={`${site}/llms-full.txt`}><code>llms-full.txt</code></a></td><td>The rules, every component and the tokens in one file, for a single read.</td></tr>
               <tr><td><code>/components/&lt;name&gt;.md</code></td><td>Any component as Markdown: add <code>.md</code> to its page address, like <a href={`${site}/components/badge.md`}><code>/components/badge.md</code></a>.</td></tr>
+              <tr><td><code>/blocks/&lt;name&gt;.md</code></td><td>Any block&apos;s code as Markdown, like <a href={`${site}/blocks/sign-in.md`}><code>/blocks/sign-in.md</code></a>.</td></tr>
               <tr><td><a href={`${site}/llms/tokens.md`}><code>llms/tokens.md</code></a></td><td>Every design token, with light and dark values.</td></tr>
             </tbody>
           </table>

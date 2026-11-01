@@ -243,7 +243,6 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <Badge color="neutral" variant="outline" className="hero-badge">Free and open source</Badge>
         <h1>One design system for Figma and React.</h1>
         <p className="lede">
           Halo gives designers a Figma library and developers React components built from the same tokens. Start with sixty components, light and dark mode, and seven example apps.
