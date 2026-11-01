@@ -39,6 +39,7 @@ Read the ones the task needs:
 - The brand colour is for the main action. Charts, stats and decorative tiles stay neutral.
 - Clickable icons are `CompactButton` (or `Button iconOnly`) with an `aria-label`, plus a `Tooltip` with the same words.
 - In forms, use the Field versions (`InputField`, `SelectField`, ...) inside `Form`.
+- Every text field gets a placeholder with an example answer (`John`, `johndoe@example.com`). It never replaces the label. `PasswordInput` shows dots by itself.
 - No drop shadows on cards, panels, dialogs or drawers. Halo uses borders, and its Overlay behind dialogs.
 
 ## Quick decisions

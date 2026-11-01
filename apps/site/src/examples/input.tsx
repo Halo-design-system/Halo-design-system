@@ -6,7 +6,7 @@ export default function Example() {
     <div style={{ display: 'grid', gap: 20, width: 320 }}>
       <InputField label="Email" type="email" placeholder="name@company.com" hint="We send receipts here." />
       <InputField label="Search" placeholder="Search projects" iconLeft={<MagnifyingGlass />} />
-      <InputField label="Username" defaultValue="ada" error="That name is taken." />
+      <InputField label="Username" placeholder="johndoe" defaultValue="ada" error="That name is taken." />
     </div>
   );
 }

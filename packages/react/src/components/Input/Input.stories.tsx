@@ -42,11 +42,11 @@ export const Sizes: Story = {
 export const States: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 20 }}>
-      <InputField label="Full name" required defaultValue="Amara Okafor" />
+      <InputField label="Full name" placeholder="John Doe" required defaultValue="Amara Okafor" />
       <InputField label="Company" optional info="Shown on your invoices." placeholder="Studio" />
-      <InputField label="Username" valid defaultValue="amara.okafor" />
-      <InputField label="Password" error="Use at least 8 characters." defaultValue="abc" />
-      <InputField label="Email" disabled defaultValue="amara@example.com" />
+      <InputField label="Username" placeholder="johndoe" valid defaultValue="amara.okafor" />
+      <InputField label="Password" placeholder="••••••••" error="Use at least 8 characters." defaultValue="abc" />
+      <InputField label="Email" placeholder="johndoe@example.com" disabled defaultValue="amara@example.com" />
     </div>
   ),
 };
@@ -55,9 +55,9 @@ export const States: Story = {
 export const Success: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 20 }}>
-      <InputField label="Username" valid defaultValue="amara.okafor" />
-      <InputField label="Account number" hint="10 digits" valid defaultValue="0123456789" />
-      <Input valid defaultValue="SAVE20" aria-label="Promo code" />
+      <InputField label="Username" placeholder="johndoe" valid defaultValue="amara.okafor" />
+      <InputField label="Account number" placeholder="0000000000" hint="10 digits" valid defaultValue="0123456789" />
+      <Input valid placeholder="Promo code" defaultValue="SAVE20" aria-label="Promo code" />
     </div>
   ),
 };
@@ -68,7 +68,7 @@ export const Affixes: Story = {
     <div style={{ display: 'grid', gap: 20 }}>
       <Input iconLeft={<MagnifyingGlass />} placeholder="Search" aria-label="Search" />
       <InputField label="Website" prefix="https://" placeholder="example.com" />
-      <InputField label="Weight" suffix="kg" defaultValue="72" />
+      <InputField label="Weight" suffix="kg" placeholder="70" defaultValue="72" />
       <PasswordInput label="Password" defaultValue="correct horse" />
     </div>
   ),
@@ -76,7 +76,7 @@ export const Affixes: Story = {
 
 /** A number with minus and plus buttons. */
 export const Number: Story = {
-  render: () => <NumberInput label="Guests" defaultValue={2} min={1} max={10} />,
+  render: () => <NumberInput label="Guests" placeholder="1" defaultValue={2} min={1} max={10} />,
 };
 
 /** One circle per digit. Pasting fills them all. */

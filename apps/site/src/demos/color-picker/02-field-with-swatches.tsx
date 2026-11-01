@@ -7,7 +7,7 @@ import { ColorField } from '@halo-ds/react';
 export default function Demo() {
   return (
     <div style={{ width: 280 }}>
-      <ColorField label="Brand colour" hint="Used for buttons and links." swatches={['#CC1DD0', '#3D7BF7', '#1FA971', '#F2994A']} />
+      <ColorField label="Brand colour" placeholder="#2F6BFF" hint="Used for buttons and links." swatches={['#CC1DD0', '#3D7BF7', '#1FA971', '#F2994A']} />
     </div>
   );
 }

@@ -29,6 +29,7 @@ grep -rnE "<CompactButton|iconOnly" src --include=*.tsx
 - [ ] One primary Button per screen. Premium only for upgrades, never next to a primary.
 - [ ] Spacing uses tokens, and left and right padding are equal.
 - [ ] Every field has a label; every icon-only button has an `aria-label` and a Tooltip.
+- [ ] Every text field has a placeholder with an example answer, like `John` or `johndoe@example.com`.
 - [ ] Headings go in order: one `h1`, then `h2`.
 - [ ] Words follow `copy.md`: verbs on buttons, sentence case, no em dashes.
 - [ ] It works in light and dark mode: switch `data-theme` and look.

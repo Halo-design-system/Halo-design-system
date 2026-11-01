@@ -67,11 +67,11 @@ export default function Settings() {
             </div>
             <FormSection title="About you" description="Shown on your profile and next to your comments.">
               <FormRow>
-                <InputField name="firstName" label="First name" required defaultValue="Ada" />
-                <InputField name="lastName" label="Last name" required defaultValue="Obi" />
+                <InputField name="firstName" label="First name" placeholder="John" required defaultValue="Ada" />
+                <InputField name="lastName" label="Last name" placeholder="Doe" required defaultValue="Obi" />
               </FormRow>
-              <InputField name="role" label="Job title" optional defaultValue="Product designer" />
-              <TextareaField name="bio" label="Bio" optional rows={3} hint="A sentence or two about what you do." />
+              <InputField name="role" label="Job title" placeholder="Product designer" optional defaultValue="Product designer" />
+              <TextareaField name="bio" label="Bio" placeholder="I design tools for small teams." optional rows={3} hint="A sentence or two about what you do." />
             </FormSection>
             <FormActions>
               <Button type="submit">Save profile</Button>
@@ -96,7 +96,7 @@ export default function Settings() {
           <div style={{ display: 'grid', gap: 'var(--halo-spacing-8)' }}>
             <Form onSubmit={saved}>
               <FormSection title="Sign-in and region">
-                <InputField name="email" label="Email" type="email" required defaultValue="ada@example.com" />
+                <InputField name="email" label="Email" type="email" placeholder="johndoe@example.com" required defaultValue="ada@example.com" />
                 <SelectField
                   name="timezone"
                   label="Time zone"

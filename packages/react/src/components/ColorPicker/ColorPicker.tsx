@@ -296,11 +296,13 @@ export interface ColorFieldProps extends Omit<ColorPickerProps, 'id' | 'classNam
   /** Form field name. The text box carries the hex. */
   name?: string;
   required?: boolean;
+  /** Shown while the hex box is empty, like while retyping it. */
+  placeholder?: string;
 }
 
 /** A box showing a colour and its hex. The swatch opens a ColorPicker. Figma: Color field. */
 export const ColorInput = forwardRef<HTMLInputElement, ColorFieldProps>(function ColorInput(
-  { value, defaultValue = '#CC1DD0', onValueChange, size = 'md', disabled, invalid, id, showOpacity, showEyedropper, swatches, defaultFormat, className, classNames, styles: partStyles, name, required, ...aria },
+  { value, defaultValue = '#CC1DD0', onValueChange, size = 'md', disabled, invalid, id, showOpacity, showEyedropper, swatches, defaultFormat, className, classNames, styles: partStyles, name, required, placeholder = '#000000', ...aria },
   ref,
 ) {
   const part = parts<ColorInputPart>('color-input', { classNames, styles: partStyles });
@@ -340,6 +342,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorFieldProps>(function
           aria-required={required || undefined}
           {...part('input', inputStyles.input)}
           value={text}
+          placeholder={placeholder}
           disabled={disabled}
           spellCheck={false}
           aria-label={aria['aria-label']}

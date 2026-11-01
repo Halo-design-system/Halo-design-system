@@ -7,7 +7,7 @@ This project builds its UI with Halo (`@halo-ds/react`). Halo is newer than most
 - Use `var(--halo-...)` tokens for colour, spacing and radius. Never hard-code colours. No drop shadows on cards, panels or dialogs.
 - One primary Button per screen. Secondary for the alternative, Destructive for deleting. Premium only for upgrades, never next to a primary.
 - Icon-only buttons are `CompactButton` or `Button iconOnly`, with an `aria-label` and a `Tooltip`.
-- Forms use the Field versions (`InputField`, `SelectField`, ...) inside `Form`. Headings are plain `h1`/`h2`; `Text` is for body copy.
+- Forms use the Field versions (`InputField`, `SelectField`, ...) inside `Form`. Every text field gets a placeholder with an example answer, like `John` or `johndoe@example.com`; the label still asks the question. Headings are plain `h1`/`h2`; `Text` is for body copy.
 - Words: sentence case, a verb on every button ("Save changes", not "OK"), no em dashes.
 - Halo needs no CSS or font imports. Mode is `data-theme` on the html element: `light`, `dark` or `system`.
 - Before finishing, check light and dark mode and widths from 375 to 1440.

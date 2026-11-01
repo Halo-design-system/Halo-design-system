@@ -53,10 +53,10 @@ export default function AccountSettings() {
       <Form onSubmit={() => { toast({ type: 'success', title: 'Changes saved' }); }}>
         <FormSection title="Profile" description="How other people see you.">
           <FormRow>
-            <InputField name="firstName" label="First name" required defaultValue="Ada" />
-            <InputField name="lastName" label="Last name" required defaultValue="Obi" />
+            <InputField name="firstName" label="First name" placeholder="John" required defaultValue="Ada" />
+            <InputField name="lastName" label="Last name" placeholder="Doe" required defaultValue="Obi" />
           </FormRow>
-          <InputField name="email" label="Email" type="email" required defaultValue="ada@example.com" />
+          <InputField name="email" label="Email" type="email" placeholder="johndoe@example.com" required defaultValue="ada@example.com" />
         </FormSection>
 
         <FormSection title="Notifications">

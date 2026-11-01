@@ -93,7 +93,7 @@ export const WithContent: Story = {
             </>
           }
         >
-          <InputField label="Name" defaultValue="Quarterly report" data-autofocus />
+          <InputField label="Name" placeholder="Untitled report" defaultValue="Quarterly report" data-autofocus />
         </Modal>
       </>
     );

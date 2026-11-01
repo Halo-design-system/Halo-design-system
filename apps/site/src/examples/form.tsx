@@ -8,8 +8,8 @@ export default function Example() {
       <Form onSubmit={(values) => setSaved(`Saved ${values.firstName}`)}>
         <FormSection title="Your details" description="Submit it empty to see the checks.">
           <FormRow>
-            <InputField name="firstName" label="First name" required />
-            <InputField name="lastName" label="Last name" required />
+            <InputField name="firstName" label="First name" placeholder="John" required />
+            <InputField name="lastName" label="Last name" placeholder="Doe" required />
           </FormRow>
           <SelectField
             name="team"

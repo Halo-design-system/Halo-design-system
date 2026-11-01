@@ -52,7 +52,7 @@ export default function SignIn() {
         <Divider label="or" />
 
         <form onSubmit={signIn} style={{ display: 'grid', gap: 'var(--halo-spacing-6)' }}>
-          <InputField label="Email" name="email" type="email" autoComplete="email" required />
+          <InputField label="Email" name="email" type="email" autoComplete="email" placeholder="johndoe@example.com" required />
           <PasswordInput label="Password" name="password" required />
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--halo-spacing-4)' }}>
             <Checkbox size="sm" name="remember" label="Keep me signed in" />

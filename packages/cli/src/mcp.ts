@@ -46,6 +46,7 @@ export const RULES = `# Using Halo
 - Premium buttons are only for upgrades and paid features: at most one per screen, never next to a primary Button.
 - Clickable icons are CompactButton (or Button with iconOnly), never a bare icon, and always need an aria-label. Add a Tooltip with the same words.
 - In forms, use the Field versions (InputField, SelectField, TextareaField, ...) so labels, hints and errors are built in. Wrap them in Form to check required fields.
+- Every text field gets a placeholder with an example answer, like "John" or "johndoe@example.com". The label still asks the question; the placeholder never replaces it. PasswordInput shows dots by itself.
 - Purple is for the main action only. Keep charts, stats and decorative tiles neutral.
 - No drop shadows on panels, cards, dialogs or drawers; Halo uses borders and an Overlay instead.
 - To restyle a part inside a component, use its \`classNames\` and \`styles\` props, or target \`[data-halo="..."] [data-part="..."]\` in CSS.

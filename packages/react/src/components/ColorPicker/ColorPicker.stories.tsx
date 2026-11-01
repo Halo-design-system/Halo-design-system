@@ -40,7 +40,7 @@ export const Playground: Story = {
 export const Field: Story = {
   render: () => (
     <div style={{ maxWidth: 240, minHeight: 420 }}>
-      <ColorField label="Brand colour" hint="Used for buttons and links." swatches={swatches} />
+      <ColorField label="Brand colour" placeholder="#2F6BFF" hint="Used for buttons and links." swatches={swatches} />
     </div>
   ),
 };

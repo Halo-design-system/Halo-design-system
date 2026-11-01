@@ -10,7 +10,7 @@ export default function Demo() {
     <div className="demo-stack" style={{ width: 320 }}>
       <Input iconLeft={<MagnifyingGlass />} placeholder="Search" aria-label="Search" />
       <InputField label="Website" prefix="https://" placeholder="example.com" />
-      <InputField label="Weight" suffix="kg" defaultValue="72" />
+      <InputField label="Weight" suffix="kg" placeholder="70" defaultValue="72" />
     </div>
   );
 }

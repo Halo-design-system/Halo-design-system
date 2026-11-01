@@ -14,6 +14,9 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ### Fixed
 
+- **PasswordInput** shows dots as its placeholder by default, so an empty password field never looks blank. Pass `placeholder` to change it.
+- **ColorInput** and **ColorField** take a `placeholder`, shown while the hex box is empty.
+- Every text field in the examples, blocks and Storybook now has a placeholder with an example answer.
 - **Table**: the rows-per-page picker no longer shows up empty when the table uses a page size other than 10, 25 or 50.
 
 ## 0.3.1

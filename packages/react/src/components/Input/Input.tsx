@@ -74,6 +74,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(fu
     <InputField
       ref={ref}
       autoComplete="current-password"
+      // Dots show it's a password field even before anyone types; pass your own to change it
+      placeholder="••••••••"
       {...props}
       type={shown ? 'text' : 'password'}
       iconRight={

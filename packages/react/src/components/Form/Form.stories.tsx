@@ -52,10 +52,10 @@ export const Playground: Story = {
         >
           <FormSection title="Personal details" description="We use these on your invoices.">
             <FormRow>
-              <InputField name="firstName" label="First name" required />
-              <InputField name="lastName" label="Last name" required />
+              <InputField name="firstName" label="First name" placeholder="John" required />
+              <InputField name="lastName" label="Last name" placeholder="Doe" required />
             </FormRow>
-            <InputField name="email" label="Email" type="email" required hint="We send receipts here." />
+            <InputField name="email" label="Email" type="email" placeholder="johndoe@example.com" required hint="We send receipts here." />
           </FormSection>
           <FormSection title="Work">
             <SelectField name="team" label="Team" options={roles} required placeholder="Choose a team" />
@@ -78,8 +78,8 @@ export const Horizontal: Story = {
   render: () => (
     <div style={{ maxWidth: 720 }}>
       <Form layout="horizontal" labelWidth={180} onSubmit={() => {}}>
-        <InputField name="workspace" label="Workspace name" required defaultValue="Northwind" />
-        <InputField name="url" label="Workspace URL" hint="Letters, numbers and dashes." defaultValue="northwind" />
+        <InputField name="workspace" label="Workspace name" placeholder="Acme Inc." required defaultValue="Northwind" />
+        <InputField name="url" label="Workspace URL" placeholder="acme" hint="Letters, numbers and dashes." defaultValue="northwind" />
         <SelectField name="region" label="Data region" options={[{ value: 'eu', label: 'Europe' }, { value: 'us', label: 'United States' }]} defaultValue="eu" />
         <FormActions>
           <Button type="submit">Save changes</Button>

@@ -53,10 +53,10 @@ export default function SignUp() {
 
         <form onSubmit={signUp} style={{ display: 'grid', gap: 'var(--halo-spacing-6)' }}>
           <FormRow>
-            <InputField label="First name" name="firstName" autoComplete="given-name" required />
-            <InputField label="Last name" name="lastName" autoComplete="family-name" required />
+            <InputField label="First name" name="firstName" autoComplete="given-name" placeholder="John" required />
+            <InputField label="Last name" name="lastName" autoComplete="family-name" placeholder="Doe" required />
           </FormRow>
-          <InputField label="Work email" name="email" type="email" autoComplete="email" required />
+          <InputField label="Work email" name="email" type="email" autoComplete="email" placeholder="johndoe@example.com" required />
           <PasswordInput label="Password" name="password" autoComplete="new-password" hint="At least 8 characters, with a number." required />
           <Checkbox
             size="sm"
