@@ -34,6 +34,14 @@ packages/react/src/components/Button/
 
 Then export it from `packages/react/src/index.ts`.
 
+## Automatic checks
+
+Every push and pull request runs the **Checks** workflow on GitHub: it builds everything, checks the types, then opens every Storybook story in light and dark mode to check accessibility (with axe) and compare a screenshot with the approved one.
+
+- **Run them yourself** after `pnpm build`: `pnpm --filter docs test:a11y` and `pnpm --filter docs test:visual`. Screenshots are approved on Linux, so the visual check is most reliable on GitHub.
+- **Meant to change how something looks?** Run the **Update screenshots** workflow from the Actions tab. It takes new screenshots and commits them as the approved ones.
+- **Accessibility problems** found when the checks were switched on are listed in `apps/docs/tests/known-a11y-issues.ts`. Anything not on that list fails. Fix them and delete the line; the list should only get shorter.
+
 ## Updating tokens from Figma
 
 See [packages/tokens/README.md](packages/tokens/README.md).

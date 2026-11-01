@@ -1,0 +1,57 @@
+name: Checks
+
+# On every push and pull request: build everything, check the types, then open every Storybook
+# story in a browser to check accessibility and compare its screenshot with the approved one.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Install the test browser
+        run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Accessibility
+        run: pnpm --filter docs test:a11y
+
+      # Skipped until the first approved screenshots are in (run the "Update screenshots" workflow)
+      - name: Visual
+        if: hashFiles('apps/docs/tests/__screenshots__/*.png') != ''
+        run: pnpm --filter docs test:visual
+
+      - name: Keep the report when something fails
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-report
+          path: apps/docs/playwright-report
+          retention-days: 14

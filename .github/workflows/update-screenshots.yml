@@ -1,0 +1,44 @@
+name: Update screenshots
+
+# Run by hand from the Actions tab after a change that is meant to look different. It takes a new
+# screenshot of every story and commits them as the approved ones for the visual check.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpm --filter docs exec playwright install --with-deps chromium
+
+      - name: Take new screenshots
+        run: pnpm --filter docs test:visual --update-snapshots=all
+
+      - name: Commit them
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/docs/tests/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Screenshots are already up to date"
+          else
+            git commit -m "Update approved screenshots"
+            git push
+          fi
