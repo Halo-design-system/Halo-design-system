@@ -1761,3 +1761,8 @@ main {
   font-family: 'Geist Mono', ui-monospace, monospace;
   font-size: 13px;
 }
+
+/* Keeps a hyphenated word on one line, like "AI-assisted" in the headline */
+.nowrap {
+  white-space: nowrap;
+}
