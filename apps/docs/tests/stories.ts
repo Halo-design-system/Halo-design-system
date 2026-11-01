@@ -19,6 +19,8 @@ export const themes = ['light', 'dark'] as const;
 
 /** Opens one story on its own, in light or dark mode, and waits until it has drawn. */
 export async function openStory(page: Page, id: string, theme: (typeof themes)[number]) {
+  // The same moment every run, so things that show "now", like the calendar's current-time line, don't move
+  await page.clock.setFixedTime(new Date('2026-11-02T10:30:00'));
   // Storybook's theme switch sets data-theme itself, so ask it for the mode rather than setting it after
   await page.goto(`/iframe.html?id=${id}&viewMode=story&globals=theme:${theme === 'dark' ? 'Dark' : 'Light'}`);
   await page.waitForSelector('#storybook-root > *', { state: 'attached' });
