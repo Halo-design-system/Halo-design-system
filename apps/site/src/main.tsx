@@ -4,7 +4,7 @@ import '@fontsource/geist-mono/400.css';
 import './site.css';
 import { ToastProvider } from '@halo-ds/react';
 import { Layout } from './Layout';
-import { BlockFrame, Blocks } from './pages/Blocks';
+import { BlockFrame } from './pages/Blocks';
 import { Components } from './pages/Components';
 import { Examples } from './pages/Examples';
 import { Figma } from './pages/Figma';
@@ -14,8 +14,7 @@ import { Router, useRoute } from './router';
 
 function Pages() {
   const { path } = useRoute();
-  if (path.startsWith('/components')) return <Components />;
-  if (path.startsWith('/blocks')) return <Blocks />;
+  if (path.startsWith('/components') || path.startsWith('/blocks')) return <Components />;
   if (path.startsWith('/examples')) return <Examples />;
   if (path.startsWith('/figma')) return <Figma />;
   if (path.startsWith('/docs') || path === '/installation') return <Docs />;

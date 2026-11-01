@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Badge, Input, LinkButton, SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
 import { ArrowLeft, ArrowRight, Code, MagnifyingGlass } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
-import { all, demosFor, exampleFor, groups, thumbFor } from '../registry';
+import { all, blocks, demosFor, exampleFor, groups, thumbFor } from '../registry';
 import type { Demo, Entry } from '../registry';
 import { Link, links, useRoute } from '../router';
+import { BlockDetail, BlocksOverview } from './Blocks';
 
 const managers = { npm: 'npm install', pnpm: 'pnpm add', yarn: 'yarn add', bun: 'bun add' } as const;
 type Manager = keyof typeof managers;
@@ -31,6 +32,18 @@ export function Sidebar({ current, base = '/components' }: { current?: string; b
             </div>
           );
         })}
+        {base === '/components' && blocks.some((b) => b.title.toLowerCase().includes(q.trim().toLowerCase())) && (
+          <div className="docs-group">
+            <p className="docs-group-name">Blocks</p>
+            {blocks
+              .filter((b) => b.title.toLowerCase().includes(q.trim().toLowerCase()))
+              .map((b) => (
+                <Link key={b.slug} to={`/components/blocks/${b.slug}`} className="docs-link" aria-current={current === `blocks/${b.slug}` ? 'page' : undefined}>
+                  {b.title}
+                </Link>
+              ))}
+          </div>
+        )}
       </nav>
     </aside>
   );
@@ -50,12 +63,17 @@ function Thumb({ entry }: { entry: Entry }) {
 }
 
 function Overview() {
+  // Links like /components#blocks jump to that section once the page shows
+  useEffect(() => {
+    const target = window.location.hash.slice(1);
+    if (target) requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView({ block: 'start' }));
+  }, []);
   return (
     <div className="docs-main">
       <header className="page-head">
         <p className="eyebrow">Components</p>
         <h1>Components</h1>
-        <p className="lede">{all.length} components, each in Figma and in React. Pick one to see it live, copy the code, and find its full props in Storybook.</p>
+        <p className="lede">{all.length} components, each in Figma and in React, and {blocks.length} blocks that put them together into whole page sections. Pick one to see it live, copy the code, and find its full props in Storybook.</p>
       </header>
       {groups.map((g) => (
         <section key={g.name} className="overview-group" aria-labelledby={`g-${g.name}`}>
@@ -67,6 +85,7 @@ function Overview() {
           </div>
         </section>
       ))}
+      <BlocksOverview />
     </div>
   );
 }
@@ -200,12 +219,14 @@ function Detail({ entry }: { entry: Entry }) {
 
 export function Components() {
   const { path } = useRoute();
-  const slug = path.replace(/^\/components\/?/, '');
+  // Blocks live at /components/blocks/<name>; old /blocks/<name> links land here too
+  const slug = path.replace(/^\/(components\/?|blocks\/?)/, path.startsWith('/blocks') ? 'blocks/' : '').replace(/\/$/, '');
   const entry = all.find((e) => e.slug === slug);
+  const block = blocks.find((b) => slug === `blocks/${b.slug}`);
   return (
     <div className="docs">
-      <Sidebar current={entry?.slug} />
-      {entry ? <Detail entry={entry} /> : <Overview />}
+      <Sidebar current={entry?.slug ?? (block && slug)} />
+      {entry ? <Detail entry={entry} /> : block ? <BlockDetail block={block} /> : <Overview />}
     </div>
   );
 }

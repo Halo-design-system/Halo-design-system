@@ -696,6 +696,12 @@ main {
 
 /* ---------- Blocks ---------- */
 
+.overview-intro {
+  max-width: 640px;
+  color: var(--halo-text-secondary);
+  line-height: 24px;
+}
+
 .block-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

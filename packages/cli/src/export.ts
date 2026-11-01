@@ -20,8 +20,8 @@ const intro = `Halo is an open-source design system: React components (\`@halo-d
 // One Markdown page per component, next to its web page: /components/badge -> /components/badge.md
 for (const e of all) write(`components/${e.slug}.md`, getComponent(e.slug, true));
 
-// Each block as Markdown, next to its web page: /blocks/sign-in -> /blocks/sign-in.md
-for (const b of blocks) write(`blocks/${b.slug}.md`, getBlock(b.slug));
+// Each block as Markdown, next to its web page: /components/blocks/sign-in -> /components/blocks/sign-in.md
+for (const b of blocks) write(`components/blocks/${b.slug}.md`, getBlock(b.slug));
 
 write('llms/rules.md', RULES);
 write('llms/tokens.md', `# Halo design tokens\n\n${getTokens()}`);
@@ -51,7 +51,7 @@ ${groups
 
 Whole page sections built from Halo components. Start a screen from one of these.
 
-${blocks.map((b) => `- [${b.title}](${SITE}/blocks/${b.slug}.md): ${b.description}`).join('\n')}
+${blocks.map((b) => `- [${b.title}](${SITE}/components/blocks/${b.slug}.md): ${b.description}`).join('\n')}
 
 ## Skills
 

@@ -156,7 +156,7 @@ export function findBlock(name: string) {
 export function getBlock(name: string) {
   const b = findBlock(name);
   if (!b) return `No block called "${name}".\n\n${listBlocks()}`;
-  return `# ${b.title} block\n\n${b.description}\n\nA whole page section built from Halo components. Start from it, then change the words, data and handlers to fit the product. Keep its structure: one primary button, tokens for spacing and type, Field components in forms.\n\nAdd it to a project: \`npx halo-ds add ${b.slug}\` (saves src/blocks/${b.name}.tsx). Preview: ${SITE}/blocks/${b.slug}\n\n\`\`\`tsx\n${b.code}\n\`\`\``;
+  return `# ${b.title} block\n\n${b.description}\n\nA whole page section built from Halo components. Start from it, then change the words, data and handlers to fit the product. Keep its structure: one primary button, tokens for spacing and type, Field components in forms.\n\nAdd it to a project: \`npx halo-ds add ${b.slug}\` (saves src/blocks/${b.name}.tsx). Preview: ${SITE}/components/blocks/${b.slug}\n\n\`\`\`tsx\n${b.code}\n\`\`\``;
 }
 
 const tools = [

@@ -4,10 +4,9 @@ import { DeviceMobile, DeviceTablet, Monitor } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
 import { all, blocks } from '../registry';
 import type { Block } from '../registry';
-import { Link, useRoute } from '../router';
+import { Link } from '../router';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const categories = [...new Set(blocks.map((b) => b.category))];
 
 type Device = 'desktop' | 'tablet' | 'mobile';
 const widths: Record<Device, string> = { desktop: '100%', tablet: '768px', mobile: '390px' };
@@ -18,67 +17,34 @@ function componentsIn(code: string) {
   return all.filter((e) => e.exports.some((x) => names.includes(x)));
 }
 
-function BlockSidebar({ current }: { current?: string }) {
+/** The Blocks section at the end of the Components overview. */
+export function BlocksOverview() {
   return (
-    <aside className="docs-side" aria-label="Blocks">
-      <nav className="docs-nav">
-        <Link to="/blocks" className="docs-link" aria-current={current ? undefined : 'page'}>
-          All blocks
-        </Link>
-        {categories.map((c) => (
-          <div key={c} className="docs-group">
-            <p className="docs-group-name">{c}</p>
-            {blocks
-              .filter((b) => b.category === c)
-              .map((b) => (
-                <Link key={b.slug} to={`/blocks/${b.slug}`} className="docs-link" aria-current={current === b.slug ? 'page' : undefined}>
-                  {b.title}
-                </Link>
-              ))}
-          </div>
+    <section className="overview-group" aria-labelledby="blocks">
+      <h2 id="blocks">Blocks</h2>
+      <p className="overview-intro">
+        Whole page sections built from these components, like a sign-in screen or a settings page. Copy the code, or add one to your app with a single command, then change the words and data to fit your product.
+      </p>
+      <div className="block-grid">
+        {blocks.map((b) => (
+          <BlockThumb key={b.slug} block={b} />
         ))}
-      </nav>
-    </aside>
+      </div>
+    </section>
   );
 }
 
 /** A card on the overview: the real block, shrunk and not clickable. */
-function Thumb({ block }: { block: Block }) {
+function BlockThumb({ block }: { block: Block }) {
   return (
     // Blocks hold links of their own, so the card is not one big link: its title link stretches over it
     <div className="overview-card block-card">
-      <Link to={`/blocks/${block.slug}`} className="overview-name block-card-link">{block.title}</Link>
+      <Link to={`/components/blocks/${block.slug}`} className="overview-name block-card-link">{block.title}</Link>
       <div className="block-thumb" inert>
         <div className="block-thumb-inner">
           <block.Block />
         </div>
       </div>
-    </div>
-  );
-}
-
-function Overview() {
-  return (
-    <div className="docs-main">
-      <header className="page-head">
-        <p className="eyebrow">Blocks</p>
-        <h1>Blocks</h1>
-        <p className="lede">
-          Whole page sections built from Halo components, like a sign-in screen or a settings page. Copy the code, or add one to your app with a single command, then change the words and data to fit your product.
-        </p>
-      </header>
-      {categories.map((c) => (
-        <section key={c} className="overview-group" aria-labelledby={`b-${c}`}>
-          <h2 id={`b-${c}`}>{c}</h2>
-          <div className="block-grid">
-            {blocks
-              .filter((b) => b.category === c)
-              .map((b) => (
-                <Thumb key={b.slug} block={b} />
-              ))}
-          </div>
-        </section>
-      ))}
     </div>
   );
 }
@@ -106,7 +72,8 @@ function Preview({ block, device }: { block: Block; device: Device }) {
   );
 }
 
-function Detail({ block }: { block: Block }) {
+/** One block's page, inside Components: a preview at three widths, the code, and how to add it. */
+export function BlockDetail({ block }: { block: Block }) {
   const [tab, setTab] = useState('preview');
   const [device, setDevice] = useState<Device>('desktop');
   const used = componentsIn(block.code);
@@ -115,7 +82,7 @@ function Detail({ block }: { block: Block }) {
   return (
     <div className="docs-main">
       <header className="page-head">
-        <p className="eyebrow">Blocks · {block.category}</p>
+        <p className="eyebrow">Components · Blocks</p>
         <h1>{block.title}</h1>
         <p className="lede">{block.description}</p>
       </header>
@@ -169,18 +136,6 @@ function Detail({ block }: { block: Block }) {
           </p>
         </section>
       )}
-    </div>
-  );
-}
-
-export function Blocks() {
-  const { path } = useRoute();
-  const slug = path.replace(/^\/blocks\/?/, '');
-  const block = blocks.find((b) => b.slug === slug);
-  return (
-    <div className="docs">
-      <BlockSidebar current={block?.slug} />
-      {block ? <Detail block={block} /> : <Overview />}
     </div>
   );
 }

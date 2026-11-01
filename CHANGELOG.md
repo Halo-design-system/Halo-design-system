@@ -8,9 +8,9 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ### New
 
-- **Blocks**: eight ready-made page sections built from Halo components: Sign in, Sign up, Dashboard, Customers table, Settings, Empty projects, Pricing and Page not found. Each has a live preview at desktop, tablet and phone widths on the new Blocks page, and copyable code.
+- **Blocks**: eight ready-made page sections built from Halo components: Sign in, Sign up, Dashboard, Customers table, Settings, Empty projects, Pricing and Page not found. Each has a live preview at desktop, tablet and phone widths at the end of the Components page, and copyable code.
 - **`npx halo-ds add <block>`** adds a block to your app as a file in `src/blocks`, and installs what it needs. In Next.js it marks the file as a client component.
-- **MCP server**: two new tools, `list_blocks` and `get_block`, so AI assistants can start a screen from a block. Blocks are also in `llms.txt` and as Markdown at `/blocks/<name>.md`.
+- **MCP server**: two new tools, `list_blocks` and `get_block`, so AI assistants can start a screen from a block. Blocks are also in `llms.txt` and as Markdown at `/components/blocks/<name>.md`.
 
 ### Fixed
 

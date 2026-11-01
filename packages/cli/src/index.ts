@@ -207,7 +207,7 @@ function listBlocks() {
     for (const b of blocks.filter((x) => x.category === c)) say(`  ${b.slug.padEnd(20)}${dim(b.description)}`);
     say();
   }
-  say(`Add one: ${bold('npx halo-ds add sign-in')}\nSee them: ${SITE}/blocks`);
+  say(`Add one: ${bold('npx halo-ds add sign-in')}\nSee them: ${SITE}/components#blocks`);
 }
 
 function add(name: string | undefined, cwd: string, opts: { skipInstall: boolean; overwrite: boolean }) {

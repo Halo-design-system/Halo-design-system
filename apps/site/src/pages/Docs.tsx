@@ -268,7 +268,7 @@ function Cli() {
 
       <Section id="add" title="add">
         <p>
-          Adds a <Link to="/blocks">block</Link>, a whole page section like a sign-in screen or a dashboard, to your app as a file in <code>src/blocks</code>. It installs anything the block needs. Leave the name out to list every block.
+          Adds a <Link to="/components#blocks">block</Link>, a whole page section like a sign-in screen or a dashboard, to your app as a file in <code>src/blocks</code>. It installs anything the block needs. Leave the name out to list every block.
         </p>
         <CodeBlock code={`${x} halo-ds add sign-in`} label="Copy command" />
         <Options
@@ -495,7 +495,7 @@ function Ai() {
               <tr><td><a href={`${site}/llms.txt`}><code>llms.txt</code></a></td><td>An index of every component, the rules and the skills, with links to each as Markdown.</td></tr>
               <tr><td><a href={`${site}/llms-full.txt`}><code>llms-full.txt</code></a></td><td>The rules, every component and the tokens in one file, for a single read.</td></tr>
               <tr><td><code>/components/&lt;name&gt;.md</code></td><td>Any component as Markdown: add <code>.md</code> to its page address, like <a href={`${site}/components/badge.md`}><code>/components/badge.md</code></a>.</td></tr>
-              <tr><td><code>/blocks/&lt;name&gt;.md</code></td><td>Any block&apos;s code as Markdown, like <a href={`${site}/blocks/sign-in.md`}><code>/blocks/sign-in.md</code></a>.</td></tr>
+              <tr><td><code>/components/blocks/&lt;name&gt;.md</code></td><td>Any block&apos;s code as Markdown, like <a href={`${site}/components/blocks/sign-in.md`}><code>/components/blocks/sign-in.md</code></a>.</td></tr>
               <tr><td><a href={`${site}/llms/tokens.md`}><code>llms/tokens.md</code></a></td><td>Every design token, with light and dark values.</td></tr>
             </tbody>
           </table>

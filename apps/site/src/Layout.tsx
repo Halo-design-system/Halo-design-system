@@ -41,7 +41,6 @@ function useTheme() {
 
 const pages = [
   { to: '/components', label: 'Components' },
-  { to: '/blocks', label: 'Blocks' },
   { to: '/examples', label: 'Examples' },
   { to: '/figma', label: 'Figma' },
   { to: '/docs', label: 'Docs' },
