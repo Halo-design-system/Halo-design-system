@@ -243,7 +243,7 @@ export function Home() {
   return (
     <>
       <section className="hero">
-        <h1>The design system built for AI-assisted frontend.</h1>
+        <h1>The React design system for AI-assisted frontend development.</h1>
         <p className="lede">
           Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.
         </p>
