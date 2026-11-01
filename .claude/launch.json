@@ -18,6 +18,18 @@
         "dev"
       ],
       "port": 5174
+    },
+    {
+      "name": "figma-plugin-ui",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5179",
+        "--directory",
+        "packages/figma-plugin/dist"
+      ],
+      "port": 5179
     }
   ]
 }

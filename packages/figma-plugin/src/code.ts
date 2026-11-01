@@ -1,7 +1,8 @@
 // The plugin's main thread: finds a Halo component and places an instance of it.
 // A component is looked for in three places, in this order:
 //   1. this file, when it is Halo itself or a copy of it (a page with the component's page name);
-//   2. the person's own copy of Halo, if they told the plugin to use it (keys kept in clientStorage);
+//   2. the person's own copy of Halo: opening the plugin in a copy saves its keys (in clientStorage),
+//      so once they publish that copy, other files place components from it;
 //   3. the published Halo library, by its original key.
 import { parts } from './library';
 import type { Part } from './library';
@@ -14,10 +15,7 @@ interface Copy {
   keys: Record<string, string>;
 }
 
-type FromUi =
-  | { type: 'place'; slug: string; index: number }
-  | { type: 'remember' }
-  | { type: 'forget' };
+type FromUi = { type: 'place'; slug: string; index: number } | { type: 'open'; url: string };
 
 figma.showUI(__html__, { width: 360, height: 600, themeColors: true });
 
@@ -88,47 +86,36 @@ function place(instance: InstanceNode) {
   figma.currentPage.selection = [instance];
 }
 
+/** In a copy of Halo, saves where each component is, so other files can place them from the published copy. */
 async function remember() {
+  if (!isHaloFile()) return;
   const keys: Record<string, string> = {};
-  let missing = 0;
   for (const list of Object.values(parts)) {
     for (const part of list) {
       if (keys[part.key]) continue;
       const node = await findLocal(part);
       if (node) keys[part.key] = node.key;
-      else missing++;
     }
   }
   const copy: Copy = { name: figma.root.name, keys };
   await figma.clientStorage.setAsync(STORAGE, copy);
-  return { copy, missing };
-}
-
-async function sendState() {
-  const copy = await getCopy();
-  figma.ui.postMessage({ type: 'state', haloFile: isHaloFile(), fileName: figma.root.name, copy: copy?.name ?? null });
 }
 
 figma.ui.onmessage = async (msg: FromUi) => {
-  if (msg.type === 'place') {
-    const part = parts[msg.slug]?.[msg.index];
-    if (!part) return;
-    const node = await resolve(part);
-    if (!node) {
-      figma.ui.postMessage({ type: 'missing', name: part.name });
-      return;
-    }
-    const component = node.type === 'COMPONENT_SET' ? node.defaultVariant : node;
-    place(component.createInstance());
-    figma.ui.postMessage({ type: 'placed', name: part.name });
-  } else if (msg.type === 'remember') {
-    const { copy, missing } = await remember();
-    figma.ui.postMessage({ type: 'remembered', name: copy.name, count: Object.keys(copy.keys).length, missing });
-    await sendState();
-  } else if (msg.type === 'forget') {
-    await figma.clientStorage.deleteAsync(STORAGE);
-    await sendState();
+  // Only the website link in the footer, so a message can't open anything else.
+  if (msg.type === 'open') {
+    if (msg.url.startsWith('https://halo-design-system.github.io/')) figma.openExternal(msg.url);
+    return;
   }
+  const part = parts[msg.slug]?.[msg.index];
+  if (!part) return;
+  const node = await resolve(part);
+  if (!node) {
+    figma.ui.postMessage({ type: 'missing', name: part.name });
+    return;
+  }
+  const component = node.type === 'COMPONENT_SET' ? node.defaultVariant : node;
+  place(component.createInstance());
 };
 
-sendState();
+remember();

@@ -1,5 +1,5 @@
 {
-  "name": "Halo",
+  "name": "Halo UI",
   "id": "halo-ds",
   "api": "1.0.0",
   "main": "dist/code.js",

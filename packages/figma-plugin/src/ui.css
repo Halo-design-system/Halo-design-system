@@ -1,0 +1,73 @@
+/* Layout for the plugin window. Everything else comes from Halo's components and tokens. */
+
+html,
+body {
+  margin: 0;
+  font-family: var(--halo-font-family-body);
+  background: var(--halo-surface-primary);
+  color: var(--halo-text-primary);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.search {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--halo-spacing-7);
+  background: var(--halo-surface-primary);
+  border-bottom: 1px solid var(--halo-border-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--halo-spacing-6);
+  padding: var(--halo-spacing-7);
+}
+
+.stage {
+  aspect-ratio: 4 / 3;
+  border-bottom: 1px solid var(--halo-border-secondary);
+}
+
+/* The page colour, because some components carry their own background in the pictures. */
+.frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--halo-spacing-6);
+  background: var(--halo-surface-primary);
+  box-sizing: border-box;
+}
+
+/* Real size, shrunk to fit the frame when it is bigger. Card's media rule makes direct children
+   fill the box, so the image sits one level down and keeps its own size. */
+.frame img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.label {
+  padding: var(--halo-spacing-5) var(--halo-spacing-6);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding: var(--halo-spacing-5) var(--halo-spacing-7);
+  background: var(--halo-surface-primary);
+  border-top: 1px solid var(--halo-border-secondary);
+}
