@@ -15,7 +15,7 @@ The skills are Markdown files in this folder. They run nothing on their own.
 
 The MCP server lets Claude look up each Halo component's import line, props, examples and usage guidance, the design tokens, and ready-made page blocks, instead of guessing them.
 
-What it runs: `npx -y halo-ds@0.4.0 mcp`. npx downloads the `halo-ds` package, version 0.4.0, from the npm registry the first time, then starts it on your computer. The server talks to Claude Code over standard input and output only.
+What it runs: `npx -y halo-ds@0.4.1 mcp`. npx downloads the `halo-ds` package, version 0.4.1, from the npm registry the first time, then starts it on your computer. The server talks to Claude Code over standard input and output only.
 
 What it reads and sends: nothing from your project or computer. All of Halo's documentation is inside the package. It makes no network requests, collects no data and stores nothing.
 
