@@ -55,7 +55,8 @@
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--halo-spacing-4); }
 
 /* ---------- Month ---------- */
-.month { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--halo-border-secondary); border-radius: var(--halo-radius-6); }
+/* The grids are white, so days show white on any page colour and days from other months stand out grey */
+.month { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--halo-border-secondary); border-radius: var(--halo-radius-6); background: var(--halo-surface-primary); }
 .weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-bottom: 1px solid var(--halo-border-secondary); }
 .weekday {
   padding: var(--halo-spacing-4) var(--halo-spacing-5);
@@ -183,6 +184,7 @@
   overflow: hidden;
   border: 1px solid var(--halo-border-secondary);
   border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-primary);
 }
 .tgHead,
 .allDay { display: grid; grid-template-columns: var(--gutter) repeat(var(--cols), minmax(0, 1fr)); }
