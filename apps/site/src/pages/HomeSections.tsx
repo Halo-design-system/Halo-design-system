@@ -383,7 +383,7 @@ const faqs: [string, ReactNode][] = [
   ['How do AI tools use it?', <>Halo&apos;s MCP server gives your assistant every component&apos;s props, examples and rules. Skills and plain-text docs work with tools that don&apos;t use MCP. See <Link to="/docs/ai">AI and MCP server</Link>.</>],
   ['Can I use my own brand colour?', <>Yes. Run <code>npx halo-ds theme &quot;#2F6BFF&quot;</code> and it works out every brand colour for light and dark mode. Try it on the components at the top of this page.</>],
   ['Is it accessible?', 'Every component works with the keyboard and screen readers, and every story is checked automatically for accessibility problems in light and dark mode.'],
-  ['Do I need the Figma file?', 'No. It helps designers work with the same components, names and tokens as the code, so designs and builds match.'],
+  ['Is there a Figma file?', 'Yes, free. Every component, variant and token from the code, so what you design is what ships.'],
 ];
 
 export function FaqSection() {
