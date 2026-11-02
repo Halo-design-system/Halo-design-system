@@ -72,7 +72,7 @@ const features = [
   {
     icon: <Devices />,
     title: 'Example apps',
-    count: '7 apps, about 200 screens',
+    count: '7 apps, 29 screens, desktop and mobile',
     text: 'Banking, healthcare, payroll, tax, sales, creators and a SaaS product, each on desktop and mobile, built only from the components.',
   },
   {

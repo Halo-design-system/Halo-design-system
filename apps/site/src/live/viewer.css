@@ -1,0 +1,129 @@
+/* The device frames around a live example. Borders only, no shadows. */
+
+.lv {
+  display: grid;
+  gap: 20px;
+}
+
+.lv-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.lv-bar > :first-child {
+  min-width: 220px;
+}
+
+.lv-bar > :last-child {
+  margin-left: auto;
+}
+
+.lv-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--halo-surface-minimal);
+}
+
+.lv-scale {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform-origin: top center;
+  translate: -50% 0;
+}
+
+.lv iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: var(--halo-surface-primary);
+}
+
+/* Desktop: a browser window */
+.lv-desktop {
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--halo-border-secondary);
+  background: var(--halo-surface-primary);
+}
+
+.lv-browser {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 44px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--halo-border-secondary);
+  background: var(--halo-surface-minimal);
+}
+
+.lv-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.lv-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--halo-surface-secondary);
+}
+
+.lv-address {
+  flex: 1;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--halo-surface-primary);
+  color: var(--halo-text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Phone and tablet: a body around the screen, with the status bar at the top */
+.lv-handheld {
+  padding: 14px;
+  border-radius: 56px;
+  background: #111;
+}
+
+.lv-tablet {
+  border-radius: 40px;
+}
+
+.lv-glass {
+  overflow: hidden;
+  border-radius: 44px;
+  background: var(--halo-surface-primary);
+}
+
+.lv-tablet .lv-glass {
+  border-radius: 28px;
+}
+
+.lv-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  padding: 0 32px;
+  color: var(--halo-text-primary);
+  font-size: 16px;
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.lv-status-icons {
+  display: flex;
+  gap: 6px;
+  font-size: 18px;
+}
+
+.lv-code {
+  max-height: 640px;
+  overflow: auto;
+  margin-top: 12px;
+}

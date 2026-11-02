@@ -47,7 +47,7 @@ export function Apps() {
       <div style={{ position: 'absolute', left: 160, top: 0, bottom: 0, display: 'flex', alignItems: 'center' }}>
         <div className="band" style={{ display: 'flex', alignItems: 'center', gap: 56, padding: '40px 56px', borderRadius: 32 }}>
           <Title value={<Count to={7} start={6} frames={20} />} label="example apps" />
-          <Title value={<><Count to={200} start={12} />+</>} label="screens" />
+          <Title value={<Count to={29} start={12} frames={20} />} label="screens" />
         </div>
       </div>
     </Scene>

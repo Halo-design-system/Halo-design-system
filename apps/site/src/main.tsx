@@ -4,6 +4,7 @@ import '@fontsource/geist-mono/400.css';
 import './site.css';
 import { ToastProvider } from '@halo-ds/react';
 import { Layout } from './Layout';
+import { AppFrame } from './live/AppFrame';
 import { BlockFrame } from './pages/Blocks';
 import { Components } from './pages/Components';
 import { Examples } from './pages/Examples';
@@ -25,6 +26,8 @@ function App() {
   const { path } = useRoute();
   // The Blocks page previews each block in an iframe of this page, without the site around it
   if (path.startsWith('/block-frame/')) return <BlockFrame slug={path.slice('/block-frame/'.length)} />;
+  // Live example apps run on their own page: in the Examples preview, or full page from Live preview
+  if (path.startsWith('/app-frame/')) return <AppFrame path={path.slice('/app-frame/'.length)} />;
   return (
     <Layout>
       <Pages />

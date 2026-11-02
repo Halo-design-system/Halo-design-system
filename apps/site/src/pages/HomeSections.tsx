@@ -218,7 +218,7 @@ export function AppsSection() {
   const screen = current.screens[tick % current.screens.length]!;
   return (
     <section className="hs">
-      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="Over 200 screens, desktop and mobile, built only from Halo.">
+      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="29 screens, built only from Halo. Click through them live.">
         <Link to="/examples" className="hs-link">
           See all examples <ArrowRight aria-hidden="true" />
         </Link>

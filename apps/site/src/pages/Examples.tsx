@@ -4,6 +4,8 @@ import { DeviceMobile, Monitor } from '@phosphor-icons/react';
 import { apps } from '../screens';
 import type { Screen } from '../screens';
 import { useRoute } from '../router';
+import { liveApps } from '../live/registry';
+import { Viewer } from '../live/Viewer';
 
 function ScreenShot({ screen, device }: { screen: Screen; device: 'desktop' | 'mobile' }) {
   const src = `${import.meta.env.BASE_URL}screens/${screen.id}-${device}.webp`;
@@ -26,6 +28,8 @@ export function Examples() {
   const id = path.replace(/^\/examples\/?/, '');
   const app = apps.find((a) => a.id === id) ?? apps[0]!;
   const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop');
+  // Apps built in code run live; the rest show their Figma screens until they are built
+  const live = liveApps.find((a) => a.id === app.id);
 
   // Links from a component page carry the screen in the hash: scroll to it once the page shows.
   useEffect(() => {
@@ -38,9 +42,7 @@ export function Examples() {
       <header className="page-head">
         <p className="eyebrow">Examples</p>
         <h1>Components in real screens</h1>
-        <p className="lede">
-          Seven example apps built with the same components you install. See how the pieces fit together on desktop and mobile, then open any component to use it.
-        </p>
+        <p className="lede">Seven apps built only from Halo. Click around, switch devices, copy the code.</p>
       </header>
 
       <div className="examples-bar">
@@ -51,7 +53,7 @@ export function Examples() {
             ))}
           </TabList>
         </Tabs>
-        <SegmentedControl
+        {!live && <SegmentedControl
           aria-label="Device"
           size="sm"
           value={device}
@@ -60,14 +62,18 @@ export function Examples() {
             { value: 'desktop', label: 'Desktop', icon: <Monitor /> },
             { value: 'mobile', label: 'Mobile', icon: <DeviceMobile /> },
           ]}
-        />
+        />}
       </div>
 
-      <div className={device === 'mobile' ? 'screens screens-mobile' : 'screens'}>
-        {app.screens.map((s) => (
-          <ScreenShot key={`${s.id}-${device}`} screen={s} device={device} />
-        ))}
-      </div>
+      {live ? (
+        <Viewer key={live.id} app={live} />
+      ) : (
+        <div className={device === 'mobile' ? 'screens screens-mobile' : 'screens'}>
+          {app.screens.map((s) => (
+            <ScreenShot key={`${s.id}-${device}`} screen={s} device={device} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
