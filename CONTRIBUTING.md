@@ -88,7 +88,13 @@ Each release:
 
    pnpm swaps the internal `workspace:*` link for the real version number, so `@halo-ds/react` depends on the matching `@halo-ds/tokens`.
 
-5. Tag the release in git: `git tag v0.1.0 && git push --tags`.
-6. The MCP Registry listing updates by itself: pushing the version tag runs the **Publish to the MCP Registry** workflow, which reads `server.json` and signs in through GitHub. Run it from the Actions tab if the tag went out before npm finished. The `mcpName` in `packages/cli/package.json` must match the `name` in `server.json`.
-7. The Claude Code plugin is published from its own repository, [Halo-design-system/halo-claude-plugin](https://github.com/Halo-design-system/halo-claude-plugin), so Claude's plugin directory can list it (this repository's build settings would block it). Edit it here in `plugins/halo-ds`; that repository's **Sync** workflow copies it from the newest version tag once a day. Run Sync from its Actions tab to copy it straight away.
+5. Pin the plugin to the new package. Set the version in `plugins/halo-ds/package.json` (both fields), then refresh its lockfile, which records the published package's hash. Claude's plugin directory holds plugins that run `npx` without one.
+
+   ```bash
+   cd plugins/halo-ds && npm install --package-lock-only --ignore-scripts
+   ```
+
+6. Tag the release in git: `git tag v0.1.0 && git push --tags`.
+7. The MCP Registry listing updates by itself: pushing the version tag runs the **Publish to the MCP Registry** workflow, which reads `server.json` and signs in through GitHub. Run it from the Actions tab if the tag went out before npm finished. The `mcpName` in `packages/cli/package.json` must match the `name` in `server.json`.
+8. The Claude Code plugin is published from its own repository, [Halo-design-system/halo-claude-plugin](https://github.com/Halo-design-system/halo-claude-plugin), so Claude's plugin directory can list it (this repository's build settings would block it). Edit it here in `plugins/halo-ds`; that repository's **Sync** workflow copies it from the newest version tag once a day. Run Sync from its Actions tab to copy it straight away.
 

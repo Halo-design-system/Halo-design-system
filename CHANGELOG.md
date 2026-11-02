@@ -8,6 +8,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 - **Figma plugin, Halo UI** in `packages/figma-plugin`: every Halo component as a card, A to Z, with search. Click one to place it on the canvas, or inside the selected frame. Built with Halo's own components, in light and dark. Works in the Halo file, in a copy from the Community, and in any file that uses a published copy (open the plugin in the copy once). Not on the Figma Community yet.
 - **Claude Code plugin** is now called `halo-ds` and lives in its own repository, so it can be listed in Claude's plugin directory. Install it with `/plugin marketplace add Halo-design-system/halo-claude-plugin`, then `/plugin install halo-ds@halo-design-system`. It is copied there from `plugins/halo-ds` in this repository on every release.
+- **Claude Code plugin** ships a `package-lock.json` that pins `halo-ds` by version and hash, as Claude's plugin directory asks of plugins that run `npx`.
 - **EventCalendar** week and day views always open on the first hour. Before, the grid could sit a pixel off when the fonts finished loading.
 - **EventCalendar:** the month, week and day grids have a white surface of their own, so they stay white on a grey page and days from other months stand out. Before, the page colour showed through.
 - **Table:** selected rows and the toolbar's selected state are light grey (`surface/secondary`) instead of brand pink, so the brand colour stays on the checkboxes. Matches the Figma file.

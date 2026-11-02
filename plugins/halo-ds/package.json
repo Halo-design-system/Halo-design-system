@@ -1,0 +1,10 @@
+{
+  "name": "halo-ds-plugin",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Pins the halo-ds package the plugin's MCP server runs, so it installs from a lockfile.",
+  "license": "MIT",
+  "dependencies": {
+    "halo-ds": "0.4.0"
+  }
+}
