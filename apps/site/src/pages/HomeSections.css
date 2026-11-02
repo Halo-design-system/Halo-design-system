@@ -382,6 +382,8 @@
 }
 
 .hs-stat {
+  display: grid;
+  gap: 8px;
   align-content: center;
 }
 
@@ -467,6 +469,38 @@
     animation: hs-blink 1s steps(1) infinite;
   }
 
+  /* Charts wait out of sight, then play each time they scroll into view */
+  [data-chart-run='0'] {
+    opacity: 0;
+  }
+
+  /* Lines and areas sweep in from the left, as if drawn */
+  .hs-chart-play path[fill='none'],
+  .hs-chart-play path[fill^='url'] {
+    animation: hs-wipe 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+
+  .hs-chart-play [data-part='bar'] path {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: hs-grow 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hs-chart-play [data-part='slice'] {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: hs-spin 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hs-chart-play [data-part='bar']:nth-of-type(2) path,
+  .hs-chart-play [data-part='slice']:nth-of-type(2) { animation-delay: 80ms; }
+  .hs-chart-play [data-part='bar']:nth-of-type(3) path,
+  .hs-chart-play [data-part='slice']:nth-of-type(3) { animation-delay: 160ms; }
+  .hs-chart-play [data-part='bar']:nth-of-type(4) path { animation-delay: 240ms; }
+  .hs-chart-play [data-part='bar']:nth-of-type(5) path { animation-delay: 320ms; }
+  .hs-chart-play [data-part='bar']:nth-of-type(6) path { animation-delay: 400ms; }
+  .hs-chart-play [data-part='bar']:nth-of-type(7) path { animation-delay: 480ms; }
+
   /* Each section fades up as it scrolls into view, where the browser supports it */
   @supports (animation-timeline: view()) {
     .hs-head,
@@ -492,6 +526,28 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes hs-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes hs-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes hs-spin {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
   }
 }
 

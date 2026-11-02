@@ -67,7 +67,7 @@ export function CommandSection() {
   const done = typed.length === `npx halo-ds add ${block.slug}`.length;
   return (
     <section className="hs hs-command">
-      <Head eyebrow="Command line" title="Add a whole page with one command" text="Sign-in, pricing, dashboards and more, built from Halo components. The code lands in your project, ready to change." />
+      <Head eyebrow="Command line" title="Add a whole page with one command" text="Sign-in, pricing, dashboards and more, straight into your project." />
       <div className="hs-command-body">
         <div className="hs-terminal" data-theme="dark">
           <div className="hs-terminal-bar">
@@ -127,7 +127,7 @@ export function ComponentsSection() {
   const entries = showcase.map((s) => all.find((e) => e.slug === s)).filter((e) => e !== undefined);
   return (
     <section className="hs">
-      <Head eyebrow="Components" title={`${all.length} components, every state built in`} text="Forms, data, dates, charts, navigation and feedback. Each one works with the keyboard and screen readers, in light and dark mode.">
+      <Head eyebrow="Components" title={`${all.length} components, every state built in`} text="Keyboard and screen reader ready, in light and dark.">
         <Button variant="secondary" iconRight={<ArrowRight />} onClick={() => go('/components')}>
           Browse all components
         </Button>
@@ -183,7 +183,7 @@ export function AiSection() {
   const config = mcpConfigs[tool];
   return (
     <section className="hs">
-      <Head eyebrow="AI tools" title="Your AI knows every component" text="Connect Claude Code, Cursor or VS Code to Halo's MCP server. Your assistant looks up props, examples and design rules while it builds, instead of guessing.">
+      <Head eyebrow="AI tools" title="Your AI knows every component" text="It reads props, examples and rules through Halo's MCP server.">
         <Button variant="secondary" iconRight={<ArrowRight />} onClick={() => go('/docs/ai')}>
           Set up your AI tool
         </Button>
@@ -218,7 +218,7 @@ export function AppsSection() {
   const screen = current.screens[tick % current.screens.length]!;
   return (
     <section className="hs">
-      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="SaaS, banking, sales, tax, creators, healthcare and payroll. Over 200 screens on desktop and mobile in the Figma file, built only from Halo components.">
+      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="Over 200 screens, desktop and mobile, built only from Halo.">
         <Link to="/examples" className="hs-link">
           See all examples <ArrowRight aria-hidden="true" />
         </Link>
@@ -256,28 +256,93 @@ export function AppsSection() {
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'].map((m, i) => ({ m, visits: [320, 410, 380, 520, 490, 610, 580, 700][i], signups: [120, 160, 150, 210, 230, 260, 250, 320][i] }));
 
+/** True while the element is on screen. Each time it comes back into view, `run` goes up, so animations can replay. */
+function useInView<T extends Element>() {
+  const [el, setEl] = useState<T | null>(null);
+  const [run, setRun] = useState(0);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e!.isIntersecting) {
+        setSeen(true);
+        setRun((r) => r + 1);
+      } else setSeen(false);
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [el]);
+  return { ref: setEl, run, seen };
+}
+
+/** A number that counts up from zero each time `run` changes. */
+function CountUp({ to, run, format = (n: number) => n.toLocaleString('en-US') }: { to: number; run: number; format?: (n: number) => string }) {
+  const [n, setN] = useState(to);
+  useEffect(() => {
+    if (!run || reducedMotion()) return setN(to);
+    const start = performance.now();
+    let frame = 0;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / 1200);
+      setN(to * (1 - (1 - t) ** 3));
+      if (t < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [to, run]);
+  return <>{format(n)}</>;
+}
+
+/** A chart card that replays its chart's entrance each time it scrolls into view. */
+function ChartCard({ title, wide, children }: { title: ReactNode; wide?: boolean; children: (run: number) => ReactNode }) {
+  const { ref, run } = useInView<HTMLDivElement>();
+  return (
+    <div ref={ref} className={`hs-chart${wide ? ' hs-chart-wide' : ''}`}>
+      <p className="hs-chart-title">{title}</p>
+      {/* A new key remounts the chart, which starts its animation again */}
+      <div key={run} data-chart-run={run} className={run ? 'hs-chart-play' : undefined}>
+        {children(run)}
+      </div>
+    </div>
+  );
+}
+
 export function ChartsSection() {
   return (
     <section className="hs">
-      <Head eyebrow="Charts" title="Charts that read at a glance" text="Line, area, bar and pie charts with tooltips, legends and a table for screen readers. Same tokens, so they follow your theme." />
+      <Head eyebrow="Charts" title="Charts that read at a glance" text="Line, area, bar and pie. They follow your theme." />
       <div className="hs-charts">
-        <div className="hs-chart hs-chart-wide">
-          <p className="hs-chart-title">Visits and sign-ups</p>
-          <AreaChart label="Visits and sign-ups" data={months} xKey="m" series={[{ key: 'visits', label: 'Visits' }, { key: 'signups', label: 'Sign-ups' }]} height={240} legend />
-        </div>
-        <div className="hs-chart">
-          <p className="hs-chart-title">Traffic by device</p>
-          <PieChart label="Traffic by device" variant="donut" data={[{ label: 'Desktop', value: 58 }, { label: 'Mobile', value: 34 }, { label: 'Tablet', value: 8 }]} centerLabel="Visits" centerValue="12.4k" legend="bottom" size={180} />
-        </div>
-        <div className="hs-chart hs-chart-wide">
-          <p className="hs-chart-title">Orders this week</p>
-          <BarChart label="Orders this week" data={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => ({ d, orders: [42, 58, 51, 66, 73, 38, 30][i] }))} xKey="d" series={[{ key: 'orders', label: 'Orders' }]} height={220} />
-        </div>
-        <div className="hs-chart hs-stat">
-          <p className="hs-chart-title">Revenue</p>
-          <strong>$48,920</strong>
-          <span className="hs-up">Up 12% on last month</span>
-        </div>
+        <ChartCard title="Visits and sign-ups" wide>
+          {() => <AreaChart label="Visits and sign-ups" data={months} xKey="m" series={[{ key: 'visits', label: 'Visits' }, { key: 'signups', label: 'Sign-ups' }]} height={240} legend />}
+        </ChartCard>
+        <ChartCard title="Traffic by device">
+          {(run) => (
+            <PieChart
+              label="Traffic by device"
+              variant="donut"
+              data={[{ label: 'Desktop', value: 58 }, { label: 'Mobile', value: 34 }, { label: 'Tablet', value: 8 }]}
+              centerLabel="Visits"
+              centerValue={<CountUp to={12.4} run={run} format={(n) => `${n.toFixed(1)}k`} />}
+              legend="bottom"
+              size={180}
+            />
+          )}
+        </ChartCard>
+        <ChartCard title="Orders this week" wide>
+          {() => <BarChart label="Orders this week" data={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => ({ d, orders: [42, 58, 51, 66, 73, 38, 30][i] }))} xKey="d" series={[{ key: 'orders', label: 'Orders' }]} height={220} />}
+        </ChartCard>
+        <ChartCard title="Revenue">
+          {(run) => (
+            <div className="hs-stat">
+              <strong>
+                $<CountUp to={48920} run={run} format={(n) => Math.round(n).toLocaleString('en-US')} />
+              </strong>
+              <span className="hs-up">
+                Up <CountUp to={12} run={run} format={(n) => `${Math.round(n)}%`} /> on last month
+              </span>
+            </div>
+          )}
+        </ChartCard>
       </div>
     </section>
   );
@@ -296,7 +361,7 @@ export function OpenSourceSection() {
   }, []);
   return (
     <section className="hs hs-center">
-      <Head eyebrow="Open source" title="Free, and yours to change" text="Every component, the tokens, the CLI and the MCP server are MIT licensed. Use them in any project, including paid ones." />
+      <Head eyebrow="Open source" title="Free, and yours to change" text="MIT licensed. Use it anywhere, including paid projects." />
       <a className="hs-github" href={links.github}>
         <GithubLogo weight="fill" aria-hidden="true" />
         <span>Star on GitHub</span>

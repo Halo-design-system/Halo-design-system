@@ -421,17 +421,17 @@ const features = [
   {
     icon: <FigmaLogo />,
     title: 'Designed in Figma',
-    text: 'Every component with its variants and states, plus colour, spacing and type variables for light and dark mode.',
+    text: 'Every component, variant and token, in light and dark.',
   },
   {
     icon: <Code />,
     title: 'Built in React',
-    text: 'TypeScript components that work with the keyboard and screen readers. Style any part of them with classes or CSS variables.',
+    text: 'Typed, accessible, and styled with CSS variables.',
   },
   {
     icon: <Plugs />,
     title: 'Kept in sync',
-    text: 'Design and code share the same tokens and the same names, so what you design is what ships.',
+    text: 'Same tokens and names, so what you design ships.',
   },
 ];
 
@@ -500,7 +500,7 @@ export function Home() {
 
       <section className="cta">
         <h2>Start building</h2>
-        <p>Install the package, or grab the Figma file and start designing.</p>
+        <p>Install the package or open the Figma file.</p>
         <div className="hero-actions">
           <Button iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Installation</Button>
           <Button variant="secondary" iconLeft={<FigmaLogo />} onClick={() => go('/figma')}>Figma file</Button>
