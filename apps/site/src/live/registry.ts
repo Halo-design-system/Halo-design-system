@@ -1,5 +1,6 @@
 // The example apps that run live on the site, and the source of every file, for the Code view.
 import type { ComponentType } from 'react';
+import { banking } from './banking';
 import { saas } from './saas';
 
 export interface LiveApp {
@@ -14,12 +15,12 @@ export interface LiveApp {
   Missing: ComponentType<{ page: string }>;
 }
 
-export const liveApps: LiveApp[] = [saas];
+export const liveApps: LiveApp[] = [saas, banking];
 
-const sources = import.meta.glob('./*/*.{tsx,ts,css}', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const sources = import.meta.glob(['./*/*.{tsx,ts,css}', './shared/*.{tsx,css}', './kit.tsx'], { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
-/** The text of one of an app's files, like sourceOf('saas', 'Overview.tsx'). */
-export const sourceOf = (app: string, file: string) => sources[`./${app}/${file}`] ?? '';
+/** The text of one of an app's files, like sourceOf('saas', 'Overview.tsx'). Paths with a slash are from the live folder, like 'shared/AppShell.tsx'. */
+export const sourceOf = (app: string, file: string) => sources[file.includes('/') || file === 'kit.tsx' ? `./${file}` : `./${app}/${file}`] ?? '';
 
 /** The address of a screen on its own, without the site around it. */
 export const frameUrl = (app: string, screen: string) => `${import.meta.env.BASE_URL}app-frame/${app}/${screen}`;

@@ -1,5 +1,5 @@
 // Tessel's home: this month's numbers, active users, recent activity and the projects table.
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Avatar,
   Badge,
@@ -16,29 +16,49 @@ import {
   SegmentedControl,
   Statistic,
   useToast,
-} from '@halo-ds/react';
-import type { BadgeColor, DataTableColumn, DateRange } from '@halo-ds/react';
-import { DotsThree, DownloadSimple, Funnel, MagnifyingGlass, Plus } from '@phosphor-icons/react';
-import { useNav } from '../kit';
-import { activeUsers, activity, projects } from './data';
-import { Shell } from './Shell';
+  TableToolbar,
+} from "@halo-ds/react";
+import type { BadgeColor, DataTableColumn, DateRange } from "@halo-ds/react";
+import {
+  DotsThree,
+  DownloadSimple,
+  Funnel,
+  MagnifyingGlass,
+  Plus,
+} from "@phosphor-icons/react";
+import { useNav } from "../kit";
+import { activeUsers, activity, projects } from "./data";
+import { Shell } from "./Shell";
 
-const statusColor: Record<string, BadgeColor> = { 'In review': 'warning', 'On track': 'success', 'At risk': 'error', 'Not started': 'neutral' };
-const day = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+const statusColor: Record<string, BadgeColor> = {
+  "In review": "warning",
+  "On track": "success",
+  "At risk": "error",
+  "Not started": "neutral",
+};
+const day = (d: Date) =>
+  d.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
 type Project = (typeof projects)[number];
 
 export default function Overview() {
   const go = useNav();
   const { toast } = useToast();
-  const [range, setRange] = useState<DateRange | null>([new Date(2026, 9, 1), new Date(2026, 9, 31)]);
-  const [period, setPeriod] = useState('month');
-  const [query, setQuery] = useState('');
+  const [range, setRange] = useState<DateRange | null>([
+    new Date(2026, 9, 1),
+    new Date(2026, 9, 31),
+  ]);
+  const [period, setPeriod] = useState("month");
+  const [query, setQuery] = useState("");
 
   const columns: DataTableColumn<Project>[] = [
     {
-      key: 'name',
-      header: 'Project',
+      key: "name",
+      header: "Project",
       sortable: true,
       sortValue: (p) => p.name,
       render: (p) => (
@@ -49,8 +69,8 @@ export default function Overview() {
       ),
     },
     {
-      key: 'owner',
-      header: 'Owner',
+      key: "owner",
+      header: "Owner",
       render: (p) => (
         <span className="t-person">
           <Avatar src={p.owner.src} name={p.owner.name} size="sm" />
@@ -62,8 +82,8 @@ export default function Overview() {
       ),
     },
     {
-      key: 'status',
-      header: 'Status',
+      key: "status",
+      header: "Status",
       filters: Object.keys(statusColor).map((s) => ({ value: s, label: s })),
       onFilter: (p, values) => values.includes(p.status),
       render: (p) => (
@@ -73,21 +93,31 @@ export default function Overview() {
       ),
     },
     {
-      key: 'progress',
-      header: 'Progress',
+      key: "progress",
+      header: "Progress",
       sortable: true,
       sortValue: (p) => p.progress,
       render: (p) => (
         <span className="t-progress">
-          <ProgressBar value={p.progress} size="sm" aria-label={`${p.name} progress`} />
+          <ProgressBar
+            value={p.progress}
+            size="sm"
+            aria-label={`${p.name} progress`}
+          />
         </span>
       ),
     },
-    { key: 'due', header: 'Due date', sortable: true, sortValue: (p) => p.due.getTime(), render: (p) => day(p.due) },
     {
-      key: 'actions',
+      key: "due",
+      header: "Due date",
+      sortable: true,
+      sortValue: (p) => p.due.getTime(),
+      render: (p) => day(p.due),
+    },
+    {
+      key: "actions",
       header: <span className="sr-only">Actions</span>,
-      align: 'right',
+      align: "right",
       render: (p) => (
         <Menu
           aria-label={`${p.name} actions`}
@@ -97,17 +127,26 @@ export default function Overview() {
             </CompactButton>
           }
           items={[
-            { label: 'Open board', onSelect: () => go('project') },
-            { label: 'Copy link', onSelect: () => toast({ type: 'success', title: 'Link copied' }) },
-            { type: 'separator' },
-            { label: 'Archive', destructive: true, onSelect: () => toast({ title: `${p.name} archived` }) },
+            { label: "Open board", onSelect: () => go("project") },
+            {
+              label: "Copy link",
+              onSelect: () => toast({ type: "success", title: "Link copied" }),
+            },
+            { type: "separator" },
+            {
+              label: "Archive",
+              destructive: true,
+              onSelect: () => toast({ title: `${p.name} archived` }),
+            },
           ]}
         />
       ),
     },
   ];
 
-  const shown = projects.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase()));
+  const shown = projects.filter((p) =>
+    p.name.toLowerCase().includes(query.trim().toLowerCase()),
+  );
 
   return (
     <Shell current="overview">
@@ -119,12 +158,26 @@ export default function Overview() {
           </div>
           <div className="t-actions">
             <div className="t-dates">
-              <DateRangePicker aria-label="Dates" value={range} onValueChange={setRange} />
+              <DateRangePicker
+                aria-label="Dates"
+                value={range}
+                onValueChange={setRange}
+              />
             </div>
-            <Button variant="secondary" iconLeft={<DownloadSimple />} onClick={() => toast({ type: 'success', title: 'Report exported', description: 'Overview, 1 to 31 Oct 2026.' })}>
+            <Button
+              variant="secondary"
+              iconLeft={<DownloadSimple />}
+              onClick={() =>
+                toast({
+                  type: "success",
+                  title: "Report exported",
+                  description: "Overview, 1 to 31 Oct 2026.",
+                })
+              }
+            >
               Export
             </Button>
-            <Button iconLeft={<Plus />} onClick={() => go('project')}>
+            <Button iconLeft={<Plus />} onClick={() => go("project")}>
               New project
             </Button>
           </div>
@@ -132,16 +185,47 @@ export default function Overview() {
 
         <div className="t-stats">
           <Card>
-            <Statistic label="Active users" value={12480} change="+12.4%" trend="up" sentiment="positive" comparison="vs last month" />
+            <Statistic
+              label="Active users"
+              value={12480}
+              change="+12.4%"
+              trend="up"
+              sentiment="positive"
+              comparison="vs last month"
+            />
           </Card>
           <Card>
-            <Statistic label="New sign-ups" value={1284} change="+8.1%" trend="up" sentiment="positive" comparison="vs last month" />
+            <Statistic
+              label="New sign-ups"
+              value={1284}
+              change="+8.1%"
+              trend="up"
+              sentiment="positive"
+              comparison="vs last month"
+            />
           </Card>
           <Card>
-            <Statistic label="Churn rate" value={2.3} precision={1} suffix="%" change="-0.4%" trend="down" sentiment="positive" comparison="vs last month" />
+            <Statistic
+              label="Churn rate"
+              value={2.3}
+              precision={1}
+              suffix="%"
+              change="-0.4%"
+              trend="down"
+              sentiment="positive"
+              comparison="vs last month"
+            />
           </Card>
           <Card>
-            <Statistic label="Monthly revenue" value={48920} prefix="$" change="+5.6%" trend="up" sentiment="positive" comparison="vs last month" />
+            <Statistic
+              label="Monthly revenue"
+              value={48920}
+              prefix="$"
+              change="+5.6%"
+              trend="up"
+              sentiment="positive"
+              comparison="vs last month"
+            />
           </Card>
         </div>
 
@@ -158,13 +242,19 @@ export default function Overview() {
                 value={period}
                 onValueChange={setPeriod}
                 options={[
-                  { value: 'week', label: 'Week' },
-                  { value: 'month', label: 'Month' },
-                  { value: 'year', label: 'Year' },
+                  { value: "week", label: "Week" },
+                  { value: "month", label: "Month" },
+                  { value: "year", label: "Year" },
                 ]}
               />
             </div>
-            <BarChart label="Active users by month" data={activeUsers} xKey="month" series={[{ key: 'users', label: 'Active users' }]} height={240} />
+            <BarChart
+              label="Active users by month"
+              data={activeUsers}
+              xKey="month"
+              series={[{ key: "users", label: "Active users" }]}
+              height={240}
+            />
           </section>
 
           <section className="t-panel" aria-labelledby="t-activity">
@@ -195,18 +285,25 @@ export default function Overview() {
           getRowId={(p) => p.id}
           pageSize={5}
           toolbar={
-            <div className="t-panel-head" style={{ width: '100%' }}>
-              <div>
-                <h2 style={{ margin: 0, fontSize: 'var(--halo-font-size-lg)' }}>Projects</h2>
-                <p className="t-muted">8 active projects across 4 teams</p>
-              </div>
-              <div className="t-actions">
-                <Input size="sm" aria-label="Search projects" placeholder="Search" iconLeft={<MagnifyingGlass />} value={query} onChange={(e) => setQuery(e.target.value)} />
-                <Button size="sm" variant="secondary" iconLeft={<Funnel />}>
-                  Filter
-                </Button>
-              </div>
-            </div>
+            <TableToolbar
+              title="Projects"
+              description="8 active projects across 4 teams"
+              actions={
+                <>
+                  <Input
+                    size="sm"
+                    aria-label="Search projects"
+                    placeholder="Search"
+                    iconLeft={<MagnifyingGlass />}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                  <Button size="sm" variant="secondary" iconLeft={<Funnel />}>
+                    Filter
+                  </Button>
+                </>
+              }
+            />
           }
         />
       </div>

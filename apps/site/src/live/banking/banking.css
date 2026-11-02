@@ -1,0 +1,302 @@
+/* Kova's own styles: the logo, money tiles and the card. The shared layout is in ../shared/app.css. */
+
+.kova-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--halo-spacing-4);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.kova-logo svg {
+  fill: var(--halo-icon-primary);
+}
+
+.kova-logo .kova-logo-hole {
+  fill: var(--halo-surface-primary);
+}
+
+.k-balance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+}
+
+.k-balance strong {
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-5xl);
+  line-height: var(--halo-line-height-5xl);
+  font-weight: var(--halo-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.k-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--halo-spacing-6);
+}
+
+.k-tile {
+  display: grid;
+  gap: var(--halo-spacing-2);
+  padding: var(--halo-spacing-7);
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-minimal);
+}
+
+.k-tile strong {
+  font-size: var(--halo-font-size-xl);
+  line-height: var(--halo-line-height-xl);
+  font-variant-numeric: tabular-nums;
+}
+
+.k-spend {
+  display: grid;
+  gap: var(--halo-spacing-7);
+}
+
+.k-spend-row {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+}
+
+.k-spend-row > :last-child {
+  flex: 1;
+}
+
+.k-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--halo-surface-minimal);
+  color: var(--halo-icon-primary);
+  font-size: 18px;
+}
+
+.k-icon-alert {
+  background: var(--halo-state-error-invert);
+  color: var(--halo-state-error-primary);
+}
+
+.k-goal {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-7);
+  width: 100%;
+  padding: var(--halo-spacing-4);
+  border: 0;
+  border-radius: var(--halo-radius-5);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.k-goal:hover {
+  background: var(--halo-surface-minimal);
+}
+
+.k-goal:focus-visible {
+  outline: 2px solid var(--halo-border-focus);
+}
+
+.k-in {
+  color: var(--halo-state-success-contrast);
+}
+
+/* Send money */
+
+.k-send {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--halo-spacing-9);
+}
+
+.k-people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--halo-spacing-6);
+}
+
+.k-person {
+  display: grid;
+  justify-items: center;
+  gap: var(--halo-spacing-2);
+  min-width: 64px;
+  padding: var(--halo-spacing-4);
+  border: 1px solid transparent;
+  border-radius: var(--halo-radius-6);
+  background: none;
+  color: var(--halo-text-secondary);
+  font: inherit;
+  font-size: var(--halo-font-size-sm);
+  cursor: pointer;
+}
+
+.k-person[aria-pressed='true'] {
+  border-color: var(--halo-text-primary);
+  color: var(--halo-text-primary);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.k-person:focus-visible {
+  outline: 2px solid var(--halo-border-focus);
+}
+
+.k-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--halo-spacing-7);
+}
+
+.k-summary {
+  display: grid;
+  gap: var(--halo-spacing-6);
+  margin: 0;
+  font-size: var(--halo-font-size-sm);
+}
+
+.k-summary > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--halo-spacing-6);
+}
+
+.k-summary dt {
+  color: var(--halo-text-secondary);
+}
+
+.k-summary dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.k-summary .k-total {
+  padding-top: var(--halo-spacing-6);
+  border-top: 1px solid var(--halo-border-secondary);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.k-summary .k-total dt {
+  color: var(--halo-text-primary);
+}
+
+.k-who {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+  padding: var(--halo-spacing-6);
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-minimal);
+}
+
+/* Cards */
+
+.k-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--halo-spacing-9);
+}
+
+.k-card {
+  display: grid;
+  gap: var(--halo-spacing-10);
+  aspect-ratio: 1.68;
+  padding: var(--halo-spacing-9);
+  border-radius: var(--halo-radius-8);
+  background: #111;
+  color: #fff;
+  transition: filter 300ms ease;
+}
+
+.k-card[data-frozen] {
+  filter: grayscale(1) opacity(0.55);
+}
+
+.k-card-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.k-card-top svg {
+  fill: #fff;
+}
+
+.k-card-number {
+  align-self: center;
+  font-size: var(--halo-font-size-2xl);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.k-card-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  font-size: var(--halo-font-size-sm);
+}
+
+.k-card-foot span {
+  color: #bbb;
+}
+
+.k-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--halo-spacing-6);
+}
+
+/* Savings goal */
+
+.k-goal-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: var(--halo-spacing-9);
+}
+
+.k-saved {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-9);
+}
+
+.k-saved strong {
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-5xl);
+  line-height: var(--halo-line-height-5xl);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+@media (max-width: 1023px) {
+  .k-tiles,
+  .k-send,
+  .k-cards,
+  .k-goal-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .k-tiles,
+  .k-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .k-balance strong,
+  .k-saved strong {
+    font-size: var(--halo-font-size-3xl);
+    line-height: var(--halo-line-height-3xl);
+  }
+
+  .k-saved {
+    gap: var(--halo-spacing-7);
+  }
+}

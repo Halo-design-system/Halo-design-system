@@ -20,5 +20,5 @@ export const saas = {
   ],
   Missing,
   /** Shared by every screen, shown under Code after the screen's own file. */
-  shared: ['Shell.tsx', 'data.ts', 'saas.css'],
+  shared: ['Shell.tsx', 'data.ts', 'saas.css', 'shared/AppShell.tsx', 'shared/app.css', 'kit.tsx'],
 };

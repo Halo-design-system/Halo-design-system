@@ -6,6 +6,7 @@ import { EnvelopeSimple } from '@phosphor-icons/react';
 import { useNav } from '../kit';
 import { people } from './data';
 import { Logo } from './Shell';
+import '../shared/app.css';
 import './saas.css';
 
 export default function SignUp() {
