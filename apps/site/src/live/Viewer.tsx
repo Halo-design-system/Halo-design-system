@@ -8,12 +8,12 @@ import { frameUrl, sourceOf } from './registry';
 import type { LiveApp } from './registry';
 import './viewer.css';
 
-const devices = {
+export const devices = {
   desktop: { label: 'Desktop', icon: <Monitor />, width: 1440, height: 900 },
   tablet: { label: 'Tablet', icon: <DeviceTablet />, width: 834, height: 1112 },
   mobile: { label: 'Mobile', icon: <DeviceMobile />, width: 390, height: 844 },
 };
-type Device = keyof typeof devices;
+export type Device = keyof typeof devices;
 
 /** The phone or tablet status bar, drawn like the one in the Figma file. Decoration only, so it is hidden from screen readers. */
 function StatusBar() {
@@ -59,7 +59,7 @@ function useFit(width: number) {
   return { ref, scale };
 }
 
-function DeviceFrame({ device, src, address }: { device: Device; src: string; address: string }) {
+export function DeviceFrame({ device, src, address }: { device: Device; src: string; address: string }) {
   const d = devices[device];
   const chrome = device === 'desktop' ? 44 : 0;
   const { ref, scale } = useFit(d.width + (device === 'desktop' ? 0 : 28));
