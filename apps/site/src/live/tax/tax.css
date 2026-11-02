@@ -1,0 +1,180 @@
+/* Zephra's own styles: the logo, deductions, receipts and the paid receipt. The shared layout is in ../shared/app.css. */
+
+.zephra-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--halo-spacing-4);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.zephra-logo svg {
+  fill: var(--halo-icon-primary);
+}
+
+.z-deadline {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+}
+
+.z-deadline > .t-two-lines {
+  flex: 1;
+}
+
+.z-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--halo-surface-minimal);
+  color: var(--halo-icon-primary);
+  font-size: 20px;
+}
+
+.z-icon-soon {
+  background: var(--halo-state-warning-invert);
+  color: var(--halo-state-warning-contrast);
+}
+
+.z-icon-done {
+  background: var(--halo-state-success-invert);
+  color: var(--halo-state-success-contrast);
+}
+
+.z-claim {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--halo-spacing-9);
+  padding: var(--halo-spacing-8) 0;
+  border-bottom: 1px solid var(--halo-border-secondary);
+}
+
+.z-claim > :last-child {
+  flex: 0 0 180px;
+}
+
+/* Receipts */
+
+.z-receipts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--halo-spacing-9);
+}
+
+.z-receipt {
+  display: grid;
+  gap: var(--halo-spacing-4);
+  padding: var(--halo-spacing-7);
+  border: 1px solid var(--halo-border-secondary);
+  border-radius: var(--halo-radius-8);
+  background: var(--halo-surface-primary);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.z-receipt:hover {
+  transform: translateY(-2px);
+}
+
+.z-receipt:focus-visible {
+  outline: 2px solid var(--halo-border-focus);
+  outline-offset: 2px;
+}
+
+.z-receipt-image {
+  display: grid;
+  place-items: center;
+  height: 120px;
+  margin-bottom: var(--halo-spacing-4);
+  border-radius: var(--halo-radius-5);
+  background: var(--halo-surface-minimal);
+  color: var(--halo-icon-primary);
+  font-size: 36px;
+}
+
+/* Paid receipt */
+
+.z-paid {
+  display: grid;
+  justify-items: center;
+  gap: var(--halo-spacing-8);
+  width: 100%;
+  max-width: 560px;
+  margin: var(--halo-spacing-12) auto;
+  padding: var(--halo-spacing-12) var(--halo-spacing-12);
+  border: 1px solid var(--halo-border-secondary);
+  border-radius: var(--halo-radius-8);
+  background: var(--halo-surface-primary);
+  text-align: center;
+}
+
+.z-paid h1 {
+  margin: 0;
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-2xl);
+  line-height: var(--halo-line-height-2xl);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.z-tick {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--halo-state-success-secondary);
+  color: var(--halo-state-success-contrast);
+  font-size: 30px;
+}
+
+.z-box {
+  width: 100%;
+  padding: var(--halo-spacing-7);
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-minimal);
+  text-align: left;
+}
+
+.z-qr {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-7);
+}
+
+@media (max-width: 1023px) {
+  .z-receipts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .z-receipts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .z-claim {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--halo-spacing-6);
+  }
+
+  .z-claim > :last-child {
+    flex-basis: auto;
+  }
+
+  .z-paid {
+    margin: 0;
+    padding: var(--halo-spacing-9) var(--halo-spacing-7);
+  }
+
+  .z-qr {
+    flex-direction: column;
+    text-align: center;
+  }
+}
