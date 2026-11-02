@@ -65,23 +65,6 @@
   flex: 1;
 }
 
-.k-icon {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--halo-surface-minimal);
-  color: var(--halo-icon-primary);
-  font-size: 18px;
-}
-
-.k-icon-alert {
-  background: var(--halo-state-error-invert);
-  color: var(--halo-state-error-primary);
-}
-
 .k-goal {
   display: flex;
   align-items: center;
@@ -111,19 +94,6 @@
 
 /* Send money */
 
-.k-send {
-  display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
-  align-items: start;
-  gap: var(--halo-spacing-9);
-}
-
-.k-people {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--halo-spacing-6);
-}
-
 .k-person {
   display: grid;
   justify-items: center;
@@ -147,62 +117,6 @@
 
 .k-person:focus-visible {
   outline: 2px solid var(--halo-border-focus);
-}
-
-.k-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--halo-spacing-7);
-}
-
-.k-summary {
-  display: grid;
-  gap: var(--halo-spacing-6);
-  margin: 0;
-  font-size: var(--halo-font-size-sm);
-}
-
-.k-summary > div {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--halo-spacing-6);
-}
-
-.k-summary dt {
-  color: var(--halo-text-secondary);
-}
-
-.k-summary dd {
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.k-summary .k-total {
-  padding-top: var(--halo-spacing-6);
-  border-top: 1px solid var(--halo-border-secondary);
-  font-weight: var(--halo-font-weight-semibold);
-}
-
-.k-summary .k-total dt {
-  color: var(--halo-text-primary);
-}
-
-.k-who {
-  display: flex;
-  align-items: center;
-  gap: var(--halo-spacing-6);
-  padding: var(--halo-spacing-6);
-  border-radius: var(--halo-radius-6);
-  background: var(--halo-surface-minimal);
-}
-
-/* Cards */
-
-.k-cards {
-  display: grid;
-  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr);
-  align-items: start;
-  gap: var(--halo-spacing-9);
 }
 
 .k-card {
@@ -245,21 +159,6 @@
 
 .k-card-foot span {
   color: #bbb;
-}
-
-.k-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--halo-spacing-6);
-}
-
-/* Savings goal */
-
-.k-goal-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
-  gap: var(--halo-spacing-9);
 }
 
 .k-saved {

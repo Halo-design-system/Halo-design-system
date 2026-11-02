@@ -74,25 +74,6 @@
   line-height: var(--halo-line-height-5xl);
 }
 
-.v-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--halo-spacing-6);
-}
-
-.v-logo-box {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--halo-radius-6);
-  border: 1px solid var(--halo-border-secondary);
-  background: var(--halo-surface-primary);
-  color: var(--halo-icon-primary);
-  font-size: 28px;
-}
-
 .v-feed {
   display: grid;
   gap: var(--halo-spacing-9);

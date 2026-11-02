@@ -15,32 +15,6 @@
   fill: var(--halo-surface-primary);
 }
 
-.s-call {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 130px;
-  align-items: center;
-  gap: var(--halo-spacing-7);
-}
-
-.s-call-when {
-  display: grid;
-  justify-items: end;
-  gap: var(--halo-spacing-2);
-  font-size: var(--halo-font-size-sm);
-  font-weight: var(--halo-font-weight-semibold);
-}
-
-.s-three {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.s-account {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--halo-spacing-7);
-}
-
 /* Product preview */
 
 .s-preview {
