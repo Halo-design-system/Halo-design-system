@@ -351,9 +351,16 @@ main {
 }
 
 .wall-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* One run of cards; the column holds two, so it can loop while it drifts */
+.wall-run {
   display: grid;
   gap: 12px;
-  min-width: 0;
+  padding-bottom: 12px;
 }
 
 .wall-col:nth-child(even) {
@@ -397,6 +404,15 @@ main {
     margin-top: 0;
   }
 
+  /* On phones the columns stack, so they stay still and show one copy */
+  .wall-run + .wall-run {
+    display: none;
+  }
+
+  .wall-col[data-drift] {
+    animation: none !important;
+  }
+
   .brand-dock-label {
     display: none;
   }
@@ -428,6 +444,18 @@ main {
     animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both;
   }
 
+  /* The wall drifts slowly, columns taking turns up and down. It stops while you use it. */
+  .wall-col[data-drift='up'] {
+    animation: drift-up var(--speed, 80s) linear infinite;
+  }
+  .wall-col[data-drift='down'] {
+    animation: drift-down var(--speed, 80s) linear infinite;
+  }
+  .wall:hover .wall-col,
+  .wall:focus-within .wall-col {
+    animation-play-state: paused;
+  }
+
   /* Further down, sections and cards fade up as they scroll into view, where the browser supports it */
   @supports (animation-timeline: view()) {
     .features .feature,
@@ -444,6 +472,24 @@ main {
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }
+  }
+}
+
+@keyframes drift-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes drift-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 

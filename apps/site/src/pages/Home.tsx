@@ -36,8 +36,8 @@ import {
 import { ArrowRight, Code, FigmaLogo, Plugs } from '@phosphor-icons/react';
 import { brandVariables, contrast, parseHex } from '../../../../packages/cli/src/colour';
 import { CodeBlock } from '../CodeBlock';
-import { Link, useRoute } from '../router';
-import { apps } from '../screens';
+import { useRoute } from '../router';
+import { AiSection, AppsSection, ChartsSection, CommandSection, ComponentsSection, FaqSection, OpenSourceSection } from './HomeSections';
 
 /* ---------- The headline: the end of the sentence changes, with the letters scrambling into place ---------- */
 
@@ -462,10 +462,15 @@ export function Home() {
       <section className="hero-wall" aria-label="Live components to try">
         <div className="wall" style={style}>
           {wall.map((col, c) => (
-            <div key={c} className="wall-col">
-              {col.map((Item, i) => (
-                <div key={i} className="wall-item" style={{ '--i': c + i * 2 } as CSSProperties}>
-                  <Item />
+            // Each column drifts slowly up or down. A second copy follows the first, so it loops without a gap.
+            <div key={c} className="wall-col" data-drift={c % 2 ? 'down' : 'up'} style={{ '--speed': `${70 + c * 9}s` } as CSSProperties}>
+              {[0, 1].map((copy) => (
+                <div key={copy} className="wall-run" aria-hidden={copy === 1 || undefined} inert={copy === 1 || undefined}>
+                  {col.map((Item, i) => (
+                    <div key={i} className="wall-item" style={{ '--i': c + i * 2 } as CSSProperties}>
+                      <Item />
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -473,6 +478,12 @@ export function Home() {
         </div>
         <BrandDock value={brand} onChange={setBrand} />
       </section>
+
+      <CommandSection />
+      <ComponentsSection />
+      <AiSection />
+      <AppsSection />
+      <ChartsSection />
 
       <section className="features" aria-label="What you get">
         {features.map((f) => (
@@ -484,28 +495,8 @@ export function Home() {
         ))}
       </section>
 
-      <section className="showcase" aria-labelledby="showcase-title">
-        <div className="try-head">
-          <div>
-            <h2 id="showcase-title">See it in real screens</h2>
-            <p>Seven example apps, on desktop and mobile, with every component named.</p>
-          </div>
-          <Button variant="secondary" iconRight={<ArrowRight />} onClick={() => go('/examples')}>All examples</Button>
-        </div>
-        <div className="used-grid showcase-grid">
-          {(['saas', 'banking', 'healthcare'] as const).map((id) => {
-            const app = apps.find((a) => a.id === id)!;
-            const screen = app.screens[0]!;
-            return (
-              <Link key={id} to={`/examples/${id}`} className="used-card">
-                <img src={`${import.meta.env.BASE_URL}screens/${screen.id}-desktop.webp`} alt="" loading="lazy" width={screen.desktop[0]} height={screen.desktop[1]} />
-                <span className="used-screen">{app.name}</span>
-                <span className="used-name">{app.screens.length} screens</span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+      <OpenSourceSection />
+      <FaqSection />
 
       <section className="cta">
         <h2>Start building</h2>

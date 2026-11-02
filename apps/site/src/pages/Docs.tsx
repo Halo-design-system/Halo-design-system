@@ -373,7 +373,7 @@ function Theming() {
 }
 
 const mcpCommand = 'npx -y halo-ds@latest mcp';
-const mcpConfigs = {
+export const mcpConfigs = {
   claude: { label: 'Claude Code', file: 'In your terminal', code: `claude mcp add halo -- ${mcpCommand}` },
   cursor: { label: 'Cursor', file: '.cursor/mcp.json', code: JSON.stringify({ mcpServers: { halo: { command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
   vscode: { label: 'VS Code', file: '.vscode/mcp.json', code: JSON.stringify({ servers: { halo: { type: 'stdio', command: 'npx', args: ['-y', 'halo-ds@latest', 'mcp'] } } }, null, 2) },
