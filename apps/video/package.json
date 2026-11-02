@@ -1,0 +1,29 @@
+{
+  "name": "video",
+  "private": true,
+  "type": "module",
+  "description": "The Halo launch video, made with Remotion from the real components.",
+  "scripts": {
+    "studio": "node scripts/music.mjs && remotion studio src/index.ts",
+    "render": "node scripts/music.mjs && remotion render src/index.ts Launch out/halo-launch.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/geist": "^5.3.0",
+    "@fontsource/geist-mono": "^5.2.7",
+    "@halo-ds/react": "workspace:*",
+    "@halo-ds/tokens": "workspace:*",
+    "@phosphor-icons/react": "^2.1.10",
+    "@remotion/cli": "4.0.539",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "4.0.539"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

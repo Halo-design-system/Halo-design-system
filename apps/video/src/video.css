@@ -1,0 +1,29 @@
+/* Each frame is drawn on its own, so CSS transitions would catch components halfway. The scenes animate instead. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* The backdrop: a soft light falling from the top right, in either theme */
+.stage[data-theme='light'] {
+  background: radial-gradient(ellipse 90% 90% at 70% 30%, #ffffff 0%, #e4e6eb 100%);
+}
+.stage[data-theme='dark'] {
+  background: radial-gradient(ellipse 90% 90% at 70% 30%, #2e2e2e 0%, #141414 100%);
+}
+
+/* A frosted panel for counts that sit over moving components */
+.band {
+  background: color-mix(in srgb, var(--halo-surface-primary) 88%, transparent);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--halo-border-secondary);
+}
+
+body {
+  margin: 0;
+  font-family: var(--halo-font-family-body);
+  -webkit-font-smoothing: antialiased;
+}

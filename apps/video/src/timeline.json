@@ -1,0 +1,15 @@
+{
+  "intro": 120,
+  "interact": 400,
+  "dark": 150,
+  "components": 270,
+  "tokens": 180,
+  "icons": 150,
+  "illustrations": 150,
+  "assets": 210,
+  "apps": 210,
+  "cli": 300,
+  "mcp": 330,
+  "figma": 120,
+  "outro": 150
+}

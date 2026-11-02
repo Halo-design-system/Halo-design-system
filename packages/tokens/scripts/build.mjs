@@ -143,8 +143,14 @@ for (const [, c] of collections) {
   for (const mode of others) {
     // Breakpoints build on the previous (smaller) one; themes build on the base mode.
     const from = c.breakpoints ? prev : base;
+    // A token that points at another themed token, like button-secondary at surface-primary, is repeated
+    // even when its text is the same, so it resolves again inside a dark section of a light page.
+    const pointsAtThemed = (t) => {
+      const alias = (t.byMode[mode] ?? Object.values(t.byMode)[0]).alias;
+      return !c.breakpoints && alias && lookup(alias).collection === t.collection;
+    };
     const lines = [...c.tokens.values()]
-      .filter((t) => cssValue(t, mode) !== cssValue(t, from))
+      .filter((t) => cssValue(t, mode) !== cssValue(t, from) || pointsAtThemed(t))
       .map((t) => `${cssVar(t)}: ${cssValue(t, mode)};`);
     if (c.breakpoints) responsive.push([c.breakpoints[mode], lines]);
     else themed.push([mode.toLowerCase(), lines]);
