@@ -2,6 +2,7 @@
 import type { ComponentType } from 'react';
 import { banking } from './banking';
 import { saas } from './saas';
+import { salesCrm } from './sales-crm';
 
 export interface LiveApp {
   id: string;
@@ -15,7 +16,7 @@ export interface LiveApp {
   Missing: ComponentType<{ page: string }>;
 }
 
-export const liveApps: LiveApp[] = [saas, banking];
+export const liveApps: LiveApp[] = [saas, banking, salesCrm];
 
 const sources = import.meta.glob(['./*/*.{tsx,ts,css}', './shared/*.{tsx,css}', './kit.tsx'], { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 

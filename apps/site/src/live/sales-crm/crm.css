@@ -1,0 +1,123 @@
+/* Veyra's own styles: deal cards and the stage boards. The shared layout is in ../shared/app.css. */
+
+.v-stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: var(--halo-spacing-7);
+  overflow-x: auto;
+}
+
+.v-deal {
+  display: grid;
+  gap: var(--halo-spacing-4);
+  width: 100%;
+  padding: var(--halo-spacing-7);
+  border: 0;
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-primary);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.v-deal:hover {
+  transform: translateY(-2px);
+}
+
+.v-deal:focus-visible {
+  outline: 2px solid var(--halo-border-focus);
+  outline-offset: 2px;
+}
+
+.v-stage-head {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-4);
+  padding: var(--halo-spacing-2) var(--halo-spacing-2) var(--halo-spacing-2) var(--halo-spacing-4);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.v-stage-head > :last-child {
+  margin-left: auto;
+  color: var(--halo-text-secondary);
+  font-size: var(--halo-font-size-sm);
+  font-weight: var(--halo-font-weight-regular);
+}
+
+.v-board-wrap {
+  padding: var(--halo-spacing-2);
+}
+
+.v-rank {
+  display: grid;
+  grid-template-columns: 24px minmax(160px, 1fr) minmax(0, 1.4fr) auto;
+  align-items: center;
+  gap: var(--halo-spacing-7);
+}
+
+.v-ratings {
+  display: grid;
+  gap: var(--halo-spacing-6);
+}
+
+.v-score {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+}
+
+.v-score strong {
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-5xl);
+  line-height: var(--halo-line-height-5xl);
+}
+
+.v-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--halo-spacing-6);
+}
+
+.v-logo-box {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--halo-radius-6);
+  border: 1px solid var(--halo-border-secondary);
+  background: var(--halo-surface-primary);
+  color: var(--halo-icon-primary);
+  font-size: 28px;
+}
+
+.v-feed {
+  display: grid;
+  gap: var(--halo-spacing-9);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v-feed li {
+  display: flex;
+  gap: var(--halo-spacing-6);
+}
+
+@media (max-width: 1023px) {
+  .v-rank {
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+  }
+
+  .v-rank > :nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .v-stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
