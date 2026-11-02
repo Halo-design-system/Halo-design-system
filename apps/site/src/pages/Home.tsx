@@ -451,9 +451,8 @@ export function Home() {
           Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.
         </p>
         <div className="hero-actions">
-          <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Get started</Button>
+          <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Start for free</Button>
           <Button size="lg" variant="secondary" onClick={() => go('/components')}>Browse components</Button>
-          <Button size="lg" variant="ghost" iconLeft={<FigmaLogo />} onClick={() => go('/figma')}>Get the Figma file</Button>
         </div>
         <div className="hero-install">
           <CodeBlock code="npm install @halo-ds/react" label="Copy install command" compact />
