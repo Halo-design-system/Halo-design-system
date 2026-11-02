@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5174",
-    "build": "vite build && node scripts/spa-fallback.mjs && node ../../packages/cli/build/export.mjs dist",
+    "dev": "node scripts/icons.mjs && vite --port 5174",
+    "build": "node scripts/icons.mjs && vite build && node scripts/spa-fallback.mjs && node ../../packages/cli/build/export.mjs dist",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

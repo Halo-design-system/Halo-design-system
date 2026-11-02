@@ -1,66 +1,156 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
+  Accordion,
+  AccordionItem,
+  Alert,
   Avatar,
+  AvatarGroup,
   BarChart,
   Badge,
   Button,
   Calendar,
   Card,
   Checkbox,
+  ColorPicker,
   FileItem,
   InputField,
+  Pagination,
+  Popover,
+  ProgressCircle,
   RangeSlider,
+  Rating,
   SegmentedControl,
   SelectField,
   Statistic,
+  Stepper,
   Switch,
   Tab,
   TabList,
   Tabs,
   Tag,
+  TextareaField,
+  VerificationCode,
   useToast,
 } from '@halo-ds/react';
 import { ArrowRight, Code, FigmaLogo, Plugs } from '@phosphor-icons/react';
+import { brandVariables, contrast, parseHex } from '../../../../packages/cli/src/colour';
 import { CodeBlock } from '../CodeBlock';
-import { Link, links, useRoute } from '../router';
+import { Link, useRoute } from '../router';
 import { apps } from '../screens';
 
-/* Brand colours people can try on the live examples. Purple is Halo's own, so it uses the real tokens.
-   The others set the few variables a rebrand needs, with light and dark values (site.css picks by theme). */
-const brands = [
-  { name: 'Purple', main: '#CC1DD0' },
-  {
-    name: 'Blue', main: '#2F6BFF', hover: '#1F5FE0', ring: '#C9DAFF',
-    light: { soft: '#EAF1FF', tint: '#C9DAFF', text: '#1A4CC2' },
-    dark: { soft: '#14306E', tint: '#1C3F8F', text: '#C9DAFF' },
-  },
-  {
-    name: 'Green', main: '#178C4E', hover: '#11693A', ring: '#B9E6CE',
-    light: { soft: '#E8F7EF', tint: '#B9E6CE', text: '#11693A' },
-    dark: { soft: '#0E3D24', tint: '#13502F', text: '#B9E6CE' },
-  },
-  {
-    name: 'Orange', main: '#E2601B', hover: '#C24F12', ring: '#FFD3B8',
-    light: { soft: '#FFF2EA', tint: '#FFD3B8', text: '#8F3A0C' },
-    dark: { soft: '#5A2608', tint: '#73320C', text: '#FFD3B8' },
-  },
+/* ---------- The headline: the end of the sentence changes, with the letters scrambling into place ---------- */
+
+const endings = [
+  'AI-assisted frontend',
+  'scalable products',
+  'fintech apps',
+  'edtech platforms',
+  'agentic products',
+  'HR management tools',
+  'healthcare apps',
+  'SaaS dashboards',
 ];
 
-const brandVars = (b: (typeof brands)[number]) =>
-  (b.light
-    ? {
-        '--b-main': b.main,
-        '--b-hover': b.hover,
-        '--b-ring': b.ring,
-        '--b-soft-light': b.light.soft,
-        '--b-tint-light': b.light.tint,
-        '--b-text-light': b.light.text,
-        '--b-soft-dark': b.dark.soft,
-        '--b-tint-dark': b.dark.tint,
-        '--b-text-dark': b.dark.text,
-      }
-    : {}) as CSSProperties;
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function Scramble({ words }: { words: string[] }) {
+  const [text, setText] = useState(words[0]!);
+  useEffect(() => {
+    let index = 0;
+    let frame = 0;
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const timer = window.setInterval(() => {
+      const from = words[index]!;
+      index = (index + 1) % words.length;
+      const to = words[index]!;
+      // Without motion, just swap the words
+      if (reducedMotion()) return setText(to);
+      const start = performance.now();
+      const run = (now: number) => {
+        const t = Math.min(1, (now - start) / 700);
+        const length = Math.round(from.length + (to.length - from.length) * Math.min(1, t * 2));
+        let out = '';
+        for (let i = 0; i < length; i++) {
+          // Letters settle from left to right; the rest flicker
+          if (i / length < t * 1.2 - 0.2) out += to[i] ?? '';
+          else out += to[i] === ' ' ? ' ' : letters[Math.floor(Math.random() * letters.length)];
+        }
+        setText(t < 1 ? out : to);
+        if (t < 1) frame = requestAnimationFrame(run);
+      };
+      frame = requestAnimationFrame(run);
+    }, 2800);
+    return () => {
+      window.clearInterval(timer);
+      cancelAnimationFrame(frame);
+    };
+  }, [words]);
+  return (
+    <span className="scramble" aria-hidden="true">
+      {text}
+    </span>
+  );
+}
+
+/* ---------- Brand colours for the live components ---------- */
+
+const presets = [
+  { name: 'Purple', hex: '#CC1DD0' },
+  { name: 'Blue', hex: '#2F6BFF' },
+  { name: 'Teal', hex: '#0F9D8A' },
+  { name: 'Green', hex: '#178C4E' },
+  { name: 'Orange', hex: '#E2601B' },
+  { name: 'Red', hex: '#E5484D' },
+];
+
+/** The site's light or dark mode, kept up to date when the theme switch changes it. */
+function useSiteTheme() {
+  const read = (): 'light' | 'dark' => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+  const [theme, setTheme] = useState(read);
+  useEffect(() => {
+    const watch = new MutationObserver(() => setTheme(read()));
+    watch.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => watch.disconnect();
+  }, []);
+  return theme;
+}
+
+/** The same colour maths as `npx halo-ds theme`, so what you try here is what the CLI writes. */
+function brandStyle(hex: string, theme: 'light' | 'dark'): CSSProperties {
+  // Purple is Halo's own, so the real tokens apply
+  if (hex === presets[0]!.hex) return {};
+  const rgb = parseHex(hex);
+  if (!rgb) return {};
+  const { light, dark } = brandVariables(rgb);
+  const vars: Record<string, string> = { ...light, '--halo-button-primary-focused': light['--halo-button-primary']!, ...(theme === 'dark' ? dark : {}) };
+  // A light brand colour gets dark text on its buttons, so the label stays readable
+  if (contrast([255, 255, 255], rgb) < 3) Object.assign(vars, { '--halo-text-on-brand': '#111111', '--halo-icon-on-brand': '#111111' });
+  return vars as CSSProperties;
+}
+
+function BrandDock({ value, onChange }: { value: string; onChange: (hex: string) => void }) {
+  const custom = !presets.some((p) => p.hex === value);
+  return (
+    <div className="brand-dock">
+      <span className="brand-dock-label">Try your brand colour</span>
+      <div className="swatches" role="radiogroup" aria-label="Brand colour">
+        {presets.map((p) => (
+          <button key={p.name} type="button" role="radio" aria-checked={value === p.hex} aria-label={p.name} className="swatch" style={{ background: p.hex }} onClick={() => onChange(p.hex)} />
+        ))}
+        <Popover
+          side="top"
+          title="Any colour"
+          trigger={<button type="button" role="radio" aria-checked={custom} aria-label="Pick any colour" className="swatch swatch-custom" style={custom ? { background: value } : undefined} />}
+        >
+          <ColorPicker value={value} onValueChange={onChange} showOpacity={false} swatches={presets.map((p) => p.hex)} />
+        </Popover>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- The live components in the hero ---------- */
 
 function SignUp() {
   const { toast } = useToast();
@@ -191,7 +281,7 @@ function Visits() {
           <h3 className="demo-title">Visits this week</h3>
           <p className="demo-sub">2,120 in total, up 14% on last week.</p>
         </div>
-        <BarChart label="Visits this week" data={visits} xKey="day" series={[{ key: 'visits', label: 'Visits' }]} height={230} />
+        <BarChart label="Visits this week" data={visits} xKey="day" series={[{ key: 'visits', label: 'Visits' }]} height={200} />
       </div>
     </Card>
   );
@@ -216,8 +306,116 @@ function Filters() {
 
 function PickDate() {
   const [date, setDate] = useState<Date | null>(new Date());
-  return <Calendar value={date} onChange={setDate} />;
+  return (
+    <Card className="demo-card demo-calendar">
+      <Calendar value={date} onChange={setDate} />
+    </Card>
+  );
 }
+
+function Checkout() {
+  const [step, setStep] = useState(1);
+  return (
+    <Card className="demo-card">
+      <div className="demo-form">
+        <h3 className="demo-title">Checkout</h3>
+        <Stepper aria-label="Checkout" orientation="vertical" current={step} steps={[{ title: 'Cart', description: '3 items' }, { title: 'Shipping', description: 'Address and delivery' }, { title: 'Payment' }]} />
+        <Button variant="secondary" onClick={() => setStep((s) => (s + 1) % 3)}>Next step</Button>
+      </div>
+    </Card>
+  );
+}
+
+function Review() {
+  const [stars, setStars] = useState(4);
+  return (
+    <Card className="demo-card">
+      <div className="demo-form">
+        <div>
+          <h3 className="demo-title">Rate your order</h3>
+          <p className="demo-sub">Tell others what you thought.</p>
+        </div>
+        <Rating value={stars} onValueChange={setStars} aria-label="Rating" />
+        <TextareaField label="Your review" placeholder="The fit was great and it arrived early." rows={3} />
+      </div>
+    </Card>
+  );
+}
+
+function Storage() {
+  return (
+    <Card className="demo-card">
+      <div className="demo-row-card">
+        <ProgressCircle value={72} showValue size="lg" aria-label="Storage used" />
+        <div>
+          <h3 className="demo-title">Storage</h3>
+          <p className="demo-sub">36 GB of 50 GB used.</p>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function Verify() {
+  return (
+    <Card className="demo-card">
+      <div className="demo-form">
+        <div>
+          <h3 className="demo-title">Check your email</h3>
+          <p className="demo-sub">Enter the 4-digit code we sent you.</p>
+        </div>
+        <VerificationCode length={4} aria-label="Verification code" />
+      </div>
+    </Card>
+  );
+}
+
+function Help() {
+  return (
+    <Card className="demo-card">
+      <div className="demo-form">
+        <h3 className="demo-title">Questions</h3>
+        <Accordion>
+          <AccordionItem title="Can I change plans later?">Yes, any time. The price changes from your next bill.</AccordionItem>
+          <AccordionItem title="Do you offer refunds?">Within 30 days, no questions asked.</AccordionItem>
+          <AccordionItem title="Is there a free trial?">Every plan starts with 14 free days.</AccordionItem>
+        </Accordion>
+      </div>
+    </Card>
+  );
+}
+
+function Notice() {
+  return <Alert type="success" title="Payment received" description="Invoice #2041 is marked as paid." />;
+}
+
+function Results() {
+  const [page, setPage] = useState(2);
+  return (
+    <Card className="demo-card">
+      <div className="demo-form">
+        <div className="demo-row-card">
+          <AvatarGroup size="sm" max={3} total={8}>
+            <Avatar name="Ada Obi" />
+            <Avatar name="Kofi Mensah" />
+            <Avatar name="Lena Park" />
+          </AvatarGroup>
+          <p className="demo-sub">8 people are viewing</p>
+        </div>
+        <Pagination pageCount={9} page={page} onPageChange={setPage} variant="compact" />
+      </div>
+    </Card>
+  );
+}
+
+// Laid out as columns; each list fills one column from the top
+const wall = [
+  [SignUp, Storage, Help],
+  [Numbers, Settings, Results, Notice],
+  [PickDate, Team, Verify],
+  [Visits, Filters, Checkout],
+  [Uploads, Review],
+];
 
 const features = [
   {
@@ -239,11 +437,16 @@ const features = [
 
 export function Home() {
   const { go } = useRoute();
-  const [brand, setBrand] = useState(brands[0]!);
+  const [brand, setBrand] = useState(presets[0]!.hex);
+  const theme = useSiteTheme();
+  const style = useMemo(() => brandStyle(brand, theme), [brand, theme]);
   return (
     <>
       <section className="hero">
-        <h1>The React design system for <span className="nowrap">AI-assisted</span> frontend development</h1>
+        <h1>
+          The React design system for <span className="sr-only">{endings.join(', ')}</span>
+          <Scramble words={endings} />
+        </h1>
         <p className="lede">
           Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.
         </p>
@@ -257,45 +460,19 @@ export function Home() {
         </div>
       </section>
 
-      <section className="try" aria-labelledby="try-title">
-        <div className="try-head">
-          <div>
-            <h2 id="try-title">Try it</h2>
-            <p>These are the real components. Click around, then try your own brand colour.</p>
-          </div>
-          <div className="swatches" role="radiogroup" aria-label="Brand colour">
-            {brands.map((b) => (
-              <button
-                key={b.name}
-                type="button"
-                role="radio"
-                aria-checked={brand.name === b.name}
-                aria-label={b.name}
-                className="swatch"
-                style={{ background: b.main }}
-                onClick={() => setBrand(b)}
-              />
-            ))}
-          </div>
+      <section className="hero-wall" aria-label="Live components to try">
+        <div className="wall" style={style}>
+          {wall.map((col, c) => (
+            <div key={c} className="wall-col">
+              {col.map((Item, i) => (
+                <div key={i} className="wall-item" style={{ '--i': c + i * 2 } as CSSProperties}>
+                  <Item />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
-        <div className="demo-grid" data-rebrand={brand.light ? '' : undefined} style={brandVars(brand)}>
-          <div className="demo-col">
-            <SignUp />
-            <Uploads />
-          </div>
-          <div className="demo-col">
-            <Numbers />
-            <Settings />
-            <Visits />
-          </div>
-          <div className="demo-col">
-            <Card className="demo-card demo-calendar">
-              <PickDate />
-            </Card>
-            <Team />
-            <Filters />
-          </div>
-        </div>
+        <BrandDock value={brand} onChange={setBrand} />
       </section>
 
       <section className="features" aria-label="What you get">

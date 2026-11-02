@@ -6,6 +6,7 @@ import { all, blocks, demosFor, exampleFor, groups, thumbFor } from '../registry
 import type { Demo, Entry } from '../registry';
 import { Link, links, useRoute } from '../router';
 import { BlockDetail, BlocksOverview } from './Blocks';
+import { FoundationDetail, FoundationOverview, foundations } from './Foundation';
 
 const managers = { npm: 'npm install', pnpm: 'pnpm add', yarn: 'yarn add', bun: 'bun add' } as const;
 type Manager = keyof typeof managers;
@@ -18,6 +19,18 @@ export function Sidebar({ current, base = '/components' }: { current?: string; b
     <aside className="docs-side" aria-label="Components">
       <Input size="sm" aria-label="Search components" placeholder="Search" iconLeft={<MagnifyingGlass />} value={q} onChange={(e) => setQ(e.target.value)} />
       <nav className="docs-nav">
+        {base === '/components' && foundations.some((f) => f.title.toLowerCase().includes(q.trim().toLowerCase())) && (
+          <div className="docs-group">
+            <p className="docs-group-name">Foundation</p>
+            {foundations
+              .filter((f) => f.title.toLowerCase().includes(q.trim().toLowerCase()))
+              .map((f) => (
+                <Link key={f.slug} to={`/components/foundation/${f.slug}`} className="docs-link" aria-current={current === `foundation/${f.slug}` ? 'page' : undefined}>
+                  {f.title}
+                </Link>
+              ))}
+          </div>
+        )}
         {groups.map((g) => {
           const items = g.items.filter(match);
           if (!items.length) return null;
@@ -73,8 +86,9 @@ function Overview() {
       <header className="page-head">
         <p className="eyebrow">Components</p>
         <h1>Components</h1>
-        <p className="lede">{all.length} components, each in Figma and in React, and {blocks.length} blocks that put them together into whole page sections. Pick one to see it live, copy the code, and find its full props in Storybook.</p>
+        <p className="lede">{all.length} components, each in Figma and in React, the foundation they are built on, and {blocks.length} blocks that put them together into whole page sections. Pick one to see it live, copy the code, and find its full props in Storybook.</p>
       </header>
+      <FoundationOverview />
       {groups.map((g) => (
         <section key={g.name} className="overview-group" aria-labelledby={`g-${g.name}`}>
           <h2 id={`g-${g.name}`}>{g.name}</h2>
@@ -223,10 +237,11 @@ export function Components() {
   const slug = path.replace(/^\/(components\/?|blocks\/?)/, path.startsWith('/blocks') ? 'blocks/' : '').replace(/\/$/, '');
   const entry = all.find((e) => e.slug === slug);
   const block = blocks.find((b) => slug === `blocks/${b.slug}`);
+  const foundation = foundations.find((f) => slug === `foundation/${f.slug}`);
   return (
     <div className="docs">
-      <Sidebar current={entry?.slug ?? (block && slug)} />
-      {entry ? <Detail entry={entry} /> : block ? <BlockDetail block={block} /> : <Overview />}
+      <Sidebar current={entry?.slug ?? (block || foundation ? slug : undefined)} />
+      {entry ? <Detail entry={entry} /> : block ? <BlockDetail block={block} /> : foundation ? <FoundationDetail key={foundation.slug} slug={foundation.slug} /> : <Overview />}
     </div>
   );
 }
