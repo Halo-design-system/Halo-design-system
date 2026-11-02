@@ -1,0 +1,170 @@
+/* Solin's own styles: the logo, calls, the product preview and the call lobby. The shared layout is in ../shared/app.css. */
+
+.solin-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--halo-spacing-4);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.solin-logo svg {
+  fill: var(--halo-icon-primary);
+}
+
+.solin-logo .solin-logo-hole {
+  fill: var(--halo-surface-primary);
+}
+
+.s-call {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 130px;
+  align-items: center;
+  gap: var(--halo-spacing-7);
+}
+
+.s-call-when {
+  display: grid;
+  justify-items: end;
+  gap: var(--halo-spacing-2);
+  font-size: var(--halo-font-size-sm);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.s-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.s-account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--halo-spacing-7);
+}
+
+/* Product preview */
+
+.s-preview {
+  overflow: hidden;
+  border: 1px solid var(--halo-border-secondary);
+  border-radius: var(--halo-radius-8);
+  background: var(--halo-surface-primary);
+}
+
+.s-cover {
+  height: 200px;
+  background:
+    radial-gradient(ellipse 30% 25% at 60% 55%, #ff3fbf 0%, transparent 70%),
+    radial-gradient(ellipse 60% 70% at 40% 40%, #5b2bd8 0%, transparent 70%),
+    linear-gradient(160deg, #2a0f5c, #12052b);
+}
+
+.s-preview-body {
+  display: grid;
+  gap: var(--halo-spacing-4);
+  padding: var(--halo-spacing-7);
+}
+
+.s-preview-body h3 {
+  margin: 0;
+  font-size: var(--halo-font-size-lg);
+}
+
+.s-sticky {
+  position: sticky;
+  top: var(--halo-spacing-9);
+  display: grid;
+  gap: var(--halo-spacing-4);
+}
+
+/* Lobby */
+
+.s-lobby {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--halo-spacing-12);
+  max-width: 1160px;
+  min-height: calc(100vh - 120px);
+  margin: 0 auto;
+  padding: var(--halo-spacing-9) var(--halo-spacing-10);
+}
+
+.s-lobby-page {
+  min-height: 100vh;
+  background: var(--halo-surface-minimal);
+  color: var(--halo-text-primary);
+}
+
+.s-lobby-top {
+  padding: var(--halo-spacing-9) var(--halo-spacing-12);
+}
+
+.s-video {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--halo-radius-8);
+  background: #222;
+}
+
+.s-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--halo-spacing-6);
+  margin-top: var(--halo-spacing-6);
+}
+
+.s-lobby-side {
+  display: grid;
+  gap: var(--halo-spacing-7);
+}
+
+.s-lobby-side h1 {
+  margin: 0;
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-3xl);
+  line-height: var(--halo-line-height-3xl);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.s-card {
+  padding: var(--halo-spacing-7);
+  border: 1px solid var(--halo-border-secondary);
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-primary);
+}
+
+@media (max-width: 1023px) {
+  .s-three,
+  .s-lobby {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .s-lobby {
+    gap: var(--halo-spacing-9);
+    padding: var(--halo-spacing-7);
+  }
+
+  .s-lobby-top {
+    padding: var(--halo-spacing-7);
+  }
+
+  .s-sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .s-call {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .s-call > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .s-call-when {
+    justify-items: start;
+  }
+}

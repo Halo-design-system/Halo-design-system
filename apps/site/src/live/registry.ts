@@ -1,6 +1,7 @@
 // The example apps that run live on the site, and the source of every file, for the Code view.
 import type { ComponentType } from 'react';
 import { banking } from './banking';
+import { creators } from './creators';
 import { saas } from './saas';
 import { salesCrm } from './sales-crm';
 import { tax } from './tax';
@@ -17,7 +18,7 @@ export interface LiveApp {
   Missing: ComponentType<{ page: string }>;
 }
 
-export const liveApps: LiveApp[] = [saas, banking, salesCrm, tax];
+export const liveApps: LiveApp[] = [saas, banking, salesCrm, tax, creators];
 
 const sources = import.meta.glob(['./*/*.{tsx,ts,css}', './shared/*.{tsx,css}', './kit.tsx'], { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
