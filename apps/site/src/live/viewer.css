@@ -35,7 +35,8 @@
   translate: -50% 0;
 }
 
-.lv iframe {
+/* Wherever the device frame is used, the app fills it */
+.lv-stage iframe {
   display: block;
   width: 100%;
   border: 0;
