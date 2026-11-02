@@ -1,0 +1,89 @@
+/* Arko's own styles: the payslip. The shared layout is in ../shared/app.css. */
+
+.a-slip {
+  display: grid;
+  gap: var(--halo-spacing-9);
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--halo-spacing-9);
+  border: 1px solid var(--halo-border-secondary);
+  border-radius: var(--halo-radius-8);
+  background: var(--halo-surface-primary);
+}
+
+.a-slip-head {
+  padding-bottom: var(--halo-spacing-8);
+  border-bottom: 1px solid var(--halo-border-secondary);
+}
+
+.a-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--halo-spacing-7);
+  margin: 0;
+}
+
+.a-facts dt {
+  color: var(--halo-text-secondary);
+  font-size: var(--halo-font-size-sm);
+}
+
+.a-facts dd {
+  margin: var(--halo-spacing-2) 0 0;
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.a-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--halo-spacing-9);
+}
+
+.a-columns h2 {
+  margin: 0 0 var(--halo-spacing-6);
+  font-size: var(--halo-font-size-md);
+  font-weight: var(--halo-font-weight-semibold);
+}
+
+.a-dashed {
+  border-top-style: dashed !important;
+}
+
+.a-net {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--halo-spacing-7);
+  padding: var(--halo-spacing-8);
+  border-radius: var(--halo-radius-6);
+  background: var(--halo-surface-minimal);
+}
+
+.a-net-value {
+  font-family: var(--halo-font-family-heading);
+  font-size: var(--halo-font-size-4xl);
+  line-height: var(--halo-line-height-4xl);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .a-facts,
+  .a-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .a-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .a-net {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .a-net-value {
+    font-size: var(--halo-font-size-3xl);
+    line-height: var(--halo-line-height-3xl);
+  }
+}
