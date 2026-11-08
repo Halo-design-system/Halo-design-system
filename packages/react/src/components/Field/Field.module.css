@@ -47,7 +47,7 @@
   line-height: var(--halo-line-height-xs);
 }
 
-.error { color: var(--halo-state-error-contrast); }
+.error { color: var(--halo-state-error-primary); }
 
 .count {
   margin-left: auto;

@@ -14,10 +14,14 @@ type Manager = keyof typeof managers;
 /** The grouped component list. `base` picks where the links go: the component pages or the usage guide. */
 export function Sidebar({ current, base = '/components' }: { current?: string; base?: string }) {
   const [q, setQ] = useState('');
-  const match = (e: Entry) => e.name.toLowerCase().includes(q.trim().toLowerCase());
+  // Also searches the parts a page covers, so "image" finds ImageUpload on the File upload page.
+  const squash = (text: string) => text.toLowerCase().replace(/\s+/g, '');
+  const match = (e: Entry) => [e.name, ...e.exports].some((name) => squash(name).includes(squash(q)));
   return (
     <aside className="docs-side" aria-label="Components">
-      <Input size="sm" aria-label="Search components" placeholder="Search" iconLeft={<MagnifyingGlass />} value={q} onChange={(e) => setQ(e.target.value)} />
+      <div className="docs-search">
+        <Input size="sm" aria-label="Search components" placeholder="Search" iconLeft={<MagnifyingGlass />} value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
       <nav className="docs-nav">
         {base === '/components' && foundations.some((f) => f.title.toLowerCase().includes(q.trim().toLowerCase())) && (
           <div className="docs-group">

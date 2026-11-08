@@ -43,7 +43,7 @@
 
 .selected,
 .item[aria-selected='true'] { background: var(--halo-surface-minimal); font-weight: var(--halo-font-weight-semibold); }
-.destructive { color: var(--halo-state-error-contrast); }
+.destructive { color: var(--halo-state-error-primary); }
 .item[aria-disabled='true'] { color: var(--halo-text-disabled); cursor: not-allowed; background: transparent; }
 
 .icon { display: inline-flex; width: 16px; height: 16px; flex-shrink: 0; color: var(--halo-icon-primary); }

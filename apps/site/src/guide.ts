@@ -799,7 +799,8 @@ export const guides: Record<string, Guide> = {
   "file-upload": {
     "callout": "A place to drop or choose files, and a row for each file that shows how its upload is going.",
     "about": [
-      "Use the drop zone when uploading is a main task, like adding documents or images. People can drag files onto it or choose them with the Browse button. Each file then appears as a File item that shows progress, success or a problem, with a way to cancel, retry or remove it. In tight spaces like a form, use just a Button with File items below."
+      "Use the drop zone when uploading is a main task, like adding documents or images. People can drag files onto it or choose them with the Browse button. Each file then appears as a File item that shows progress, success or a problem, with a way to cancel, retry or remove it. In tight spaces like a form, use just a Button with File items below.",
+      "Use Image upload for one picture in a circle, like a profile photo or a company logo."
     ],
     "example": {
       "width": 518,

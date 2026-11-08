@@ -701,7 +701,19 @@ main {
   gap: 16px;
   max-height: calc(100vh - 112px);
   overflow-y: auto;
-  padding-right: 8px;
+  /* Room for the search box's focus ring, which a scrolling box would otherwise clip */
+  margin-inline: -6px;
+  padding-inline: 6px;
+  padding-bottom: 8px;
+}
+
+/* Stays at the top of the list while it scrolls */
+.docs-search {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-block: 6px;
+  background: var(--halo-surface-primary);
 }
 
 .docs-nav {

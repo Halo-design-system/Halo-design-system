@@ -41,7 +41,7 @@
 }
 .step.current .title { font-weight: var(--halo-font-weight-semibold); }
 .step.upcoming .title { color: var(--halo-text-secondary); }
-.step.error .title { color: var(--halo-state-error-contrast); }
+.step.error .title { color: var(--halo-state-error-primary); }
 .description {
   color: var(--halo-text-secondary);
   font-family: var(--halo-font-family-body);

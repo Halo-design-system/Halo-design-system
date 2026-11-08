@@ -73,7 +73,7 @@
   font-size: var(--halo-font-size-xs);
   line-height: var(--halo-line-height-xs);
 }
-.hintError { color: var(--halo-state-error-contrast); }
+.hintError { color: var(--halo-state-error-primary); }
 .hintIcon { width: 16px; height: 16px; flex-shrink: 0; color: var(--halo-icon-negative); }
 
 /* ---------- Circle ---------- */

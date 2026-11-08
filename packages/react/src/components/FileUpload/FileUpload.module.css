@@ -46,7 +46,7 @@
   font-size: var(--halo-font-size-sm);
   line-height: var(--halo-line-height-sm);
 }
-.errorText { color: var(--halo-state-error-contrast); }
+.errorText { color: var(--halo-state-error-primary); }
 
 /* ---------- Image upload ---------- */
 

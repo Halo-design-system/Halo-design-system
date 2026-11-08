@@ -6,6 +6,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Error text** under fields, in Progress and Stepper, and on destructive menu items (Delete) now uses the same red as its icon, `state/error/primary`. Banners and badges on a red tint keep the dark red.
 ## 0.5.0
 
 - **Image upload:** a new `ImageUpload` for one picture in a circle, like a profile photo or a company logo. A person or a business, with a title and hint or compact. Upload, change and remove. In Figma on the File upload page.
