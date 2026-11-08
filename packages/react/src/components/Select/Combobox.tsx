@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent, ReactNode } from 'react';
 import { cx } from '../../internal/cx';
 import { parts } from '../../internal/parts';
 import type { PartsProps } from '../../internal/parts';
@@ -18,8 +18,13 @@ import type { SelectOption } from './Select';
 /** Parts you can style with `classNames` and `styles`. The menu opens in a layer over the page. */
 export type ComboboxPart = 'root' | 'values' | 'input' | 'caret' | 'menu' | 'option' | 'empty';
 
+export interface ComboboxOption extends SelectOption {
+  /** An Avatar, size "xs", for people. Shows in the list and on the option's tag. */
+  avatar?: ReactNode;
+}
+
 interface ComboboxBase extends PartsProps<ComboboxPart> {
-  options: SelectOption[];
+  options: ComboboxOption[];
   placeholder?: string;
   size?: 'sm' | 'md' | 'lg';
   invalid?: boolean;
@@ -144,7 +149,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps | MultiCombob
         <div {...part('values', styles.values)}>
           {multiple &&
             values.map((v) => (
-              <Tag key={v} size={size === 'sm' ? 'sm' : 'md'} disabled={disabled} onRemove={() => setValues(values.filter((x) => x !== v))}>
+              <Tag key={v} size={size === 'sm' ? 'sm' : 'md'} avatar={options.find((o) => o.value === v)?.avatar} disabled={disabled} onRemove={() => setValues(values.filter((x) => x !== v))}>
                 {labelOf(v)}
               </Tag>
             ))}
@@ -195,6 +200,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps | MultiCombob
                   onPointerDown={(e) => e.preventDefault()}
                   onClick={() => pick(i)}
                 >
+                  {o.avatar}
                   {o.icon && <span className={menuStyles.icon} aria-hidden="true">{o.icon}</span>}
                   <span className={menuStyles.itemLabel}>{o.label}</span>
                   {on && <Icon name="Check" className={menuStyles.check} />}

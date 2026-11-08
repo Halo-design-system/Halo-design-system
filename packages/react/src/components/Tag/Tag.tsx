@@ -21,7 +21,7 @@ export interface TagProps extends HTMLAttributes<HTMLSpanElement>, PartsProps<Ta
   size?: 'sm' | 'md';
   /** Icon before the label. Figma: L icon. */
   icon?: ReactNode;
-  /** An Avatar before the label, for people. Figma: Avatar. */
+  /** An Avatar before the label, for people. Use size "xs"; it fits the tag either way. Figma: Avatar. */
   avatar?: ReactNode;
   /** Shows a remove button and calls this when it is pressed. Figma: Closable. */
   onRemove?: () => void;

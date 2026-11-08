@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Avatar } from '../Avatar';
 import { Select, SelectField } from './Select';
 import { ComboboxField } from './Combobox';
 import type { SelectOption } from './Select';
@@ -52,6 +53,19 @@ export const States: Story = {
 /** Type to filter, choose one. */
 export const Combobox: Story = {
   render: () => <ComboboxField label="Fruit" options={fruit} placeholder="Search fruit" />,
+};
+
+/** Options with an avatar show it in the list and on the tag. */
+export const ComboboxPeople: Story = {
+  render: () => (
+    <ComboboxField
+      label="Assign to"
+      multiple
+      defaultValue={['Ada Obi', 'Lara Pinto']}
+      options={['Ada Obi', 'Jonas Schmidt', 'Lara Pinto'].map((name) => ({ value: name, label: name, avatar: <Avatar size="xs" name={name} /> }))}
+      placeholder="Choose people"
+    />
+  ),
 };
 
 /** Several values shown as Tags, plus adding new ones. Backspace removes the last tag. */

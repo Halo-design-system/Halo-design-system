@@ -67,7 +67,7 @@ export type { MenuAction, MenuEntry, MenuLabel, MenuProps, MenuSeparator } from 
 export { Popover } from './components/Popover';
 export type { PopoverProps } from './components/Popover';
 export { Combobox, ComboboxField, Select, SelectField } from './components/Select';
-export type { ComboboxFieldProps, ComboboxProps, MultiComboboxProps, SelectFieldProps, SelectOption, SelectProps } from './components/Select';
+export type { ComboboxFieldProps, ComboboxOption, ComboboxProps, MultiComboboxProps, SelectFieldProps, SelectOption, SelectProps } from './components/Select';
 export { Tag, TAG_COLORS } from './components/Tag';
 export type { TagColor, TagProps } from './components/Tag';
 export { Alert } from './components/Alert';
