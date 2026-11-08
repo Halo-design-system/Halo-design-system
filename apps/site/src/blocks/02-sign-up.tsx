@@ -3,8 +3,8 @@
  * Authentication
  * Name, email and a password with its rules shown up front, an agreement to the terms, and sign-up with Google or GitHub.
  */
-import type { FormEvent } from 'react';
-import { Button, Checkbox, Divider, FormRow, InputField, LinkButton, PasswordInput, SocialButton, Text } from '@halo-ds/react';
+import { Button, Checkbox, Divider, Field, Form, FormRow, InputField, LinkButton, PasswordInput, SocialButton, Text } from '@halo-ds/react';
+import type { FormValues } from '@halo-ds/react';
 import { Hexagon } from '@phosphor-icons/react';
 
 // Headings are plain h1, styled with Halo's type tokens. Text is for body copy.
@@ -26,10 +26,16 @@ const logo = {
 };
 
 export default function SignUp() {
-  const signUp = (e: FormEvent) => {
-    e.preventDefault();
+  const signUp = () => {
     // Send the details to your sign-up endpoint
   };
+
+  // Form checks the required fields itself and shows each message under its field
+  const validate = (values: FormValues) => ({
+    email: values.email && !/^\S+@\S+\.\S+$/.test(String(values.email)) ? 'Enter an email like johndoe@example.com.' : undefined,
+    password: values.password && !(String(values.password).length >= 8 && /\d/.test(String(values.password))) ? 'Use at least 8 characters, with a number.' : undefined,
+    terms: values.terms ? undefined : 'Agree to the Terms and Privacy policy to continue.',
+  });
 
   return (
     <main style={{ display: 'grid', justifyItems: 'center', padding: 'var(--halo-spacing-12) var(--halo-spacing-7)' }}>
@@ -51,25 +57,30 @@ export default function SignUp() {
 
         <Divider label="or" />
 
-        <form onSubmit={signUp} style={{ display: 'grid', gap: 'var(--halo-spacing-6)' }}>
+        <Form onSubmit={signUp} validate={validate} style={{ gap: 'var(--halo-spacing-6)' }}>
           <FormRow>
             <InputField label="First name" name="firstName" autoComplete="given-name" placeholder="John" required />
             <InputField label="Last name" name="lastName" autoComplete="family-name" placeholder="Doe" required />
           </FormRow>
           <InputField label="Work email" name="email" type="email" autoComplete="email" placeholder="johndoe@example.com" required />
           <PasswordInput label="Password" name="password" autoComplete="new-password" hint="At least 8 characters, with a number." required />
-          <Checkbox
-            size="sm"
-            name="terms"
-            required
-            label={
-              <>
-                I agree to the <LinkButton href="#" size="sm">Terms</LinkButton> and <LinkButton href="#" size="sm">Privacy policy</LinkButton>
-              </>
-            }
-          />
+          <Field name="terms">
+            {(field) => (
+              <Checkbox
+                {...field}
+                invalid={field['aria-invalid']}
+                size="sm"
+                name="terms"
+                label={
+                  <>
+                    I agree to the <LinkButton href="#" size="sm">Terms</LinkButton> and <LinkButton href="#" size="sm">Privacy policy</LinkButton>
+                  </>
+                }
+              />
+            )}
+          </Field>
           <Button type="submit" style={{ width: '100%' }}>Create account</Button>
-        </form>
+        </Form>
 
         <Text color="secondary" style={{ textAlign: 'center' }}>
           Already have an account? <LinkButton href="#">Sign in</LinkButton>

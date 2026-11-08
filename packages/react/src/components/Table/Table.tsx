@@ -121,6 +121,7 @@ export function TableHeaderCell({ align = 'left', sort, onSort, checkbox, filter
             side="bottom"
             align={align === 'right' ? 'end' : 'start'}
             arrow={false}
+            showClose={false}
             trigger={
               <CompactButton {...part('filter', [styles.filterButton, filtered && styles.filtered])} variant="ghost" size="md" selected={filtered} aria-label={filtered ? 'Filter, on' : 'Filter'}>
                 <Icon name="Funnel" />

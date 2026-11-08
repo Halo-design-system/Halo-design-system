@@ -7,7 +7,7 @@ const teams = [
 
 export default function Example() {
   return (
-    <div style={{ display: 'grid', gap: 20, width: 320, minHeight: 280 }}>
+    <div style={{ display: 'grid', alignContent: 'start', gap: 20, width: 320, minHeight: 280 }}>
       <TreeSelect nodes={teams} placeholder="Choose a team" aria-label="Team" />
       <TreeSelect nodes={teams} multiple search placeholder="Choose teams" aria-label="Teams" />
     </div>

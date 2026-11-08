@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Sign in and Sign up blocks** use `Form`, so an empty submit shows Halo's error messages under each field. Before, the browser's own "Please fill in this field" bubble appeared.
+- **Table:** selected rows and the selected toolbar use the lighter `surface/minimal` grey. The filter menu in a column header no longer has an empty header row with a close button.
 - **Compact button:** more room around the icon: Large is 28px and Medium is 24px, with the same icon sizes. On press the button stays still and only the icon dips, in place of the shrink and bounce, which was less than a pixel of movement at this size.
 - **Menu, Select, Combobox and Tree select:** long lists still scroll, without a scrollbar beside the items.
 - **Error text** under fields, in Progress and Stepper, and on destructive menu items (Delete) now uses the same red as its icon, `state/error/primary`. Banners and badges on a red tint keep the dark red.
