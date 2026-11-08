@@ -1,10 +1,11 @@
 // Foundation: the design tokens and assets every component is built from, read straight from @halo-ds/tokens.
 import { useEffect, useMemo, useState } from 'react';
 import type { ComponentType, ReactNode } from 'react';
-import { Award, Illustration, Input, SegmentedControl, Spinner, awardNames, illustrationNames, useToast } from '@halo-ds/react';
+import { Award, Illustration, SegmentedControl, Spinner, awardNames, illustrationNames, useToast } from '@halo-ds/react';
 import { tokens } from '@halo-ds/tokens';
 import type { Token } from '@halo-ds/tokens';
-import { ArrowRight, Bell, Heart, House, MagnifyingGlass, Star } from '@phosphor-icons/react';
+import { ArrowRight, Bell, Heart, House, Star } from '@phosphor-icons/react';
+import { SearchBox } from '../SearchBox';
 import { Link } from '../router';
 
 export const foundations = [
@@ -269,7 +270,7 @@ function Icons() {
   return (
     <Section title={set ? `${set.length.toLocaleString('en-US')} icons` : 'Icons'} text={<>From <a href="https://phosphoricons.com">Phosphor</a>, in regular and fill. Click one to copy it.</>}>
       <div className="icon-tools">
-        <Input aria-label="Search icons" placeholder="Search, like arrow or bell" iconLeft={<MagnifyingGlass />} value={q} onChange={(e) => setQ(e.target.value)} />
+        <SearchBox label="Search icons" placeholder="Search, like arrow or bell" value={q} onChange={setQ} />
         <SegmentedControl aria-label="Weight" value={weight} onValueChange={(v) => setWeight(v as typeof weight)} options={[{ value: 'regular', label: 'Regular' }, { value: 'fill', label: 'Fill' }]} />
       </div>
       {!set ? (

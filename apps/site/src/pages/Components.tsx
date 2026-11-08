@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Badge, Input, LinkButton, SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
-import { ArrowLeft, ArrowRight, Code, MagnifyingGlass } from '@phosphor-icons/react';
+import { Badge, LinkButton, SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
+import { ArrowLeft, ArrowRight, Code } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
+import { SearchBox } from '../SearchBox';
 import { all, blocks, demosFor, exampleFor, groups, thumbFor } from '../registry';
 import type { Demo, Entry } from '../registry';
 import { Link, links, useRoute } from '../router';
@@ -20,7 +21,7 @@ export function Sidebar({ current, base = '/components' }: { current?: string; b
   return (
     <aside className="docs-side" aria-label="Components">
       <div className="docs-search">
-        <Input size="sm" aria-label="Search components" placeholder="Search" iconLeft={<MagnifyingGlass />} value={q} onChange={(e) => setQ(e.target.value)} />
+        <SearchBox size="sm" label="Search components" placeholder="Search" value={q} onChange={setQ} />
       </div>
       <nav className="docs-nav">
         {base === '/components' && foundations.some((f) => f.title.toLowerCase().includes(q.trim().toLowerCase())) && (
