@@ -94,7 +94,7 @@ export const Styles: Story = {
   ),
 };
 
-/** lg is 24px with a 20px icon (default); md is 20px with a 16px icon. Corners are slightly rounded or fully round. */
+/** lg is 28px with a 20px icon (default); md is 24px with a 16px icon. Corners are slightly rounded or fully round. */
 export const SizesAndCorners: Story = {
   name: 'Sizes and corners',
   render: () => (

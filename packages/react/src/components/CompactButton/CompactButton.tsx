@@ -13,7 +13,7 @@ export type CompactButtonPart = 'root' | 'icon';
 export interface CompactButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, PartsProps<CompactButtonPart> {
   /** Background and outline. Figma: Style. */
   variant?: CompactButtonVariant;
-  /** lg is 24px with a 20px icon, md is 20px with a 16px icon. Figma: Size. */
+  /** lg is 28px with a 20px icon, md is 24px with a 16px icon. Figma: Size. */
   size?: CompactButtonSize;
   /** Fully round corners instead of slightly rounded. Figma: Full radius. */
   round?: boolean;

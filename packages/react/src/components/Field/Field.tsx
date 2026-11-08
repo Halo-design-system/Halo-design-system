@@ -44,7 +44,7 @@ export function FieldLabel({ required, optional, info, className, style, childre
       </label>
       {info && (
         <Tooltip content={info}>
-          <CompactButton variant="ghost" size="lg" aria-label="More information">
+          <CompactButton variant="ghost" size="md" aria-label="More information">
             <Icon name="Info" />
           </CompactButton>
         </Tooltip>
