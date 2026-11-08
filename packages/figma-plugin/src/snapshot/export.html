@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; padding: 16px; font: 13px/20px system-ui, sans-serif; color: var(--figma-color-text); background: var(--figma-color-bg); }
+      p { margin: 0 0 12px; }
+      a { display: inline-block; padding: 8px 12px; border-radius: 6px; color: var(--figma-color-text-onbrand); background: var(--figma-color-bg-brand); text-decoration: none; }
+      a[hidden] { display: none; }
+    </style>
+  </head>
+  <body>
+    <p id="status" role="status">Reading components…</p>
+    <a id="save" download="halo-library.json.gz" hidden>Save halo-library.json.gz</a>
+    <script>
+      const status = document.getElementById('status');
+      const save = document.getElementById('save');
+      onmessage = async (event) => {
+        const msg = event.data.pluginMessage;
+        if (!msg) return;
+        if (msg.type === 'progress') status.textContent = `Reading components: ${msg.done} of ${msg.total}`;
+        if (msg.type === 'failed') status.textContent = msg.message;
+        if (msg.type === 'done') {
+          status.textContent = 'Compressing…';
+          const stream = new Blob([msg.json]).stream().pipeThrough(new CompressionStream('gzip'));
+          const blob = await new Response(stream).blob();
+          save.href = URL.createObjectURL(blob);
+          save.hidden = false;
+          status.textContent = `${msg.components} components, ${(blob.size / 1048576).toFixed(1)} MB.`;
+        }
+      };
+    </script>
+  </body>
+</html>

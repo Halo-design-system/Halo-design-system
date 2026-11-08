@@ -6,15 +6,25 @@ The pictures are in `previews/` (light) and `previews/dark/` (dark), one PNG per
 
 A footer links to the Halo website; Figma opens it in the browser.
 
-## Where the components come from
+## Works in any file
 
-The plugin looks in three places, in this order:
+Figma has no public libraries, so the plugin carries Halo's components with it. Clicking a card looks for the component in this order:
 
-1. **This file.** If the file has Halo's component pages (it is Halo, or a copy of it from the Community), the plugin places the component from here. It finds each one by its page and name, so keep the page names as they are.
-2. **Your copy of Halo.** Open the plugin once in your copy and it remembers that copy's components, for you only. Publish the copy as a library (Assets, then Libraries, then Publish) and add it to the files you design in; the plugin then places components from it in any file.
-3. **The Halo library**, for people in the team where the original file is published.
+1. **This file**, when it is Halo or a copy of it.
+2. **The "Halo components" page** in this file, from an earlier click.
+3. **A published Halo library** the person can reach, which keeps the instance linked to it.
+4. **The data inside the plugin.** It creates Halo's variables and styles once per file, builds the component's default look on a "Halo components" page, places an instance, then adds the other variants in the background. A small spinner by the component count shows that work. If the plugin closes early, clicking the component again picks it back up.
 
-If none of these has the component, the plugin says so and how to add the library.
+A file keeps the version it received. On a plan with too few variable modes, a collection keeps its default mode only, and the free plan's page limit puts the components in a section beside the design.
+
+## Updating the component data
+
+When components change in Figma, the plugin needs a new copy of them:
+
+1. Build the plugin (below).
+2. In the Figma desktop app, choose Plugins, then Development, then Import plugin from manifest, and pick `dist/export-plugin/manifest.json`.
+3. Open the Halo file and run **Halo UI export**. When it finishes, choose **Save** and save the file as `library/halo-library.json.gz`.
+4. Build again.
 
 ## Build
 
@@ -22,7 +32,7 @@ If none of these has the component, the plugin says so and how to add the librar
 pnpm --filter @halo-ds/figma-plugin build
 ```
 
-This writes `dist/code.js` and `dist/ui.html`. The component list comes from `apps/site/src/catalog.ts`; the Figma keys come from `src/library.ts`. The build stops if a catalog entry has no Figma component, or the other way round, so add both together.
+This writes `dist/code.js`, `dist/ui.html` and the export plugin in `dist/export-plugin`. The component list comes from `apps/site/src/catalog.ts`; the Figma keys come from `src/library.ts`. The build stops if a catalog entry has no Figma component, or the other way round, so add both together.
 
 To try it, open the Figma desktop app, choose Plugins, then Development, then Import plugin from manifest, and pick `packages/figma-plugin/manifest.json`. Run `pnpm --filter @halo-ds/figma-plugin watch` to rebuild on every change.
 
@@ -35,4 +45,4 @@ To try it, open the Figma desktop app, choose Plugins, then Development, then Im
 
 ## Publishing the plugin
 
-Before the first Community release, create the plugin in Figma (Plugins, then Development, then New plugin) and copy the id it gives into `manifest.json` in place of `halo-ds`. The icon (128 by 128) and cover image (1920 by 1080) are added in Figma's publish form, not here.
+Publish from Plugins, then Manage plugins, in the Figma desktop app. `manifest.json` holds the plugin's Figma ID; keep it the same for every update, or Figma treats it as a separate plugin. The icon (128 by 128) and cover image (1920 by 1080) are added in Figma's publish form, not here.

@@ -23,6 +23,20 @@ body {
   border-bottom: 1px solid var(--halo-border-secondary);
 }
 
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--halo-spacing-5);
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: var(--halo-spacing-2);
+  color: var(--halo-text-secondary);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

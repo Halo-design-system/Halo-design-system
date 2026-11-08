@@ -2,7 +2,7 @@
 // fonts and component pictures inlined (Figma loads the window from one HTML string).
 // The component list comes from the website's catalog. The build fails if a catalog entry has no
 // Figma component in src/library.ts or no picture in previews/, so they stay in step.
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { build, context } from 'esbuild';
@@ -43,6 +43,21 @@ const code = {
   format: 'iife',
 };
 
+// The development plugin that saves the component data, in its own folder so it can't be
+// mistaken for Halo UI when importing it into Figma.
+const EXPORT_DIR = 'dist/export-plugin';
+const exporter = { ...code, entryPoints: ['src/snapshot/export.ts'], outfile: `${EXPORT_DIR}/code.js` };
+mkdirSync(EXPORT_DIR, { recursive: true });
+copyFileSync('src/snapshot/export.html', `${EXPORT_DIR}/ui.html`);
+writeFileSync(
+  `${EXPORT_DIR}/manifest.json`,
+  JSON.stringify(
+    { name: 'Halo UI export', id: 'halo-ds-export', api: '1.0.0', main: 'code.js', ui: 'ui.html', editorType: ['figma'], documentAccess: 'dynamic-page', networkAccess: { allowedDomains: ['none'] } },
+    null,
+    2,
+  ),
+);
+
 // previews/<slug>.png and previews/dark/<slug>.png as data URLs, imported by the window as './previews'.
 function pictures(dir) {
   const map = {};
@@ -61,6 +76,20 @@ const previews = {
         export const previewsDark = ${JSON.stringify(pictures('previews/dark'))};`,
       loader: 'js',
     }));
+  },
+};
+
+// The component data the window hands to the main thread, saved by the Halo UI export plugin.
+const LIBRARY = 'library/halo-library.json.gz';
+const library = {
+  name: 'library',
+  setup(b) {
+    b.onResolve({ filter: /halo-library$/ }, () => ({ path: 'halo-library', namespace: 'library' }));
+    b.onLoad({ filter: /.*/, namespace: 'library' }, () => {
+      const data = existsSync(LIBRARY) ? readFileSync(LIBRARY).toString('base64') : '';
+      if (!data) console.warn(`No ${LIBRARY} yet, so components can only be placed in files that already have them.`);
+      return { contents: `export const libraryData = ${JSON.stringify(data)};`, loader: 'js' };
+    });
   },
 };
 
@@ -110,16 +139,18 @@ const ui = {
   define: { 'process.env.NODE_ENV': '"production"' },
   loader: { '.woff2': 'dataurl' },
   write: false,
-  plugins: [previews, fonts, inline],
+  plugins: [previews, library, fonts, inline],
 };
 
 await check();
 
 if (watch) {
   await (await context(code)).watch();
+  await (await context(exporter)).watch();
   await (await context(ui)).watch();
   console.log('Watching for changes…');
 } else {
   await build(code);
+  await build(exporter);
   await build(ui);
 }

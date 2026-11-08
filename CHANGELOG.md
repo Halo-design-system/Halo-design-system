@@ -8,6 +8,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 - **Menu, Select, Combobox and Tree select:** long lists still scroll, without a scrollbar beside the items.
 - **Error text** under fields, in Progress and Stepper, and on destructive menu items (Delete) now uses the same red as its icon, `state/error/primary`. Banners and badges on a red tint keep the dark red.
+- **Figma plugin, Halo UI** now works in any file, with no library needed. It carries Halo's components and builds what you click on a "Halo components" page, with Halo's variables and styles. It stays linked when a published Halo library is available.
 
 ## 0.5.0
 

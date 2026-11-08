@@ -2,9 +2,10 @@
 // A to Z, showing the component itself and its name. Clicking a card places it.
 import { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, MagnifyingGlass } from '@phosphor-icons/react';
-import { Card, EmptyState, Input, LinkButton, Text, ToastProvider, useToast } from '@halo-ds/react';
+import { ArrowUpRight, DiamondsFour, MagnifyingGlass } from '@phosphor-icons/react';
+import { Card, EmptyState, Input, LinkButton, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
 import { all } from '../../../apps/site/src/catalog';
+import { loadLibrary, subset } from './snapshot/subset';
 import { sizes } from './preview-sizes';
 import { previews, previewsDark } from './previews';
 import './ui.css';
@@ -40,14 +41,34 @@ function App() {
   const { toast } = useToast();
   const [query, setQuery] = useState('');
 
+  const [busy, setBusy] = useState<string | null>(null);
+  const [finishing, setFinishing] = useState(false);
+
   useEffect(() => {
-    onmessage = (event: MessageEvent) => {
+    const failed = (name: string, message: string) => {
+      setBusy(null);
+      toast({ type: 'error', title: `Couldn’t add ${name}`, description: message });
+    };
+    onmessage = async (event: MessageEvent) => {
       const msg = event.data.pluginMessage;
-      if (msg?.type === 'missing') {
-        toast({ type: 'error', title: `Couldn’t find ${msg.name}`, description: 'Add the Halo library to this file, then try again.' });
+      if (msg?.type === 'done') setBusy(null);
+      if (msg?.type === 'background') setFinishing(msg.busy);
+      if (msg?.type === 'failed') failed(msg.name, msg.message);
+      if (msg?.type === 'need') {
+        try {
+          send({ type: 'data', slug: msg.slug, index: msg.index, placed: msg.placed, data: subset(await loadLibrary(), msg.key) });
+        } catch (error) {
+          failed('this component', String((error as Error).message));
+        }
       }
     };
   }, [toast]);
+
+  const place = (slug: string) => {
+    if (busy) return;
+    setBusy(slug);
+    send({ type: 'place', slug, index: 0 });
+  };
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -57,6 +78,18 @@ function App() {
   return (
     <div className="app">
       <header className="search">
+        <div className="title">
+          <Text weight="semibold" as="span">
+            Halo UI
+          </Text>
+          <span className="count">
+            {finishing && <Spinner size="xs" label="Finishing variants" />}
+            <DiamondsFour weight="fill" aria-hidden />
+            <Text size="sm" color="secondary" as="span">
+              {components.length}
+            </Text>
+          </span>
+        </div>
         <Input
           type="search"
           size="md"
@@ -66,7 +99,7 @@ function App() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && shown[0]) send({ type: 'place', slug: shown[0].slug, index: 0 });
+            if (e.key === 'Enter' && shown[0]) place(shown[0].slug);
           }}
           autoFocus
         />
@@ -79,10 +112,10 @@ function App() {
               classNames={{ media: 'stage', content: 'label' }}
               media={
                 <div className="frame">
-                  <img src={pictures[c.slug]} alt="" draggable={false} style={{ width: sizes[c.slug]?.[0] }} />
+                  {busy === c.slug ? <Spinner /> : <img src={pictures[c.slug]} alt="" draggable={false} style={{ width: sizes[c.slug]?.[0] }} />}
                 </div>
               }
-              onClick={() => send({ type: 'place', slug: c.slug, index: 0 })}
+              onClick={() => place(c.slug)}
               title={`Place ${c.name}`}
             >
               <Text size="sm" weight="semibold" as="span">
