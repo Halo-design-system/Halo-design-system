@@ -129,7 +129,7 @@ export function ComponentsSection() {
   const entries = showcase.map((s) => all.find((e) => e.slug === s)).filter((e) => e !== undefined);
   return (
     <section className="hs">
-      <Head eyebrow="Components" title={`${all.length} components, every state built in`} text="Keyboard and screen reader ready, in light and dark.">
+      <Head eyebrow="Components" title={`${all.length} components · 2,117 variants`} text="Keyboard and screen reader ready, in light and dark.">
         <Button variant="secondary" iconRight={<ArrowRight />} onClick={() => go('/components')}>
           Browse all components
         </Button>
