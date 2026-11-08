@@ -2,7 +2,7 @@
 
 This project builds its UI with Halo (`@halo-ds/react`). Halo is newer than most AI training data, so look components up instead of guessing.
 
-- Look up every component before using it: the Halo MCP tools `find_component` and `get_component`, or `npx halo-ds docs <name>`. Never guess prop names.
+- Look up every component before using it: the Halo MCP tools `find_component` and `get_component` if they are connected. Otherwise run `npx halo-ds docs <name>` for usage, and read `node_modules/@halo-ds/react/dist/components/<Name>/<Name>.d.ts` for props. Never guess prop names.
 - Build from Halo components. Don't rebuild buttons, fields, menus, dialogs or tables from plain HTML, and don't add another UI library.
 - Use `var(--halo-...)` tokens for colour, spacing and radius. Never hard-code colours. No drop shadows on cards, panels or dialogs.
 - One primary Button per screen. Secondary for the alternative, Destructive for deleting. Premium only for upgrades, never next to a primary.

@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Claude Code plugin** now holds Halo's four skills only, so it can be listed in Claude's plugin directory. The MCP server is a separate one-line setup: `claude mcp add halo -- npx -y halo-ds mcp`. The skills use it when it is connected, and read the installed package's types and tokens when it isn't.
+
 ## 0.4.1
 
 - **Figma plugin, Halo UI** in `packages/figma-plugin`: every Halo component as a card, A to Z, with search. Click one to place it on the canvas, or inside the selected frame. Built with Halo's own components, in light and dark. Works in the Halo file, in a copy from the Community, and in any file that uses a published copy (open the plugin in the copy once). Not on the Figma Community yet.

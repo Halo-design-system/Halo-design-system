@@ -11,11 +11,11 @@ Work one screen or feature at a time, so the app keeps working in between.
 
 - Run `npx halo-ds init` if Halo isn't installed. Both libraries can live side by side while you migrate.
 - If the old library had a brand colour, apply it with `npx halo-ds theme "<hex>"`.
-- Call the Halo MCP tool `get_setup_and_rules` once.
+- If the Halo MCP server is connected, call its tool `get_setup_and_rules` once.
 
 ## 2. Map each component
 
-Find the Halo equivalent, then check its props with `get_component` before rewriting. Never carry props across by name; many differ.
+Find the Halo equivalent, then check its props with `get_component` (or in `node_modules/@halo-ds/react/dist/components/<Name>/<Name>.d.ts`) before rewriting. Never carry props across by name; many differ.
 
 | shadcn/ui | Ant Design | Material UI | Halo |
 | --- | --- | --- | --- |
@@ -51,12 +51,12 @@ Find the Halo equivalent, then check its props with `get_component` before rewri
 | Empty | Empty | (none) | EmptyState |
 | Result | Result | (none) | Result |
 
-If something isn't in the table, use `find_component` with what it does.
+If something isn't in the table, use `find_component` with what it does, or list every component with `npx halo-ds docs`.
 
 ## 3. Rewrite
 
-- Replace imports and JSX, then the props, from `get_component`.
-- Replace the old library's colours and spacing with Halo tokens (`get_tokens`); remove leftover Tailwind colour classes or theme overrides that styled the old components.
+- Replace imports and JSX, then the props, from `get_component` or the component's `.d.ts` file.
+- Replace the old library's colours and spacing with Halo tokens (`get_tokens`, or `node_modules/@halo-ds/react/dist/index.css`); remove leftover Tailwind colour classes or theme overrides that styled the old components.
 - Remove the old library's CSS imports and providers once nothing uses them.
 
 ## 4. Check

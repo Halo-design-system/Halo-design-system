@@ -27,7 +27,7 @@ Free and open source under the MIT licence. Current version: 0.4.1 on [npm](http
 | [`@halo-ds/react`](packages/react) | React components |
 | [`halo-ds`](packages/cli) | CLI and MCP server: `npx halo-ds init`, `theme`, `add`, `docs` and `mcp` |
 | [`figma-plugin`](packages/figma-plugin) | Figma plugin: search every component and place it on the canvas |
-| [`halo-ds` plugin](plugins/halo-ds) | Claude Code plugin: the MCP server plus skills to build, review, theme and migrate UI |
+| [`halo-ds` plugin](plugins/halo-ds) | Claude Code plugin: skills to build, review, theme and migrate UI |
 | [`site`](apps/site) | The website: docs, components, foundations and the live example apps |
 | [`docs`](apps/docs) | Storybook: live documentation and component playground |
 

@@ -1,6 +1,6 @@
 # Choosing a component by job
 
-Find the job, then check the component's props with `get_component` (or `npx halo-ds docs <name>`) before using it.
+Find the job, then check the component's props with `get_component` (or in `node_modules/@halo-ds/react/dist/components/<Name>/<Name>.d.ts`) before using it.
 
 ## Doing things
 

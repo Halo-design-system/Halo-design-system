@@ -1,6 +1,6 @@
 # Halo for Claude Code
 
-This plugin helps Claude Code build, review and theme React interfaces with the Halo design system (`@halo-ds/react`). It adds four skills and one MCP server.
+This plugin helps Claude Code build, review and theme React interfaces with the Halo design system (`@halo-ds/react`). It adds four skills.
 
 ## Skills
 
@@ -11,15 +11,15 @@ This plugin helps Claude Code build, review and theme React interfaces with the 
 
 The skills are Markdown files in this folder. They run nothing on their own.
 
-## MCP server
+## Optional: add the MCP server
 
-The MCP server lets Claude look up each Halo component's import line, props, examples and usage guidance, the design tokens, and ready-made page blocks, instead of guessing them.
+Halo also has an MCP server that looks up each component's props, examples and usage guidance, the design tokens and ready-made page blocks. It is not part of this plugin. The skills work without it, and use it when it is connected. To add it:
 
-What it runs: `npx -y halo-ds@0.4.1 mcp`. npx downloads the `halo-ds` package, version 0.4.1, from the npm registry the first time, then starts it on your computer. The server talks to Claude Code over standard input and output only.
+```bash
+claude mcp add halo -- npx -y halo-ds mcp
+```
 
-What it reads and sends: nothing from your project or computer. All of Halo's documentation is inside the package. It makes no network requests, collects no data and stores nothing.
-
-The package's source is public: [packages/cli](https://github.com/Halo-design-system/Halo-design-system/tree/main/packages/cli) in the Halo repository.
+npx downloads the `halo-ds` package from the npm registry the first time, then starts it on your computer. It reads nothing from your project, makes no network requests and collects no data. Its source is public: [packages/cli](https://github.com/Halo-design-system/Halo-design-system/tree/main/packages/cli) in the Halo repository.
 
 ## Install
 

@@ -1,7 +1,7 @@
 {
   "name": "halo-ds",
-  "version": "0.4.1",
-  "description": "Build, review and theme React UI with the Halo design system. Includes an MCP server with every component's props, examples and usage guidance.",
+  "version": "0.4.2",
+  "description": "Build, review, theme and migrate React UI with the Halo design system. Four skills that teach Claude Halo's components, tokens and rules.",
   "author": {
     "name": "Halo design system"
   },

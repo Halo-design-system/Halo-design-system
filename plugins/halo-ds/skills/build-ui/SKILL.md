@@ -10,9 +10,9 @@ Halo is a React design system: `@halo-ds/react`. It is newer than most training 
 ## Workflow
 
 1. **Check the setup.** If `@halo-ds/react` is not in package.json, run `npx halo-ds init` (add `--yes` to skip questions). Halo needs no CSS or font imports. Light, dark or system mode comes from `data-theme` on the html element.
-2. **Start from a block** when the screen is a common one: sign in, sign up, a dashboard, a table page, settings, pricing, an empty list or a 404. List them with the MCP tool `list_blocks` (or `npx halo-ds add`), then add one with `npx halo-ds add <name>` or `get_block`, and adapt its words, data and handlers.
+2. **Start from a block** when the screen is a common one: sign in, sign up, a dashboard, a table page, settings, pricing, an empty list or a 404. List them with `npx halo-ds add` (or the MCP tool `list_blocks`), then add one with `npx halo-ds add <name>` (or `get_block`), and adapt its words, data and handlers.
 3. **Plan by job.** List what the screen must do (collect an email, confirm a delete, show a status) and pick a component for each job with `references/components.md`.
-4. **Look up every component** before using it. With the Halo MCP server: `get_component` for its import, props and examples, `find_component` when unsure, `get_tokens` for values. Without it: `npx halo-ds docs <name>`.
+4. **Look up every component** before using it. If the Halo MCP server is connected: `get_component` for its import, props and examples, `find_component` when unsure, `get_tokens` for values. Without it: `npx halo-ds docs <name>` for when to use it and how to import it, `node_modules/@halo-ds/react/dist/components/<Name>/<Name>.d.ts` for its props, and `node_modules/@halo-ds/react/dist/index.css` for token values.
 5. **Build** with the rules below and the topic files.
 6. **Check** with `references/checklist.md` before you say it's done.
 

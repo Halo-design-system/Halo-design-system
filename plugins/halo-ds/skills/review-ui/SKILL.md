@@ -5,17 +5,17 @@ description: Review React code that uses the Halo design system (@halo-ds/react)
 
 # Review UI against Halo's rules
 
-Read the files the user points at (or the changed files), check them against the list below, then report. Use the Halo MCP tool `get_component` to confirm props; without it, `npx halo-ds docs <name>`.
+Read the files the user points at (or the changed files), check them against the list below, then report. Use the Halo MCP tool `get_component` to confirm props; without it, read `node_modules/@halo-ds/react/dist/components/<Name>/<Name>.d.ts`.
 
 ## What to check
 
 **Uses Halo, not look-alikes**
 - Plain `<button>`, `<input>`, `<select>`, `<dialog>` or hand-built menus, tabs or tables where a Halo component exists.
 - Components from another UI library mixed in.
-- Props that don't exist on the Halo component (check with `get_component`; never assume).
+- Props that don't exist on the Halo component (check with `get_component` or the `.d.ts` file; never assume).
 
 **Tokens, not hard-coded values**
-- Hex, `rgb()` or named colours in styles: replace with `var(--halo-...)` (look them up with `get_tokens`).
+- Hex, `rgb()` or named colours in styles: replace with `var(--halo-...)` (look them up with `get_tokens` or in `node_modules/@halo-ds/react/dist/index.css`).
 - Pixel spacing and radius in layout styles where a spacing or radius token fits.
 - `box-shadow` on cards, panels, dialogs or drawers: Halo uses borders, not shadows. (Focus rings and Toast are fine.)
 

@@ -1,6 +1,6 @@
 # Colour, surfaces, spacing and type
 
-Every value is a CSS variable starting with `--halo-`. Look up exact values with the MCP tool `get_tokens`. All of these change for dark mode by themselves, so never hard-code a colour.
+Every value is a CSS variable starting with `--halo-`. Look up exact values with the MCP tool `get_tokens`, or in `node_modules/@halo-ds/react/dist/index.css`. All of these change for dark mode by themselves, so never hard-code a colour.
 
 ## Colour
 

@@ -25,7 +25,7 @@ grep -rnE "<CompactButton|iconOnly" src --include=*.tsx
 
 ## Then check by eye
 
-- [ ] Every component and prop exists (checked with `get_component` or `npx halo-ds docs`).
+- [ ] Every component and prop exists (checked with `get_component`, or in the component's `.d.ts` file).
 - [ ] One primary Button per screen. Premium only for upgrades, never next to a primary.
 - [ ] Spacing uses tokens, and left and right padding are equal.
 - [ ] Every field has a label; every icon-only button has an `aria-label` and a Tooltip.

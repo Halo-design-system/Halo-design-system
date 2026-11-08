@@ -73,7 +73,7 @@ Releases are batched. Pushing to `main` only updates Storybook; nothing goes to 
 Each release:
 
 1. In `CHANGELOG.md`, rename **Unreleased** to the new version and add a fresh empty **Unreleased** section above it.
-2. Set the same new version in `packages/tokens/package.json`, `packages/react/package.json` and `packages/cli/package.json` (for example `0.1.0`, then `0.1.1` for fixes and `0.2.0` for new components). Also set it in the plugin: `version` in `plugins/halo-ds/.claude-plugin/plugin.json`, the `halo-ds@` version in `plugins/halo-ds/.mcp.json` and `plugins/halo-ds/README.md` (the plugin directory needs an exact version, not `@latest`), and both `version` fields in `server.json`.
+2. Set the same new version in `packages/tokens/package.json`, `packages/react/package.json` and `packages/cli/package.json` (for example `0.1.0`, then `0.1.1` for fixes and `0.2.0` for new components). Also set it in `plugins/halo-ds/.claude-plugin/plugin.json` (it must be higher than the version already there, so people get the update), and in both `version` fields of `server.json`.
 3. Check what would be published, without publishing:
 
    ```bash
@@ -88,13 +88,7 @@ Each release:
 
    pnpm swaps the internal `workspace:*` link for the real version number, so `@halo-ds/react` depends on the matching `@halo-ds/tokens`.
 
-5. Pin the plugin to the new package. Set the version in `plugins/halo-ds/package.json` (both fields), then refresh its lockfile, which records the published package's hash. Claude's plugin directory holds plugins that run `npx` without one.
-
-   ```bash
-   cd plugins/halo-ds && npm install --package-lock-only --ignore-scripts
-   ```
-
-6. Tag the release in git: `git tag v0.1.0 && git push --tags`.
-7. The MCP Registry listing updates by itself: pushing the version tag runs the **Publish to the MCP Registry** workflow, which reads `server.json` and signs in through GitHub. Run it from the Actions tab if the tag went out before npm finished. The `mcpName` in `packages/cli/package.json` must match the `name` in `server.json`.
-8. The Claude Code plugin is published from its own repository, [Halo-design-system/halo-claude-plugin](https://github.com/Halo-design-system/halo-claude-plugin), so Claude's plugin directory can list it (this repository's build settings would block it). Edit it here in `plugins/halo-ds`; that repository's **Sync** workflow copies it from the newest version tag once a day. Run Sync from its Actions tab to copy it straight away.
+5. Tag the release in git: `git tag v0.1.0 && git push --tags`.
+6. The MCP Registry listing updates by itself: pushing the version tag runs the **Publish to the MCP Registry** workflow, which reads `server.json` and signs in through GitHub. Run it from the Actions tab if the tag went out before npm finished. The `mcpName` in `packages/cli/package.json` must match the `name` in `server.json`.
+7. The Claude Code plugin is published from its own repository, [Halo-design-system/halo-claude-plugin](https://github.com/Halo-design-system/halo-claude-plugin), so Claude's plugin directory can list it (this repository's build settings would block it). Edit it here in `plugins/halo-ds`; that repository's **Sync** workflow copies it from `main` once a day, so a plugin change goes out without an npm release. Run Sync from its Actions tab to copy it straight away. The directory only accepts MCP servers that run on the user's computer, and dependency lockfiles, from Verified organizations, so the plugin holds skills only: no `.mcp.json`, `package.json` or lockfile.
 
