@@ -237,7 +237,7 @@ export const TreeSelect = forwardRef<HTMLButtonElement, TreeSelectProps | MultiT
             aria-invalid={isInvalid || undefined}
             aria-required={required || undefined}
             disabled={disabled}
-            {...part('value', [own.multiButton, !picked.length && selectStyles.placeholder])}
+            {...part('value', [own.multiButton, !picked.length && selectStyles.placeholder, !icon && selectStyles.textStart])}
             onClick={() => (open ? close() : setOpen(true))}
             onKeyDown={openKey}
           >

@@ -30,7 +30,7 @@ const features = [
   {
     icon: <SquaresFour />,
     title: 'Components',
-    count: `${all.length} components, 2,117 variants`,
+    count: `${all.length} components, 2,125 variants`,
     text: 'Every component in the React package, built as a Figma component with the same name and the same options. A Button, for example, is one component with 400 variants for its types, sizes, states and icons, so you pick options instead of hunting for the right copy.',
   },
   {

@@ -48,6 +48,15 @@
 }
 .errorText { color: var(--halo-state-error-contrast); }
 
+/* ---------- Image upload ---------- */
+
+.image { display: flex; align-items: center; gap: var(--halo-spacing-7); }
+.imageContent { display: flex; flex-direction: column; gap: var(--halo-spacing-2); min-width: 0; }
+.imageActions { display: flex; gap: var(--halo-spacing-4); }
+.imageActionsSpaced { padding-top: var(--halo-spacing-4); }
+.imageRemove svg { color: var(--halo-icon-negative); }
+.imageRemove:disabled svg { color: var(--halo-icon-disabled); }
+
 /* ---------- File item ---------- */
 
 .item {

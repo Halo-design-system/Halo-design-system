@@ -21,6 +21,7 @@
   flex: 1;
   min-width: 0;
   overflow: hidden;
+  padding-inline: var(--inset);
   font-family: var(--halo-font-family-body);
   font-size: var(--text-size);
   line-height: var(--text-height);
@@ -68,7 +69,11 @@
   line-height: var(--text-height);
 }
 .comboInput::placeholder { color: var(--halo-text-secondary); }
-.multiple { border-radius: var(--halo-radius-6); }
+/* Text gets --inset only when it is on its own: the one value of a single box, or the placeholder before any tags */
+.combobox:not(.multiple) .comboInput { padding-inline: var(--inset); }
+.multiple .comboInput:first-child,
+.textStart:first-child { padding-inline-start: var(--inset); }
+.multiple { gap: calc(var(--gap) + var(--inset)); border-radius: var(--halo-radius-6); }
 .multiple > .caret { align-self: flex-start; margin-top: calc((var(--height) - 10px - var(--icon)) / 2); }
 
 @media (prefers-reduced-motion: reduce) {

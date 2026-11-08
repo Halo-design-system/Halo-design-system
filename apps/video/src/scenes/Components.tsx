@@ -144,7 +144,7 @@ export function Components() {
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="band" style={{ display: 'flex', alignItems: 'center', gap: 64, padding: '36px 64px', borderRadius: 32 }}>
           <Title value={<Count to={56} from={0} start={10} />} label="components" />
-          <Title value={<Count to={2117} from={0} start={18} />} label="variants" />
+          <Title value={<Count to={2125} from={0} start={18} />} label="variants" />
         </div>
       </div>
     </Scene>

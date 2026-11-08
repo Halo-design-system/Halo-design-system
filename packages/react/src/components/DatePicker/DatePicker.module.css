@@ -168,6 +168,7 @@
 .rangeValue {
   display: flex;
   flex: 1;
+  padding-inline: var(--inset);
   align-items: center;
   gap: var(--halo-spacing-3);
   min-width: 0;

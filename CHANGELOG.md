@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Image upload:** a new `ImageUpload` for one picture in a circle, like a profile photo or a company logo. A person or a business, with a title and hint or compact. Upload, change and remove. In Figma on the File upload page.
+- **Input, Select, Combobox, Number input, Date picker, Tree select and Color picker:** icons, avatars, flags and tags now sit snugly inside the round box. The box padding is 6, 8 or 12px for small, medium and large. Text keeps its position through a 4px inset of its own, so a field with only text looks the same.
 - **Claude Code plugin** now holds Halo's four skills only, so it can be listed in Claude's plugin directory. The MCP server is a separate one-line setup: `claude mcp add halo -- npx -y halo-ds mcp`. The skills use it when it is connected, and read the installed package's types and tokens when it isn't.
 
 ## 0.4.1

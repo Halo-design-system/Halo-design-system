@@ -2,30 +2,32 @@
 
 .sm {
   --height: 32px;
-  --pad: var(--halo-spacing-5);
-  --gap: var(--halo-spacing-3);
+  --pad: var(--halo-spacing-3);
+  --gap: var(--halo-spacing-1);
   --icon: 16px;
   --text-size: var(--halo-font-size-sm);
   --text-height: var(--halo-line-height-sm);
 }
 .md {
   --height: 40px;
-  --pad: var(--halo-spacing-6);
-  --gap: var(--halo-spacing-4);
+  --pad: var(--halo-spacing-4);
+  --gap: var(--halo-spacing-2);
   --icon: 20px;
   --text-size: var(--halo-font-size-md);
   --text-height: var(--halo-line-height-md);
 }
 .lg {
   --height: 48px;
-  --pad: var(--halo-spacing-7);
-  --gap: var(--halo-spacing-4);
+  --pad: var(--halo-spacing-6);
+  --gap: var(--halo-spacing-2);
   --icon: 20px;
   --text-size: var(--halo-font-size-md);
   --text-height: var(--halo-line-height-md);
 }
 
+/* The padding is tight so icons, avatars and tags sit snugly in the round box. Text adds --inset, so it keeps its breathing room. */
 .box {
+  --inset: var(--halo-spacing-2);
   box-sizing: border-box;
   --line: var(--halo-border-strong);
   display: flex;
@@ -67,7 +69,7 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  padding: 0;
+  padding: 0 var(--inset);
   border: 0;
   outline: none;
   background: transparent;
@@ -104,6 +106,8 @@
   line-height: var(--text-height);
   white-space: nowrap;
 }
+.prefix { margin-inline-start: var(--inset); }
+.suffix { margin-inline-end: var(--inset); }
 /* The line between the affix and the value */
 .prefix::after,
 .suffix::before {

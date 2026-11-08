@@ -22,7 +22,7 @@ export function formatBytes(bytes: number) {
   return `${n < 10 ? n.toFixed(1) : Math.round(n)} ${units[i]}`;
 }
 
-function accepts(file: File, accept?: string) {
+export function accepts(file: File, accept?: string) {
   if (!accept) return true;
   return accept.split(',').some((rule) => {
     const r = rule.trim().toLowerCase();

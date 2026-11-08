@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FileItem, FileUpload } from './FileUpload';
+import { ImageUpload } from './ImageUpload';
 
 const meta = {
   title: 'Components/File upload',
   component: FileUpload,
-  subcomponents: { FileItem },
+  subcomponents: { FileItem, ImageUpload },
   tags: ['autodocs'],
   parameters: {
     layout: 'padded',
@@ -78,4 +79,16 @@ export const Live: Story = {
       </div>
     );
   },
+};
+
+/** One picture in a circle: a person or a business, empty or uploaded, with or without the title. */
+export const Images: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 40 }}>
+      <ImageUpload onFile={() => {}} />
+      <ImageUpload kind="business" onFile={() => {}} />
+      <ImageUpload layout="compact" onFile={() => {}} />
+      <ImageUpload kind="business" layout="compact" onFile={() => {}} />
+    </div>
+  ),
 };

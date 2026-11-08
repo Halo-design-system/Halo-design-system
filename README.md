@@ -11,7 +11,7 @@ An open-source design system for designers and developers: a Figma library and a
 
 **🧪 Component playground (Storybook): https://halo-design-system.github.io/Halo-design-system/storybook/**
 
-- **56 components** in Figma and React, with 2,117 Figma variants
+- **56 components** in Figma and React, with 2,125 Figma variants
 - **288 design tokens** and 42 text styles, in light and dark
 - **1,512 icons, 100 illustrations**, 3,719 emojis, 271 flags and 1,489 brand logos
 - **8 ready-made blocks** and **7 example apps** you can click through on the site

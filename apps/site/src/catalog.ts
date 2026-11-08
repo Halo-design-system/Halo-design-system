@@ -36,7 +36,7 @@ export const groups: { name: string; items: Entry[] }[] = [
       { slug: 'date-picker', name: 'Date picker', exports: ['DatePickerField', 'DateRangePickerField'], description: 'Picks a date, a range or several dates from a calendar.', storybook: 'components-date-picker--docs' },
       { slug: 'time-picker', name: 'Time picker', exports: ['TimePickerField'], description: 'Picks a time of day from a list.', storybook: 'components-time-picker--docs' },
       { slug: 'color-picker', name: 'Color picker', exports: ['ColorField'], description: 'Picks a colour with a picker or by typing a hex.', storybook: 'components-color-picker--docs' },
-      { slug: 'file-upload', name: 'File upload', exports: ['FileUpload', 'FileItem'], description: 'Drag files in or browse, and show each upload.', storybook: 'components-file-upload--docs' },
+      { slug: 'file-upload', name: 'File upload', exports: ['FileUpload', 'FileItem', 'ImageUpload'], description: 'Drag files in or browse, and show each upload.', storybook: 'components-file-upload--docs' },
       { slug: 'rating', name: 'Rating', exports: ['Rating'], description: 'Stars for giving a score or showing an average.', storybook: 'components-rating--docs' },
       { slug: 'segmented-control', name: 'Segmented control', exports: ['SegmentedControl'], description: 'Switches between a few views or options.', storybook: 'components-segmented-control--docs' },
       { slug: 'tree-select', name: 'Tree select', exports: ['TreeSelect'], description: 'Picks from nested options, like a team inside a department.', storybook: 'components-tree-select--docs' },
