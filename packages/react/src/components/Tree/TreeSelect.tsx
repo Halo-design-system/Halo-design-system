@@ -8,6 +8,7 @@ import { StatusIcon } from '../../internal/StatusIcon';
 import { useControllable } from '../../internal/useControllable';
 import { Field } from '../Field';
 import type { FieldProps, FieldWrapperProps } from '../Field';
+import { useWrapped } from '../../internal/useWrapped';
 import inputStyles from '../Input/Input.module.css';
 import menuStyles from '../Menu/Menu.module.css';
 import selectStyles from '../Select/Select.module.css';
@@ -91,6 +92,7 @@ export const TreeSelect = forwardRef<HTMLButtonElement, TreeSelectProps | MultiT
   const [query, setQuery] = useState('');
   const [expanded, setExpanded] = useState<string[]>(defaultExpanded);
   const anchor = useRef<HTMLElement | null>(null);
+  useWrapped(anchor);
   const button = useRef<HTMLButtonElement | null>(null);
   const { floating, style } = useFloating(anchor, open, { matchWidth: true });
   const close = () => {

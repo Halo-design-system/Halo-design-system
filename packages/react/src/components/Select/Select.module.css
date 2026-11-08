@@ -73,7 +73,9 @@
 .combobox:not(.multiple) .comboInput { padding-inline: var(--inset); }
 .multiple .comboInput:first-child,
 .textStart:first-child { padding-inline-start: var(--inset); }
-.multiple { gap: calc(var(--gap) + var(--inset)); border-radius: var(--halo-radius-6); }
+.multiple { gap: calc(var(--gap) + var(--inset)); }
+/* Fully round on one row, like the other fields. A taller box looks odd that round. */
+.multiple[data-wrapped] { border-radius: var(--halo-radius-6); }
 .multiple > .caret { align-self: flex-start; margin-top: calc((var(--height) - 10px - var(--icon)) / 2); }
 
 @media (prefers-reduced-motion: reduce) {

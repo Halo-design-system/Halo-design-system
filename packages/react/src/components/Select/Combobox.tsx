@@ -7,6 +7,7 @@ import { mergeRefs, Portal, useDismiss, useFloating } from '../../internal/float
 import { Icon } from '../../internal/Icon';
 import { StatusIcon } from '../../internal/StatusIcon';
 import { useControllable } from '../../internal/useControllable';
+import { useWrapped } from '../../internal/useWrapped';
 import { Field } from '../Field';
 import type { FieldProps, FieldWrapperProps } from '../Field';
 import inputStyles from '../Input/Input.module.css';
@@ -77,6 +78,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps | MultiCombob
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const box = useRef<HTMLDivElement | null>(null);
+  useWrapped(box);
   const input = useRef<HTMLInputElement | null>(null);
   const { floating, style } = useFloating(box, open, { matchWidth: true });
   useDismiss(open, () => setOpen(false), [box, floating]);

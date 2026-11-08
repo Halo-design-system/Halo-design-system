@@ -9,6 +9,7 @@ import { useControllable } from '../../internal/useControllable';
 import { Button } from '../Button';
 import { Field } from '../Field';
 import type { FieldProps, FieldWrapperProps } from '../Field';
+import { useWrapped } from '../../internal/useWrapped';
 import inputStyles from '../Input/Input.module.css';
 import selectStyles from '../Select/Select.module.css';
 import { Tag } from '../Tag';
@@ -326,6 +327,7 @@ export const MultiDatePicker = forwardRef<HTMLButtonElement, MultiDatePickerProp
     button.current?.focus();
   };
   const remove = (d: Date) => setDates(dates.filter((x) => x.getTime() !== d.getTime()));
+  useWrapped(p.anchor as unknown as RefObject<HTMLElement>);
   const isInvalid = invalid || !!aria['aria-invalid'];
   const count = dates.length === 1 ? '1 date' : `${dates.length} dates`;
   return (
