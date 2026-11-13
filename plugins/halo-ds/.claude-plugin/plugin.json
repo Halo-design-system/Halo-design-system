@@ -1,6 +1,6 @@
 {
   "name": "halo-ds",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Build, review, theme and migrate React UI with the Halo design system. Four skills that teach Claude Halo's components, tokens and rules.",
   "author": {
     "name": "Halo design system"

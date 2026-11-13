@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+## 0.6.0
+
 - **`npx halo-ds init`** makes the page follow Halo: it writes the page's background, text colour and font to `halo-theme.css`, and offers to clear a Vite starter template's own styles. Before, the page kept the template's colours, so light and dark mode only changed the components.
 - **`npx halo-ds docs`** and the MCP server find a component by anything it exports, so `combobox` and `image-upload` work.
 - **Combobox, Date picker and Tree select with several values:** fully round like the other fields while the tags fit on one row. The corners ease only once the tags wrap to a second row.
