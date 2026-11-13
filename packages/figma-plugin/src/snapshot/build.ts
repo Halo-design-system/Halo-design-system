@@ -691,11 +691,15 @@ export class Builder {
     return this.built(target)!;
   }
 
-  /** Builds one more missing variant, newest component first. Returns false when none are left. */
-  async completeNext() {
-    for (const [key, owner] of [...this.owners].reverse()) {
+  /**
+   * Builds one more missing variant of the given components, first ones first. Returns false when none are left.
+   * Parts used inside them keep only the variants they need, until someone clicks them too.
+   */
+  async completeNext(keys: string[]) {
+    for (const key of keys) {
+      const owner = this.find(key);
       const def = this.data.components[key];
-      if (!def?.variants.length || owner.removed) continue;
+      if (!def?.variants.length || !owner) continue;
       const next = def.variants.find((variant) => !this.built(variant.key));
       if (next) {
         await this.need(next.key);

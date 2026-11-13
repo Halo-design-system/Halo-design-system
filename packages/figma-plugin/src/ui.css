@@ -34,6 +34,10 @@ body {
   display: flex;
   align-items: center;
   gap: var(--halo-spacing-2);
+}
+
+.count > :last-child {
+  margin-left: var(--halo-spacing-4);
   color: var(--halo-text-secondary);
 }
 

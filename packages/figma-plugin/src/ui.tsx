@@ -1,9 +1,9 @@
 // The plugin window, built with Halo: a search box and every component as a card,
 // A to Z, showing the component itself and its name. Clicking a card places it.
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, DiamondsFour, MagnifyingGlass } from '@phosphor-icons/react';
-import { Card, EmptyState, Input, LinkButton, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
+import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
 import { all } from '../../../apps/site/src/catalog';
 import { loadLibrary, subset } from './snapshot/subset';
 import { sizes } from './preview-sizes';
@@ -16,33 +16,27 @@ const send = (msg: object) => parent.postMessage({ pluginMessage: msg }, '*');
 
 const components = [...all].sort((a, b) => a.name.localeCompare(b.name));
 
-// Figma marks its theme on <html> (themeColors: true), following its own setting or the system.
-// Halo reads data-theme, and the pictures switch to match.
-function useFigmaTheme() {
-  const [dark, setDark] = useState(false);
+type Mode = 'light' | 'dark';
+
+// The mode the person designs in, chosen in the window and kept between sessions by the main thread.
+// The window, the pictures and the components it places all follow it.
+function useMode() {
+  const [mode, setMode] = useState<Mode>('light');
   useEffect(() => {
-    const root = document.documentElement;
-    const sync = () => {
-      const isDark = root.classList.contains('figma-dark');
-      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      setDark(isDark);
-    };
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-  return dark;
+    document.documentElement.setAttribute('data-theme', mode);
+  }, [mode]);
+  return [mode, setMode] as const;
 }
 
 function App() {
-  const dark = useFigmaTheme();
-  const pictures = dark ? previewsDark : previews;
+  const [mode, setMode] = useMode();
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
+  const pictures = mode === 'dark' ? previewsDark : previews;
   const { toast } = useToast();
   const [query, setQuery] = useState('');
 
   const [busy, setBusy] = useState<string | null>(null);
-  const [finishing, setFinishing] = useState(false);
 
   useEffect(() => {
     const failed = (name: string, message: string) => {
@@ -52,22 +46,30 @@ function App() {
     onmessage = async (event: MessageEvent) => {
       const msg = event.data.pluginMessage;
       if (msg?.type === 'done') setBusy(null);
-      if (msg?.type === 'background') setFinishing(msg.busy);
+      if (msg?.type === 'mode') setMode(msg.mode);
+      if (msg?.type === 'note') toast({ type: 'information', title: msg.title, description: msg.message });
       if (msg?.type === 'failed') failed(msg.name, msg.message);
       if (msg?.type === 'need') {
         try {
-          send({ type: 'data', slug: msg.slug, index: msg.index, placed: msg.placed, data: subset(await loadLibrary(), msg.key) });
+          send({ type: 'data', slug: msg.slug, index: msg.index, placed: msg.placed, mode: modeRef.current, data: subset(await loadLibrary(), msg.key) });
         } catch (error) {
           failed('this component', String((error as Error).message));
         }
       }
     };
+    send({ type: 'hello' });
   }, [toast]);
+
+  // Unpacking the component data takes a moment, so do it while the window opens, not on the first click.
+  useEffect(() => {
+    const timer = setTimeout(() => loadLibrary().catch(() => undefined), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const place = (slug: string) => {
     if (busy) return;
     setBusy(slug);
-    send({ type: 'place', slug, index: 0 });
+    send({ type: 'place', slug, index: 0, mode: modeRef.current });
   };
 
   const shown = useMemo(() => {
@@ -83,11 +85,23 @@ function App() {
             Halo UI
           </Text>
           <span className="count">
-            {finishing && <Spinner size="xs" label="Finishing variants" />}
             <DiamondsFour weight="fill" aria-hidden />
             <Text size="sm" color="secondary" as="span">
               {components.length}
             </Text>
+            <SegmentedControl
+              size="sm"
+              aria-label="Component colour mode"
+              value={mode}
+              onValueChange={(value) => {
+                setMode(value as Mode);
+                send({ type: 'mode', mode: value });
+              }}
+              options={[
+                { value: 'light', label: 'Light' },
+                { value: 'dark', label: 'Dark' },
+              ]}
+            />
           </span>
         </div>
         <Input

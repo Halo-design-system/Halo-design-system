@@ -13,7 +13,7 @@ Figma has no public libraries, so the plugin carries Halo's components with it. 
 1. **This file**, when it is Halo or a copy of it.
 2. **The "Halo components" page** in this file, from an earlier click.
 3. **A published Halo library** the person can reach, which keeps the instance linked to it.
-4. **The data inside the plugin.** It creates Halo's variables and styles once per file, builds the component's default look on a "Halo components" page, places an instance, then adds the other variants in the background. A small spinner by the component count shows that work. If the plugin closes early, clicking the component again picks it back up.
+4. **The data inside the plugin.** It creates Halo's variables and styles once per file, builds the component's default look on a "Halo components" page, places an instance, then adds the other variants in the background. Only the components someone clicks get all their variants; parts used inside them keep the ones they need. If the plugin closes before that finishes, it carries on the next time the plugin opens in that file.
 
 A file keeps the version it received. On a plan with too few variable modes, a collection keeps its default mode only, and the free plan's page limit puts the components in a section beside the design.
 
