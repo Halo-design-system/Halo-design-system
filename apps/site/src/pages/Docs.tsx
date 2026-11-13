@@ -136,12 +136,12 @@ function Installation() {
         {(Object.keys(frameworks) as Framework[]).map((k) => (
           <TabPanel key={k} value={k} className="install-panel">
             <Step n={1} title="Create an app">
-              <p>Skip this if you already have one.</p>
+              <p>Skip this if you already have one. New Vite and Next.js apps need Node.js 22.12 or later; check yours with <code>node -v</code>.</p>
               <CodeBlock code={frameworks[k].create[pm]} label="Copy command" />
             </Step>
             {way === 'cli' ? (
               <Step n={2} title="Run init in your app's folder">
-                <p>It installs Halo, then asks for light, dark or system mode and, if you like, your brand colour.</p>
+                <p>It installs Halo, asks for light, dark or system mode and, if you like, your brand colour, and makes the page follow that mode.</p>
                 <CodeBlock code={`${run[pm]} halo-ds init`} label="Copy command" />
               </Step>
             ) : (
@@ -237,7 +237,8 @@ function Cli() {
         <ul className="docs-list">
           <li>installs <code>@halo-ds/react</code></li>
           <li>sets light, dark or system mode on the <code>html</code> element</li>
-          <li>writes your brand colour to <code>halo-theme.css</code> and imports it, if you give one</li>
+          <li>writes <code>halo-theme.css</code> and imports it: the page&apos;s background, text colour and font, plus your brand colour if you give one</li>
+          <li>offers to clear a Vite starter template&apos;s own styles, which would fight light and dark mode</li>
         </ul>
         <CodeBlock code={`${x} halo-ds init`} label="Copy command" />
         <p>What you will see:</p>

@@ -1,13 +1,14 @@
 // npx halo-ds: set up Halo in a React app, make it your brand, and read the docs in the terminal.
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { parseArgs } from 'node:util';
 import { all, groups } from '../../../apps/site/src/catalog';
 import { guides } from '../../../apps/site/src/guide';
 import { brandVariables, parseHex, themeCss, toHex } from './colour';
-import { blocks, findBlock, runMcp } from './mcp';
+import { clearStarterStyles, findStarterStyles } from './starter';
+import { blocks, findBlock, findEntry, runMcp } from './mcp';
 import { writeAgents, writeSkills } from './skills';
 import { addImport, installCommand, readProject, rel, setTheme } from './project';
 import type { Project } from './project';
@@ -83,16 +84,22 @@ function needProject(cwd: string): Project {
 
 // ---------- theme ----------
 
+/** Writes halo-theme.css: the page's own background, text colour and font, then the brand colour if there is one. */
 function writeTheme(p: Project, brand: string) {
   if (!p.entryFile) {
     note(`Couldn't find your entry file. Save this as a CSS file and import it once in your app:\n\n${themeCss(brand)}`);
     return;
   }
   const file = join(dirname(p.entryFile), 'halo-theme.css');
-  writeFileSync(file, themeCss(brand));
-  done(`Wrote your brand colours to ${bold(rel(p, file))}`);
+  // Running init again without a colour keeps the brand that is already there
+  const kept = !brand && existsSync(file) ? (readFileSync(file, 'utf8').match(/npx halo-ds theme (#[0-9a-f]{6})/i)?.[1] ?? '') : brand;
+  writeFileSync(file, themeCss(kept));
+  done(brand ? `Wrote your brand colours to ${bold(rel(p, file))}` : `Wrote the page styles to ${bold(rel(p, file))}`);
+  // The page styles use Halo's variables, which load with the package. Import it here so they are there before the first component is used.
+  addImport(p.entryFile, '@halo-ds/react');
   if (addImport(p.entryFile, './halo-theme.css') === 'added') done(`Imported it in ${bold(rel(p, p.entryFile))}`);
 
+  if (!brand) return;
   const { buttonTextContrast } = brandVariables(parseHex(brand)!);
   if (buttonTextContrast < 3) note(`White text is hard to read on ${toHex(parseHex(brand)!)} (${buttonTextContrast.toFixed(1)}:1). Button labels may need a deeper shade.`);
 }
@@ -143,8 +150,20 @@ async function init(cwd: string, opts: { yes: boolean; theme?: string; brand?: s
     else done(`Set ${bold(`data-theme="${mode}"`)} in ${bold(rel(p, p.htmlFile))}`);
   } else note(`Add data-theme="${mode}" to your <html> element.`);
 
-  // 3. The brand colour, if one was picked
-  if (brand) writeTheme(p, brand);
+  // 3. The page follows Halo's light and dark mode, with the brand colour if one was picked
+  writeTheme(p, brand);
+
+  // 4. A starter template's own colours would fight Halo's, so offer to clear them
+  const starter = findStarterStyles(p);
+  if (starter.clearable.length) {
+    const names = starter.clearable.map((f) => rel(p, f)).join(' and ');
+    const answer = opts.yes ? 'yes' : await ask(`Clear the starter template's styles in ${names}, so the page follows Halo?`, 'yes');
+    if (/^y/i.test(answer)) {
+      clearStarterStyles(starter.clearable);
+      done(`Cleared the starter styles in ${bold(names)}`);
+    } else note(`Kept ${names}. Its colours may not follow light and dark mode.`);
+  }
+  for (const f of starter.mentions) note(`${rel(p, f)} sets its own page colours. Remove its background and color rules so the page follows Halo.`);
 
   say(`
 ${bold("You're set.")} Use any component:
@@ -170,8 +189,7 @@ function docs(name: string | undefined) {
     }
     return say(`More on one: ${bold('npx halo-ds docs badge')}`);
   }
-  const q = name.toLowerCase().replace(/\s+/g, '-');
-  const entry = all.find((e) => e.slug === q || e.name.toLowerCase() === name.toLowerCase()) ?? all.find((e) => e.slug.includes(q) || q.includes(e.slug));
+  const entry = findEntry(name);
   if (!entry) fail(`No component called "${name}". See them all with: npx halo-ds docs`);
   const e = entry!;
   const shared: Record<string, string> = { 'event-calendar': 'calendar', 'tree-select': 'tree' };

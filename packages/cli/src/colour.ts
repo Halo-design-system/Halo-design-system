@@ -106,15 +106,28 @@ export function brandVariables(brand: Rgb) {
   return { light, dark, buttonTextContrast: contrast(WHITE, brand) };
 }
 
-/** The CSS file `halo-ds theme` writes. Plain CSS, so it wins over Halo's layered defaults. */
+/** The page itself: Halo styles its components, and this makes the page behind them follow light and dark mode too. */
+const PAGE_CSS = `/* The page follows Halo: its background, text colour and font change with light and dark mode. */
+
+body {
+  margin: 0;
+  background: var(--halo-surface-primary);
+  color: var(--halo-text-primary);
+  font-family: var(--halo-font-family-body);
+}
+`;
+
+/** The CSS file `halo-ds init` and `halo-ds theme` write. Plain CSS, so it wins over Halo's layered defaults. An empty brand keeps Halo purple. */
 export function themeCss(brandHex: string) {
+  if (!brandHex) return PAGE_CSS;
   const brand = parseHex(brandHex)!;
   const { light, dark } = brandVariables(brand);
   const block = (vars: Record<string, string>, indent: string) =>
     Object.entries(vars)
       .map(([k, v]) => `${indent}${k}: ${v};`)
       .join('\n');
-  return `/* Your brand colour for Halo, made by \`npx halo-ds theme ${toHex(brand)}\`. Edit freely. */
+  return `${PAGE_CSS}
+/* Your brand colour for Halo, made by \`npx halo-ds theme ${toHex(brand)}\`. Edit freely. */
 
 :root,
 [data-theme='light'] {

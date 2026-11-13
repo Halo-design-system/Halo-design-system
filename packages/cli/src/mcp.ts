@@ -60,10 +60,12 @@ export function listComponents() {
     .join('\n\n') + '\n\nGet one with the get_component tool.';
 }
 
-function findEntry(name: string): Entry | undefined {
+/** Finds a component by its slug, its name, or anything it exports, so "combobox" and "image-upload" find their pages. */
+export function findEntry(name: string): Entry | undefined {
   const q = name.trim().toLowerCase().replace(/\s+/g, '-');
+  const plain = q.replace(/-/g, '');
   return (
-    all.find((e) => e.slug === q || e.name.toLowerCase() === name.trim().toLowerCase() || e.exports.some((x) => x.toLowerCase() === name.trim().toLowerCase())) ??
+    all.find((e) => e.slug === q || e.name.toLowerCase() === name.trim().toLowerCase() || e.exports.some((x) => x.toLowerCase() === plain)) ??
     all.find((e) => e.slug.includes(q) || q.includes(e.slug))
   );
 }
