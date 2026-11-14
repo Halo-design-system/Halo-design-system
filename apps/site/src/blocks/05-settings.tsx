@@ -22,6 +22,7 @@ import {
   Tabs,
   Text,
   TextareaField,
+  ToastProvider,
   useToast,
 } from '@halo-ds/react';
 
@@ -35,7 +36,7 @@ const sectionTitle = {
   font: 'var(--halo-font-weight-semibold) var(--halo-font-size-lg)/var(--halo-line-height-lg) var(--halo-font-family-heading)',
 };
 
-export default function Settings() {
+function SettingsPage() {
   const { toast } = useToast();
   const [confirming, setConfirming] = useState(false);
   const saved = () => {
@@ -138,5 +139,14 @@ export default function Settings() {
         }
       />
     </main>
+  );
+}
+
+// Toasts need a ToastProvider above them. If your app already has one, like in its root layout, use SettingsPage on its own.
+export default function Settings() {
+  return (
+    <ToastProvider>
+      <SettingsPage />
+    </ToastProvider>
   );
 }

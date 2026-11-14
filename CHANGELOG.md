@@ -6,6 +6,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Settings block** brings its own `ToastProvider`, so it works as soon as it is added. Before, it crashed in an app that had no provider.
 - **Figma plugin, Halo UI** has a Light and Dark switch: the window, the previews and the components it places all follow it, whatever theme Figma uses. Inserting is quieter: only the component you click gets every variant in the background, with no spinner, and unfinished work carries on when the plugin opens again.
 ## 0.6.0
 
