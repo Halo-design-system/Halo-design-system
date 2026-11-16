@@ -6,6 +6,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Switch:** springier motion. The thumb stretches toward where it is going, lands with a small bounce and rounds back up, and the track fills with the brand colour as it travels. Off with reduced motion.
 - **Overlay:** softly blurs the page by default and uses the new `surface-overlay` colour: black at 40% in light mode and 60% in dark mode, as in Figma. Modal and Drawer use the blur by default too; pass `overlay="dim"` for no blur.
 - **Website on phones:** no zoom when tapping a field on iPhone, pages open at the top, tabs and chips scroll sideways with faded ends, and code fades out under the copy button.
 - **Website: search and AI assistants.** Every page is a real HTML page with its own title, description, link preview image and structured data, so search engines, link previews and AI assistants that don't run JavaScript can read it. Adds `sitemap.xml` and `robots.txt`, and pages for each address answer with success instead of "not found".

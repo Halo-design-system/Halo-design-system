@@ -14,7 +14,11 @@
 }
 
 .track {
-  --bg: var(--halo-surface-contrast);
+  --off: var(--halo-surface-contrast);
+  --on: var(--halo-fill-brand);
+  /* How far the thumb has travelled, set by Switch.tsx while it moves; the track fills with it */
+  --p: 0%;
+  --bg: color-mix(in srgb, var(--on) var(--p), var(--off));
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
@@ -25,25 +29,27 @@
   border-radius: var(--halo-radius-10);
   background: var(--bg);
   cursor: pointer;
-  transition: background-color 120ms ease;
 }
-.track:hover:not(:disabled) { --bg: var(--halo-surface-heavy-contrast); }
-.track[aria-checked='true'] { --bg: var(--halo-fill-brand); }
-.track[aria-checked='true']:hover:not(:disabled) { --bg: var(--halo-fill-brand-hover); }
+.track[aria-checked='true'] { --p: 100%; }
+.track:hover:not(:disabled) { --off: var(--halo-surface-heavy-contrast); --on: var(--halo-fill-brand-hover); }
 .track:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--halo-surface-primary), 0 0 0 4px var(--halo-border-focus);
 }
 .track:disabled { --bg: var(--halo-fill-disabled); cursor: not-allowed; }
 
+/* The thumb stretches toward where it is going, then rounds back up. Switch.tsx sets --x and --grow. */
 .thumb {
-  width: var(--thumb);
+  --x: 0px;
+  --grow: 0px;
+  flex-shrink: 0;
+  width: calc(var(--thumb) + var(--grow));
   height: var(--thumb);
-  border-radius: 50%;
+  border-radius: var(--thumb);
   background: var(--halo-icon-on-brand);
-  transition: transform 160ms cubic-bezier(0.34, 1.3, 0.64, 1);
+  transform: translateX(var(--x));
 }
-.track[aria-checked='true'] .thumb { transform: translateX(calc(var(--w) - var(--thumb) - 4px)); }
+.track[aria-checked='true'] .thumb { --x: calc(var(--w) - var(--thumb) - 4px); }
 .track:disabled .thumb { background: var(--halo-surface-primary); }
 
 .field {
@@ -60,6 +66,4 @@
 .disabled .label,
 .disabled .description { color: var(--halo-text-disabled); cursor: not-allowed; }
 
-@media (prefers-reduced-motion: reduce) {
-  .track, .thumb { transition: none; }
-}
+
