@@ -163,6 +163,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
           <CompactButton
             ref={motion.minus}
             variant="ghost"
+            round
             size={btn}
             aria-label="Decrease"
             disabled={disabled}
@@ -178,6 +179,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
         <CompactButton
           ref={motion.plus}
           variant="ghost"
+          round
           size={btn}
           aria-label="Increase"
           disabled={disabled}

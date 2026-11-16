@@ -1,5 +1,5 @@
 import { cloneElement, isValidElement, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import type { CSSProperties, FocusEvent, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from 'react';
+import type { CSSProperties, FocusEvent, KeyboardEvent, MouseEvent, PointerEvent, ReactElement, ReactNode, Ref } from 'react';
 import { createPortal } from 'react-dom';
 import { parts } from '../../internal/parts';
 import type { PartsProps } from '../../internal/parts';
@@ -31,6 +31,8 @@ const WARM_WINDOW = 300;
 type Handlers = {
   onMouseEnter?: (e: MouseEvent) => void;
   onMouseLeave?: (e: MouseEvent) => void;
+  onPointerEnter?: (e: PointerEvent) => void;
+  onPointerDown?: (e: PointerEvent) => void;
   onFocus?: (e: FocusEvent) => void;
   onBlur?: (e: FocusEvent) => void;
   onKeyDown?: (e: KeyboardEvent) => void;
@@ -63,6 +65,8 @@ export function Tooltip({ content, side = 'top', delay = 500, children, classNam
   const showTimer = useRef<number | undefined>(undefined);
   const hideTimer = useRef<number | undefined>(undefined);
   const [open, setOpen] = useState(false);
+  // A touch also fires mouse events; the last pointer type tells them apart
+  const pointer = useRef<string>('mouse');
   const [pos, setPos] = useState<{ top: number; left: number; side: TooltipSide } | null>(null);
 
   const clearTimers = () => {
@@ -119,12 +123,14 @@ export function Tooltip({ content, side = 'top', delay = 500, children, classNam
     }
     place();
     const onMove = () => place();
+    // Scrolling moves the page away from the pointer, so the tooltip closes instead of following along
+    const onScroll = () => hide();
     const onKey = (e: globalThis.KeyboardEvent) => e.key === 'Escape' && hide();
-    window.addEventListener('scroll', onMove, true);
+    window.addEventListener('scroll', onScroll, true);
     window.addEventListener('resize', onMove);
     window.addEventListener('keydown', onKey);
     return () => {
-      window.removeEventListener('scroll', onMove, true);
+      window.removeEventListener('scroll', onScroll, true);
       window.removeEventListener('resize', onMove);
       window.removeEventListener('keydown', onKey);
     };
@@ -144,9 +150,19 @@ export function Tooltip({ content, side = 'top', delay = 500, children, classNam
   const trigger = cloneElement(child, {
     ref: setTriggerRef,
     'aria-describedby': [p['aria-describedby'], open ? id : undefined].filter(Boolean).join(' ') || undefined,
+    onPointerEnter: (e: PointerEvent) => {
+      p.onPointerEnter?.(e);
+      pointer.current = e.pointerType;
+    },
+    onPointerDown: (e: PointerEvent) => {
+      p.onPointerDown?.(e);
+      pointer.current = e.pointerType;
+      if (e.pointerType !== 'mouse') hide();
+    },
     onMouseEnter: (e: MouseEvent) => {
       p.onMouseEnter?.(e);
-      show(delay);
+      // Only a real mouse hover; a tap on a phone would leave it open with nothing to close it
+      if (pointer.current === 'mouse') show(delay);
     },
     onMouseLeave: (e: MouseEvent) => {
       p.onMouseLeave?.(e);

@@ -50,6 +50,14 @@ export function Layout({ children }: { children: ReactNode }) {
   const { path, go } = useRoute();
   const [theme, setTheme] = useTheme();
   const [menu, setMenu] = useState(false);
+  // Marks the page as scrolled, so the top bar can turn to glass
+  useEffect(() => {
+    const root = document.documentElement;
+    const onScroll = () => root.classList.toggle('scrolled', window.scrollY > 4);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const isOn = (to: string) => path === to || path.startsWith(to + '/');
 
   const actions = (

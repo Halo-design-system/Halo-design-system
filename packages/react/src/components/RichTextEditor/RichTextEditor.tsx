@@ -145,6 +145,7 @@ export const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorPro
 
   const tool = (c: Command, on: boolean, onClick: () => void) => (
     <CompactButton
+      round
       key={c.label}
       variant="ghost"
       aria-label={c.label}
@@ -243,7 +244,7 @@ function UrlPopover({ label, icon, placeholder, disabled, onApply }: { label: st
       align="start"
       title={`Add ${label.toLowerCase()}`}
       trigger={
-        <CompactButton variant="ghost" aria-label={`Add ${label.toLowerCase()}`} disabled={disabled} onMouseDown={(e) => e.preventDefault()}>
+        <CompactButton variant="ghost" round aria-label={`Add ${label.toLowerCase()}`} disabled={disabled} onMouseDown={(e) => e.preventDefault()}>
           <Icon name={icon} />
         </CompactButton>
       }

@@ -6,6 +6,8 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Tooltip:** no longer opens from a tap on touch screens, where nothing would close it, and closes when the page scrolls instead of following along.
+- **Round buttons inside fields:** the compact buttons inside Input (show password), Number input, Rich text editor, Color picker and the field info button are fully round, to match the round fields. Figma matches.
 - **Number input:** the number rolls up or down when you press plus or minus. At the limit, the button shakes "no" and the number nudges. The button keeps the disabled look and is marked `aria-disabled`. Off with reduced motion.
 - **Switch:** springier motion. The thumb stretches toward where it is going, lands with a small bounce and rounds back up, and the track fills with the brand colour as it travels. Off with reduced motion.
 - **Overlay:** softly blurs the page by default and uses the new `surface-overlay` colour: black at 40% in light mode and 60% in dark mode, as in Figma. Modal and Drawer use the blur by default too; pass `overlay="dim"` for no blur.

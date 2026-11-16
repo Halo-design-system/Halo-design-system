@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Badge, LinkButton, SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
 import { ArrowLeft, ArrowRight, Code } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
@@ -12,18 +12,57 @@ import { FoundationDetail, FoundationOverview, foundations } from './Foundation'
 const managers = { npm: 'npm install', pnpm: 'pnpm add', yarn: 'yarn add', bun: 'bun add' } as const;
 type Manager = keyof typeof managers;
 
+/** Other names people search for, so a search finds the component by them too. */
+const aliases: Record<string, string> = {
+  switch: 'toggle',
+  select: 'dropdown combobox autocomplete multi select',
+  input: 'text field number password search',
+  modal: 'dialog popup',
+  drawer: 'sheet side panel',
+  toast: 'snackbar notification',
+  tag: 'chip pill',
+  badge: 'label status pill',
+  progress: 'loading loader bar',
+  spinner: 'loading loader',
+  skeleton: 'loading placeholder',
+  'date-picker': 'calendar date range',
+  'file-upload': 'dropzone image upload attachment',
+  'segmented-control': 'toggle group',
+  menu: 'dropdown context menu actions',
+  tooltip: 'hint',
+  navigation: 'sidebar nav top bar header',
+  stepper: 'steps wizard progress',
+  'rich-text-editor': 'wysiwyg text editor',
+  textarea: 'text area multiline',
+  rating: 'stars',
+  carousel: 'slider gallery',
+  'empty-state': 'no data',
+  accordion: 'collapse expand faq',
+};
+
 /** The grouped component list. `base` picks where the links go: the component pages or the usage guide. */
 export function Sidebar({ current, base = '/components' }: { current?: string; base?: string }) {
   const [q, setQ] = useState('');
   // Also searches the parts a page covers, so "image" finds ImageUpload on the File upload page.
   const squash = (text: string) => text.toLowerCase().replace(/\s+/g, '');
-  const match = (e: Entry) => [e.name, ...e.exports].some((name) => squash(name).includes(squash(q)));
+  // Names first; the description too, so a word like "toggle" finds Switch
+  const match = (e: Entry) => {
+    if ([e.name, ...e.exports].some((name) => squash(name).includes(squash(q)))) return true;
+    const word = q.trim().toLowerCase();
+    return word.length > 2 && `${aliases[e.slug] ?? ''} ${e.description}`.toLowerCase().includes(word);
+  };
+  const nav = useRef<HTMLElement>(null);
+  // Enter opens the first match, the same as clicking it
+  const openFirst = () => {
+    if (q.trim()) nav.current?.querySelector<HTMLAnchorElement>('a.docs-link')?.click();
+  };
   return (
     <aside className="docs-side" aria-label="Components">
-      <div className="docs-search">
+      <div className="docs-search" onKeyDown={(e) => e.key === 'Enter' && openFirst()}>
         <SearchBox size="sm" label="Search components" placeholder="Search" value={q} onChange={setQ} />
       </div>
-      <nav className="docs-nav">
+      {/* On phones the list is hidden until you search; then the matches show under the box */}
+      <nav ref={nav} className={q.trim() ? 'docs-nav docs-nav-searching' : 'docs-nav'} onClick={(e) => (e.target as Element).closest('a') && setQ('')}>
         {base === '/components' && foundations.some((f) => f.title.toLowerCase().includes(q.trim().toLowerCase())) && (
           <div className="docs-group">
             <p className="docs-group-name">Foundation</p>
@@ -61,6 +100,9 @@ export function Sidebar({ current, base = '/components' }: { current?: string; b
                 </Link>
               ))}
           </div>
+        )}
+        {q.trim() && !groups.some((g) => g.items.some(match)) && !foundations.some((f) => f.title.toLowerCase().includes(q.trim().toLowerCase())) && !blocks.some((b) => b.title.toLowerCase().includes(q.trim().toLowerCase())) && (
+          <p className="docs-empty">No matches. Try another word.</p>
         )}
       </nav>
     </aside>

@@ -79,7 +79,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(fu
       {...props}
       type={shown ? 'text' : 'password'}
       iconRight={
-        <CompactButton variant="ghost" aria-label={shown ? 'Hide password' : 'Show password'} aria-pressed={undefined} onClick={() => setShown((s) => !s)}>
+        <CompactButton variant="ghost" round aria-label={shown ? 'Hide password' : 'Show password'} aria-pressed={undefined} onClick={() => setShown((s) => !s)}>
           <Icon name={shown ? 'EyeSlash' : 'Eye'} />
         </CompactButton>
       }
