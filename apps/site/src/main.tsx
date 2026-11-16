@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@fontsource/geist-mono/400.css';
 import './site.css';
@@ -11,7 +11,9 @@ import { Examples } from './pages/Examples';
 import { Figma } from './pages/Figma';
 import { Home } from './pages/Home';
 import { Docs } from './pages/Docs';
+import { blocks } from './registry';
 import { Router, useRoute } from './router';
+import { SITE, metaFor } from './seo';
 
 function Pages() {
   const { path } = useRoute();
@@ -22,8 +24,19 @@ function Pages() {
   return <Home />;
 }
 
+/** Keeps the tab title, description and canonical address in step as people move around the site. */
+function useMeta(path: string) {
+  useEffect(() => {
+    const page = metaFor(path, blocks);
+    document.title = page.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', page.description);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', SITE + page.path);
+  }, [path]);
+}
+
 function App() {
   const { path } = useRoute();
+  useMeta(path);
   // The Blocks page previews each block in an iframe of this page, without the site around it
   if (path.startsWith('/block-frame/')) return <BlockFrame slug={path.slice('/block-frame/'.length)} />;
   // Live example apps run on their own page: in the Examples preview, or full page from Live preview

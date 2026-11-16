@@ -101,3 +101,15 @@ export const groups: { name: string; items: Entry[] }[] = [
 ];
 
 export const all = groups.flatMap((g) => g.items);
+
+/** The foundations pages, under Components. */
+export const foundations = [
+  { slug: 'colour', title: 'Colour', description: 'Semantic colours for surfaces, text, icons and borders, with their light and dark values, and the palettes under them.' },
+  { slug: 'typography', title: 'Typography', description: 'The Geist font, three weights and a 13-step type scale, each size with its line height.' },
+  { slug: 'spacing', title: 'Spacing', description: 'The spacing steps used for padding and gaps, from 2 to 120 pixels.' },
+  { slug: 'radius', title: 'Radius', description: 'Corner sizes, from sharp to fully round.' },
+  { slug: 'layout', title: 'Grid and layout', description: 'Breakpoints, columns, gutters and margins for mobile, tablet, desktop and wide screens.' },
+  { slug: 'icons', title: 'Icons', description: 'Every Phosphor icon, regular and fill, ready to search and copy.' },
+  { slug: 'illustrations', title: 'Illustrations', description: 'Illustrations for empty states and results, and awards for achievements.' },
+  { slug: 'assets', title: 'Emojis, flags and logos', description: 'Emojis, country flags and brand logos, in the Figma file.' },
+] as const;

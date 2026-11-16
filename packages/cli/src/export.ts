@@ -5,6 +5,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { all, groups } from '../../../apps/site/src/catalog';
 import { RULES, blocks, getBlock, getComponent, getTokens, skills } from './mcp';
+import { writePages } from './pages';
 
 const SITE = 'https://halodesignsystem.dev';
 const out = resolve(process.argv[2] ?? 'dist');
@@ -85,4 +86,7 @@ ${getTokens()}
 `,
 );
 
+const pageCount = writePages(out);
+
 console.log(`AI docs: llms.txt, llms-full.txt, ${all.length} component pages and ${blocks.length} blocks in ${out}`);
+console.log(`Pages: ${pageCount} HTML pages, sitemap.xml and robots.txt`);

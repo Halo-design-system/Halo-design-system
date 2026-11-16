@@ -7,17 +7,9 @@ import type { Token } from '@halo-ds/tokens';
 import { ArrowRight, Bell, Heart, House, Star } from '@phosphor-icons/react';
 import { SearchBox } from '../SearchBox';
 import { Link } from '../router';
+import { foundations } from '../catalog';
 
-export const foundations = [
-  { slug: 'colour', title: 'Colour', description: 'Semantic colours for surfaces, text, icons and borders, with their light and dark values, and the palettes under them.' },
-  { slug: 'typography', title: 'Typography', description: 'The Geist font, three weights and a 13-step type scale, each size with its line height.' },
-  { slug: 'spacing', title: 'Spacing', description: 'The spacing steps used for padding and gaps, from 2 to 120 pixels.' },
-  { slug: 'radius', title: 'Radius', description: 'Corner sizes, from sharp to fully round.' },
-  { slug: 'layout', title: 'Grid and layout', description: 'Breakpoints, columns, gutters and margins for mobile, tablet, desktop and wide screens.' },
-  { slug: 'icons', title: 'Icons', description: 'Every Phosphor icon, regular and fill, ready to search and copy.' },
-  { slug: 'illustrations', title: 'Illustrations', description: 'Illustrations for empty states and results, and awards for achievements.' },
-  { slug: 'assets', title: 'Emojis, flags and logos', description: 'Emojis, country flags and brand logos, in the Figma file.' },
-] as const;
+export { foundations } from '../catalog';
 
 const byPrefix = (prefix: string) => tokens.filter((t) => t.name.startsWith(prefix));
 const valueOf = (t: Token) => (t.values.light ?? t.values.default ?? Object.values(t.values)[0]) as string | number;

@@ -6,6 +6,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+- **Website: search and AI assistants.** Every page is a real HTML page with its own title, description, link preview image and structured data, so search engines, link previews and AI assistants that don't run JavaScript can read it. Adds `sitemap.xml` and `robots.txt`, and pages for each address answer with success instead of "not found".
 - **New address:** the website, docs and Storybook live at [halodesignsystem.dev](https://halodesignsystem.dev). Links to the old github.io address redirect there. The CLI, the MCP server, the Figma plugin and the package pages point to the new address.
 - **Settings block** brings its own `ToastProvider`, so it works as soon as it is added. Before, it crashed in an app that had no provider.
 - **Figma plugin, Halo UI** has a Light and Dark switch: the window, the previews and the components it places all follow it, whatever theme Figma uses. Inserting is quieter: only the component you click gets every variant in the background, with no spinner, and unfinished work carries on when the plugin opens again.
