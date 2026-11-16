@@ -129,6 +129,40 @@ main {
 
 /* ---------- Shared ---------- */
 
+/* A row that scrolls sideways; the ends fade while there is more that way (see ScrollRow.tsx) */
+.scroll-row {
+  --fade-start: 0px;
+  min-width: 0;
+  max-width: 100%;
+  --fade-end: 0px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row[data-more-start] {
+  --fade-start: 40px;
+}
+
+.scroll-row[data-more-end] {
+  --fade-end: 40px;
+}
+
+.scroll-row > [role='tablist'] {
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.scroll-row [role='tab'] {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .eyebrow {
   color: var(--halo-text-brand);
   font-family: var(--halo-font-family-label);
@@ -194,13 +228,34 @@ main {
   position: absolute;
   top: 8px;
   right: 8px;
+  z-index: 1;
+}
+
+/* Long lines fade out under the copy button instead of running into it */
+.code::after {
+  content: '';
+  position: absolute;
+  inset: 1px 1px 1px auto;
+  width: 72px;
+  border-radius: 0 var(--halo-radius-5) var(--halo-radius-5) 0;
+  background: linear-gradient(to right, transparent, var(--halo-surface-minimal) 60%);
+  pointer-events: none;
 }
 
 .code-compact pre {
   padding-block: 12px;
 }
 
-.code-compact .code-copy {
+.code pre {
+  scrollbar-width: none;
+}
+
+.code pre::-webkit-scrollbar {
+  display: none;
+}
+
+.code-compact .code-copy,
+.code-one-line .code-copy {
   top: 50%;
   transform: translateY(-50%);
 }
@@ -2336,5 +2391,23 @@ main {
 
   .space-row .token-values {
     display: none;
+  }
+}
+
+/* On phones the footer stacks and sits in the middle */
+@media (max-width: 600px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-inner p {
+    flex: none;
+    min-width: 0;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { Accordion, AccordionItem, AreaChart, BarChart, Button, PieChart, SegmentedControl, Tab, TabList, Tabs } from '@halo-ds/react';
 import { ArrowRight, ArrowSquareOut, CheckCircle, GithubLogo, Sparkle, Star } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
+import { ScrollRow } from '../ScrollRow';
 import { all, blocks, thumbFor } from '../registry';
 import { Link, links, useRoute } from '../router';
 import { liveApps, frameUrl } from '../live/registry';
@@ -92,6 +93,7 @@ export function CommandSection() {
               </>
             )}
           </div>
+          <ScrollRow>
           <div className="hs-chips" role="tablist" aria-label="Blocks">
             {featured.map((slug, i) => (
               <button
@@ -109,6 +111,7 @@ export function CommandSection() {
               </button>
             ))}
           </div>
+          </ScrollRow>
         </div>
         <div className="hs-block-frame" key={block.slug}>
           <div className="hs-block-zoom" inert>
@@ -134,7 +137,7 @@ export function ComponentsSection() {
           Browse all components
         </Button>
       </Head>
-      <div className="hs-card-grid">
+      <ScrollRow className="hs-card-grid">
         {entries.map((e) => {
           const Preview = thumbFor(e.slug);
           return (
@@ -147,7 +150,7 @@ export function ComponentsSection() {
             </Link>
           );
         })}
-      </div>
+      </ScrollRow>
     </section>
   );
 }
@@ -193,6 +196,7 @@ export function AiSection() {
       <div className="hs-ai-body">
         <div className="hs-ai-setup">
           <Tabs value={tool} onValueChange={(v) => setTool(v as typeof tool)} variant="pill" size="sm">
+            <ScrollRow>
             <TabList aria-label="AI tool">
               {(Object.keys(mcpConfigs) as (keyof typeof mcpConfigs)[]).map((k) => (
                 <Tab key={k} value={k}>
@@ -200,6 +204,7 @@ export function AiSection() {
                 </Tab>
               ))}
             </TabList>
+            </ScrollRow>
           </Tabs>
           <p className="hs-file">{config.file}</p>
           <CodeBlock code={config.code} label="Copy setup" />
@@ -226,6 +231,7 @@ export function AppsSection() {
       </Head>
       <div className="hs-apps-tools">
         <Tabs value={app} onValueChange={setApp} variant="pill" size="sm">
+          <ScrollRow>
           <TabList aria-label="App">
             {liveApps.map((a) => (
               <Tab key={a.id} value={a.id}>
@@ -233,6 +239,7 @@ export function AppsSection() {
               </Tab>
             ))}
           </TabList>
+          </ScrollRow>
         </Tabs>
         <SegmentedControl
           aria-label="Device"

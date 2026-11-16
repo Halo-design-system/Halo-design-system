@@ -27,7 +27,7 @@ export function CodeBlock({ code, label = 'Copy code', compact = false, plain = 
     }
   };
   return (
-    <div className={compact ? 'code code-compact' : 'code'}>
+    <div className={['code', compact && 'code-compact', !code.trim().includes('\n') && 'code-one-line'].filter(Boolean).join(' ')}>
       <pre>
         {/* sugar-high escapes the code, so the HTML only holds its colour spans */}
         <code dangerouslySetInnerHTML={{ __html: html }} />

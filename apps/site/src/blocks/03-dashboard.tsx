@@ -74,7 +74,7 @@ export default function Dashboard() {
           <h1 style={pageTitle}>Overview</h1>
           <Text color="secondary">How your store is doing.</Text>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--halo-spacing-4)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--halo-spacing-4)' }}>
           <SegmentedControl
             aria-label="Period"
             value={period}

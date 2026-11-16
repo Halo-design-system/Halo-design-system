@@ -18,7 +18,8 @@ export function Router({ children }: { children: ReactNode }) {
   const go = (to: string) => {
     window.history.pushState(null, '', base + to);
     setPath(to);
-    window.scrollTo(0, 0);
+    // Straight to the top: a smooth scroll gets cut short when the new page renders, leaving you part way down
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
   return <Ctx.Provider value={{ path, go }}>{children}</Ctx.Provider>;
 }

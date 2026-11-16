@@ -20,6 +20,22 @@
   margin-left: auto;
 }
 
+/* On phones the screen picker takes the full width and the switches sit centred under it */
+@media (max-width: 600px) {
+  .lv-bar {
+    justify-content: center;
+  }
+
+  .lv-bar > :first-child {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .lv-bar > :last-child {
+    margin-left: 0;
+  }
+}
+
 .lv-stage {
   position: relative;
   overflow: hidden;

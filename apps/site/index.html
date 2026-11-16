@@ -4,6 +4,11 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // iPhones zoom in on any field with text under 16px. Stopping the zoom there still lets people pinch to zoom.
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+        document.querySelector('meta[name=viewport]').content += ', maximum-scale=1';
+    </script>
     <title>Halo Design System</title>
     <meta name="description" content="An open-source design system: a Figma library and React components that match, token for token." />
   </head>

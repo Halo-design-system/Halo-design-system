@@ -115,8 +115,13 @@
 
 .hs-chips {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
+  width: max-content;
+}
+
+.hs-chip {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .hs-chip {
@@ -224,6 +229,7 @@
 
 .hs-ai-setup {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: 12px;
   min-width: 0;
@@ -232,9 +238,6 @@
   border: 1px solid var(--halo-border-secondary);
 }
 
-.hs-ai-setup [role='tablist'] {
-  flex-wrap: wrap;
-}
 
 .hs-file {
   color: var(--halo-text-secondary);
@@ -300,9 +303,9 @@
   margin-bottom: 24px;
 }
 
-.hs-apps-tools [role='tablist'] {
-  flex-wrap: wrap;
-  justify-content: center;
+.hs-apps-tools > [class] {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .hs-device {
@@ -583,8 +586,29 @@
     padding-top: 88px;
   }
 
+  /* The component cards scroll sideways on phones instead of stacking */
   .hs-card-grid {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    gap: 12px;
+    max-width: none;
+    margin-inline: -24px;
+    padding: 4px 24px 8px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+  }
+
+  .hs-card-grid > .hs-card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  .hs-card:hover {
+    transform: none;
+  }
+
+  /* The app tabs get their own line, then the device switch and buttons sit centred under them */
+  .hs-apps-tools > :first-child {
+    flex-basis: 100%;
   }
 
   .hs-block-frame {

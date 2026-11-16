@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ScrollRow } from '../ScrollRow';
 import { SegmentedControl, Tab, TabList, Tabs } from '@halo-ds/react';
 import { DeviceMobile, Monitor } from '@phosphor-icons/react';
 import { apps } from '../screens';
@@ -47,11 +48,13 @@ export function Examples() {
 
       <div className="examples-bar">
         <Tabs value={app.id} onValueChange={(v) => go(`/examples/${v}`)}>
+          <ScrollRow>
           <TabList aria-label="Example apps">
             {apps.map((a) => (
               <Tab key={a.id} value={a.id}>{a.name}</Tab>
             ))}
           </TabList>
+          </ScrollRow>
         </Tabs>
         {!live && <SegmentedControl
           aria-label="Device"
