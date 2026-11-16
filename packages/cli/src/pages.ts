@@ -185,7 +185,7 @@ export function writePages(out: string) {
       .replace(/<title>[\s\S]*?<\/title>\s*/, '')
       .replace(/<meta name="description"[^>]*>\s*/, '')
       .replace('</head>', `    ${headFor(page)}\n    ${HIDE}\n  </head>`);
-    const content = `<div class="static-page">${NAV}<main><h1>${esc(page.title.replace(/ · .*$/, ''))}</h1>\n${bodyFor(page)}</main></div>`;
+    const content = `<div class="static-page">${NAV}<main><h1>${esc(page.title.replace(/ · .*$/, '').replace(/: React component$/, ''))}</h1>\n${bodyFor(page)}</main></div>`;
     const html = head.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
     // /components/button is served from components/button.html, so the address needs no trailing slash
     const file = page.path === '/' ? 'index.html' : `${page.path.slice(1)}.html`;
