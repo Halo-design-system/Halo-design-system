@@ -1,4 +1,8 @@
 /* The value sits centred between the minus and plus buttons (Figma: Number input). */
+.number {
+  position: relative;
+}
+
 .number input {
   text-align: center;
   font-variant-numeric: tabular-nums;
@@ -6,3 +10,33 @@
 
 /* The left icon slot is decorative in Input, but here it holds a real button */
 .step { display: inline-flex; }
+
+/* A copy of the number that rolls over the text box while it changes (NumberInput.tsx places it) */
+.roll {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  color: var(--halo-text-primary);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.roll[hidden] { display: none; }
+.roll > span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  will-change: transform, opacity;
+}
+
+/* At a limit the button still takes a press, to shake "no", but looks exactly like a disabled ghost button */
+.number .wall,
+.number .wall:hover,
+.number .wall:active {
+  --icon-color: var(--halo-icon-disabled);
+  --outline: transparent;
+  background: transparent;
+  cursor: not-allowed;
+}
+.number .wall:active > * { transform: none; }
