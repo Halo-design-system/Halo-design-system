@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// On GitHub Pages the site lives at /Halo-design-system/. Set SITE_BASE=/ for a custom domain.
+// The site lives at the root of halodesignsystem.dev. Set SITE_BASE to serve it from a sub-folder instead.
 export default defineConfig({
-  base: process.env.SITE_BASE ?? (process.env.NODE_ENV === 'production' ? '/Halo-design-system/' : '/'),
+  base: process.env.SITE_BASE ?? '/',
   plugins: [react()],
 });

@@ -10,7 +10,7 @@ import { sizes } from './preview-sizes';
 import { previews, previewsDark } from './previews';
 import './ui.css';
 
-const WEBSITE = 'https://halo-design-system.github.io/Halo-design-system/';
+const WEBSITE = 'https://halodesignsystem.dev/';
 
 const send = (msg: object) => parent.postMessage({ pluginMessage: msg }, '*');
 

@@ -48,7 +48,7 @@
     "url": "git+https://github.com/Halo-design-system/Halo-design-system.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/Halo-design-system/Halo-design-system#readme",
+  "homepage": "https://halodesignsystem.dev",
   "bugs": {
     "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   },

@@ -30,7 +30,7 @@
     "url": "git+https://github.com/Halo-design-system/Halo-design-system.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://halo-design-system.github.io/Halo-design-system/docs/cli",
+  "homepage": "https://halodesignsystem.dev/docs/cli",
   "bugs": {
     "url": "https://github.com/Halo-design-system/Halo-design-system/issues"
   },

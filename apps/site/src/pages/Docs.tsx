@@ -390,7 +390,7 @@ Use Halo tokens for spacing and colour, and check the page in light and dark mod
 
 function Ai() {
   const [tool, setTool] = useState<Tool>('claude');
-  const site = 'https://halo-design-system.github.io/Halo-design-system';
+  const site = 'https://halodesignsystem.dev';
   return (
     <>
       <Head

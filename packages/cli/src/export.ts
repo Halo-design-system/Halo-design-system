@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { all, groups } from '../../../apps/site/src/catalog';
 import { RULES, blocks, getBlock, getComponent, getTokens, skills } from './mcp';
 
-const SITE = 'https://halo-design-system.github.io/Halo-design-system';
+const SITE = 'https://halodesignsystem.dev';
 const out = resolve(process.argv[2] ?? 'dist');
 
 function write(path: string, text: string) {

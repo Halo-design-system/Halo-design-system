@@ -28,7 +28,7 @@ npx downloads the `halo-ds` package from the npm registry the first time, then s
 /plugin install halo-ds@halo-design-system
 ```
 
-Restart Claude Code after installing so the plugin loads. Docs: https://halo-design-system.github.io/Halo-design-system/docs/ai
+Restart Claude Code after installing so the plugin loads. Docs: https://halodesignsystem.dev/docs/ai
 
 ## License
 

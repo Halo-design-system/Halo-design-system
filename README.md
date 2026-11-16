@@ -7,9 +7,9 @@
 
 An open-source design system for designers and developers: a Figma library and a React component library built from the same design tokens, with light and dark mode.
 
-**📖 Website and docs: https://halo-design-system.github.io/Halo-design-system/**
+**📖 Website and docs: https://halodesignsystem.dev/**
 
-**🧪 Component playground (Storybook): https://halo-design-system.github.io/Halo-design-system/storybook/**
+**🧪 Component playground (Storybook): https://halodesignsystem.dev/storybook/**
 
 - **56 components** in Figma and React, with 2,125 Figma variants
 - **288 design tokens** and 42 text styles, in light and dark
@@ -67,7 +67,7 @@ Every token is a CSS variable starting with `--halo-`, so your own styles can us
 - **Quick:** run `npx halo-ds theme "#2F6BFF"` with your brand colour, or pick one on the website. It sets your brand colour in light and dark. No rebuild needed.
 - **Full:** change the variables in your copy of the Figma file, export them, and rebuild the tokens so design and code match.
 
-The [Theming](https://halo-design-system.github.io/Halo-design-system/docs/theming) page walks through both.
+The [Theming](https://halodesignsystem.dev/docs/theming) page walks through both.
 
 ## Use it with AI assistants
 
@@ -77,7 +77,7 @@ Add the MCP server so your assistant knows every component's props, examples and
 claude mcp add halo -- npx -y halo-ds mcp
 ```
 
-Setup for Cursor, VS Code, Windsurf and others: https://halo-design-system.github.io/Halo-design-system/docs/ai
+Setup for Cursor, VS Code, Windsurf and others: https://halodesignsystem.dev/docs/ai
 
 ## Working on Halo
 

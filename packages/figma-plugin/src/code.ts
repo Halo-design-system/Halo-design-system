@@ -170,7 +170,7 @@ figma.ui.onmessage = async (msg: FromUi) => {
     return;
   }
   if (msg.type === 'open') {
-    if (msg.url.startsWith('https://halo-design-system.github.io/')) figma.openExternal(msg.url);
+    if (msg.url.startsWith('https://halodesignsystem.dev/')) figma.openExternal(msg.url);
     return;
   }
   const part = parts[msg.slug]?.[msg.index];
