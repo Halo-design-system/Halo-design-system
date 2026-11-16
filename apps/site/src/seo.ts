@@ -8,7 +8,7 @@ export const NAME = 'Halo Design System';
 const SUFFIX = ` · ${NAME}`;
 
 export const HOME_DESCRIPTION =
-  'Halo is a free, open-source React design system: 56 accessible components, a matching Figma library, design tokens, a CLI and an MCP server so AI assistants build with it correctly.';
+  'A free, open-source React design system: 56 accessible components, a matching Figma library, and an MCP server for AI tools.';
 
 export const docsPages = [
   { slug: '', title: 'Introduction', description: 'What Halo is, what comes with it, and where to start: the React components, the Figma library, the CLI and the MCP server.' },
@@ -63,7 +63,7 @@ export function pages(blocks: BlockInfo[]): PageMeta[] {
   const figma = { name: 'Figma', path: '/figma' };
   const examples = { name: 'Examples', path: '/examples' };
   const out: PageMeta[] = [
-    { path: '/', title: `${NAME}: React components, Figma library and MCP server`, description: HOME_DESCRIPTION, crumbs: [] },
+    { path: '/', title: `${NAME}: React components and Figma library`, description: HOME_DESCRIPTION, crumbs: [] },
     { path: '/components', title: `Components${SUFFIX}`, description: `All ${all.length} Halo components for React, with live examples, code and props, plus ready-made blocks and the foundations: colour, type, spacing and icons.`, crumbs: [home] },
     ...all.map((e) => ({ path: `/components/${e.slug}`, title: `${e.name}: React component${SUFFIX}`, description: trim(callout(e.slug, e.description)), crumbs: [home, components] })),
     ...foundations.map((f) => ({ path: `/components/foundation/${f.slug}`, title: `${f.title}${SUFFIX}`, description: trim(f.description), crumbs: [home, components] })),
