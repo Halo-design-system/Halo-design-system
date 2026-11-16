@@ -49,7 +49,7 @@ export function Drawer({
   showClose = true,
   actions,
   closeOnOverlayClick = true,
-  overlay = 'dim',
+  overlay = 'blur',
   children,
   className,
   classNames,

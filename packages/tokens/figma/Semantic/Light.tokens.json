@@ -227,6 +227,19 @@
           "targetVariableSetName": "Primitives"
         }
       }
+    },
+    "overlay": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.4,
+        "hex": "#000000"
+      }
     }
   },
   "button": {

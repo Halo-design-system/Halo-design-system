@@ -12,7 +12,7 @@
 }
 /* The dimmed part catches clicks; the hole lets them through to the target. */
 .spotlight path {
-  fill: var(--halo-overlay-primary);
+  fill: var(--halo-surface-overlay);
   pointer-events: visiblePainted;
 }
 

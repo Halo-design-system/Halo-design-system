@@ -6,7 +6,7 @@
   z-index: 900;
   display: flex;
   padding: var(--halo-spacing-9);
-  background: var(--halo-overlay-primary);
+  background: var(--halo-surface-overlay);
   animation: fade 160ms ease-out;
 }
 .blur { backdrop-filter: blur(8px); }

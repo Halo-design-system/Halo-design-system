@@ -55,7 +55,7 @@ export function Modal({
   showClose = true,
   actions,
   closeOnOverlayClick = true,
-  overlay = 'dim',
+  overlay = 'blur',
   children,
   className,
   classNames,

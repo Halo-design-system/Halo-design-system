@@ -15,7 +15,7 @@ const meta = {
       story: { inline: false, iframeHeight: 320 },
     },
   },
-  args: { variant: 'dim', position: 'center' },
+  args: { variant: 'blur', position: 'center' },
 } satisfies Meta<typeof Overlay>;
 
 export default meta;
