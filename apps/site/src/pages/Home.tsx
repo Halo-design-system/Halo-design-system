@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   Accordion,
@@ -39,7 +39,7 @@ import { CodeBlock } from '../CodeBlock';
 import { useRoute } from '../router';
 import { AiSection, AppsSection, ChartsSection, CommandSection, ComponentsSection, FaqSection, OpenSourceSection } from './HomeSections';
 
-/* ---------- The headline: the end of the sentence changes, with the letters scrambling into place ---------- */
+/* ---------- The headline: the end of the sentence melts from one phrase into the next ---------- */
 
 const endings = [
   'AI-assisted frontend',
@@ -54,41 +54,90 @@ const endings = [
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function Scramble({ words }: { words: string[] }) {
-  const [text, setText] = useState(words[0]!);
+/** How long a melt takes and how long each phrase stays, in seconds. */
+const MELT = 1.05;
+const HOLD = 1.6;
+const smooth = (x: number) => x * x * (3 - 2 * x);
+
+/** Blur that runs to nothing as a phrase arrives, and an opacity that comes up early. `f` goes 0 to 1. */
+function look(el: HTMLElement, f: number) {
+  el.style.filter = f >= 1 ? 'none' : `blur(${Math.min(8 / Math.max(f, 0.001) - 8, 100).toFixed(2)}px)`;
+  el.style.opacity = Math.pow(Math.max(f, 0), 0.4).toFixed(3);
+}
+
+/**
+ * One phrase melts into the next. Both blur in opposite directions, and while they overlap a hard alpha
+ * threshold (the SVG filter) fuses the two blurs into one liquid shape. The filter is only on while melting,
+ * so a phrase at rest keeps its smooth edges.
+ */
+function GooMorph({ words }: { words: string[] }) {
+  const box = useRef<HTMLSpanElement>(null);
+  const a = useRef<HTMLSpanElement>(null);
+  const b = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    let index = 0;
+    const el = box.current!;
+    const A = a.current!;
+    const B = b.current!;
+    let cur = 0;
+    let next = 0;
+    let t = 0;
+    let melting = false;
+    let hold = HOLD;
+    let last = performance.now();
     let frame = 0;
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
-    const timer = window.setInterval(() => {
-      const from = words[index]!;
-      index = (index + 1) % words.length;
-      const to = words[index]!;
-      // Without motion, just swap the words
-      if (reducedMotion()) return setText(to);
-      const start = performance.now();
-      const run = (now: number) => {
-        const t = Math.min(1, (now - start) / 700);
-        const length = Math.round(from.length + (to.length - from.length) * Math.min(1, t * 2));
-        let out = '';
-        for (let i = 0; i < length; i++) {
-          // Letters settle from left to right; the rest flicker
-          if (i / length < t * 1.2 - 0.2) out += to[i] ?? '';
-          else out += to[i] === ' ' ? ' ' : letters[Math.floor(Math.random() * letters.length)];
+    A.textContent = words[0]!;
+    B.textContent = '';
+    look(A, 1);
+    B.style.opacity = '0';
+    const reduce = reducedMotion();
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 1 / 30);
+      last = now;
+      if (melting) {
+        t += dt / MELT;
+        if (t >= 1) {
+          cur = next;
+          melting = false;
+          hold = HOLD;
+          A.textContent = words[cur]!;
+          B.textContent = '';
+          el.classList.remove('melting');
+          look(A, 1);
+          B.style.opacity = '0';
+        } else {
+          const f = smooth(t);
+          look(A, 1 - f);
+          look(B, f);
         }
-        setText(t < 1 ? out : to);
-        if (t < 1) frame = requestAnimationFrame(run);
-      };
-      frame = requestAnimationFrame(run);
-    }, 2800);
-    return () => {
-      window.clearInterval(timer);
-      cancelAnimationFrame(frame);
+      } else if ((hold -= dt) <= 0) {
+        next = (cur + 1) % words.length;
+        if (reduce) {
+          // Without motion, just swap the phrase
+          cur = next;
+          A.textContent = words[cur]!;
+          hold = HOLD + MELT;
+        } else {
+          t = 0;
+          melting = true;
+          A.textContent = words[cur]!;
+          B.textContent = words[next]!;
+          el.classList.add('melting');
+        }
+      }
+      frame = requestAnimationFrame(tick);
     };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [words]);
   return (
-    <span className="scramble" aria-hidden="true">
-      {text}
+    <span ref={box} className="goo" aria-hidden="true">
+      <svg width="0" height="0" className="goo-filter">
+        <filter id="goo-melt">
+          <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
+        </filter>
+      </svg>
+      <span ref={a} className="goo-word" />
+      <span ref={b} className="goo-word" />
     </span>
   );
 }
@@ -445,7 +494,7 @@ export function Home() {
       <section className="hero">
         <h1>
           The React design system for <span className="sr-only">{endings.join(', ')}</span>
-          <Scramble words={endings} />
+          <GooMorph words={endings} />
         </h1>
         <p className="lede">
           Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.

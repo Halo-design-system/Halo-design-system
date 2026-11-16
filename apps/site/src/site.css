@@ -368,16 +368,33 @@ main {
 }
 
 /* The changing end of the headline sits on its own line, so the line above never jumps */
-.scramble {
-  display: block;
+/* The phrase that melts into the next (GooMorph in Home.tsx). Both phrases sit in the same grid cell. */
+.goo {
+  display: grid;
   min-height: 1.08em;
+}
+
+.goo.melting {
+  filter: url(#goo-melt);
+}
+
+.goo-filter {
+  position: absolute;
+}
+
+.goo-word {
+  grid-area: 1 / 1;
   white-space: nowrap;
+  will-change: filter, opacity;
 }
 
 /* On phones a phrase can need two lines, so keep room for both and let it wrap */
 @media (max-width: 600px) {
-  .scramble {
+  .goo {
     min-height: 2.16em;
+  }
+
+  .goo-word {
     white-space: normal;
   }
 }
