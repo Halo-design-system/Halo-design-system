@@ -222,7 +222,7 @@ export function AppsSection() {
   const current = liveApps.find((a) => a.id === app)!;
   return (
     <section className="hs">
-      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="29 screens, built only from Halo. Click through them live.">
+      <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="29 screens across seven apps, built only from Halo.">
         <Link to="/examples" className="hs-link">
           See all examples <ArrowRight aria-hidden="true" />
         </Link>

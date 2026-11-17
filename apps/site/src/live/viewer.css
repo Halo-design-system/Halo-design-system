@@ -57,6 +57,12 @@
   width: 100%;
   border: 0;
   background: var(--halo-surface-primary);
+  color-scheme: normal;
+  transition: opacity 200ms ease;
+}
+
+.lv-stage iframe[data-loading] {
+  opacity: 0;
 }
 
 /* Desktop: a browser window */

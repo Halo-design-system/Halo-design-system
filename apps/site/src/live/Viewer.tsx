@@ -63,12 +63,16 @@ export function DeviceFrame({ device, src, address }: { device: Device; src: str
   const d = devices[device];
   const chrome = device === 'desktop' ? 44 : 0;
   const { ref, scale } = useFit(d.width + (device === 'desktop' ? 0 : 28));
+  // A new app paints white for a moment while it loads, so the frame stays hidden until it has drawn, then fades in
+  const [shown, setShown] = useState('');
+  const onLoad = () => requestAnimationFrame(() => requestAnimationFrame(() => setShown(src)));
+  const app = (height: number) => <iframe title="Live example" src={src} style={{ height }} data-loading={shown !== src || undefined} onLoad={onLoad} />;
   let frame: ReactNode;
   if (device === 'desktop') {
     frame = (
       <div className="lv-desktop" style={{ width: d.width }}>
         <BrowserBar address={address} />
-        <iframe title="Live example" src={src} style={{ height: d.height }} />
+        {app(d.height)}
       </div>
     );
   } else {
@@ -76,7 +80,7 @@ export function DeviceFrame({ device, src, address }: { device: Device; src: str
       <div className={`lv-handheld lv-${device}`} style={{ width: d.width + 28 }}>
         <div className="lv-glass">
           <StatusBar />
-          <iframe title="Live example" src={src} style={{ height: d.height - 54 }} />
+          {app(d.height - 54)}
         </div>
       </div>
     );

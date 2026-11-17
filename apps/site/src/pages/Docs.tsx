@@ -73,7 +73,7 @@ export default function App() {
 function Introduction() {
   return (
     <>
-      <Head title="Introduction" lede="Halo is an open-source design system with two matching halves: a Figma library for designers and a React component library for developers, built from the same design tokens. This page lists what is included and where to start." />
+      <Head title="Introduction" lede="An open-source design system: a Figma library and React components built from the same tokens." />
       <Section id="what" title="What you get">
         <ul className="docs-list">
           <li><strong>56 React components</strong> that work with the keyboard and screen readers, in light and dark mode.</li>
@@ -108,7 +108,7 @@ function Installation() {
   const [way, setWay] = useState<'cli' | 'manual'>('cli');
   return (
     <>
-      <Head title="Installation" lede="This page shows how to add Halo to a React app built with Vite, Next.js or any other setup, on React 18 or 19. You can set everything up with one command, or install the package yourself. Pick your package manager and framework below, then follow the steps." />
+      <Head title="Installation" lede="Add Halo to a React 18 or 19 app built with Vite, Next.js or any other setup." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>
@@ -224,7 +224,7 @@ function Cli() {
   const x = run[pm];
   return (
     <>
-      <Head title="CLI" lede="halo-ds is a tool you run in your terminal. It sets Halo up in your app, applies your brand colour, shows component docs and starts the MCP server for AI tools. You run it with npx, so there is nothing to install first. This page explains each command." />
+      <Head title="CLI" lede="A terminal tool for setup, brand colours, component docs and the MCP server. It runs with npx, with nothing to install." />
       <div className="install-controls">
         <div>
           <span className="control-label">Package manager</span>

@@ -11,6 +11,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 - **Number input:** the number rolls up or down when you press plus or minus. At the limit, the button shakes "no" and the number nudges. The button keeps the disabled look and is marked `aria-disabled`. Off with reduced motion.
 - **Switch:** springier motion. The thumb stretches toward where it is going, lands with a small bounce and rounds back up, and the track fills with the brand colour as it travels. Off with reduced motion.
 - **Overlay:** softly blurs the page by default and uses the new `surface-overlay` colour: black at 40% in light mode and 60% in dark mode, as in Figma. Modal and Drawer use the blur by default too; pass `overlay="dim"` for no blur.
+- **Website: plainer words.** Shorter page intros that say what is on the page, and switching example apps no longer flashes white in dark mode.
 - **Website: icon.** Adds ICO, PNG and iPhone versions of the site icon, so Google Search, Safari and link previews show the Halo mark instead of a globe.
 - **Website: component cards.** One card everywhere, on the home page and the Components page: a single component in one variant, scaled to fit and centred, with just its name.
 - **Website on phones:** no zoom when tapping a field on iPhone, pages open at the top, tabs and chips scroll sideways with faded ends, and code fades out under the copy button.

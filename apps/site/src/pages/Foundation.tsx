@@ -118,7 +118,7 @@ function Typography() {
           ))}
         </div>
       </Section>
-      <Section title="Type scale" text="Each size comes with its line height. Click one to copy its variables.">
+      <Section title="Type scale" text="Each size with its line height.">
         <div className="type-scale">
           {[...sizes].reverse().map((t) => {
             const step = leaf(t);
@@ -182,7 +182,7 @@ function Spacing() {
 function Radius() {
   const copy = useCopy();
   return (
-    <Section title="Corners" text="Click one to copy it.">
+    <Section title="Corners" text="Corner sizes, from square to fully round.">
       <div className="radius-grid">
         {byPrefix('radius/').map((t) => (
           <button key={t.name} type="button" className="radius-item" onClick={() => copy(`var(${t.cssVar})`)}>

@@ -132,7 +132,7 @@ function Overview() {
       <header className="page-head">
         <p className="eyebrow">Components</p>
         <h1>Components</h1>
-        <p className="lede">{all.length} components, each in Figma and in React, the foundation they are built on, and {blocks.length} blocks that put them together into whole page sections. Pick one to see it live, copy the code, and find its full props in Storybook.</p>
+        <p className="lede">{all.length} components in Figma and React, with 2,125 variants.</p>
       </header>
       <FoundationOverview />
       {groups.map((g) => (

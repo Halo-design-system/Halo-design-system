@@ -497,7 +497,7 @@ export function Home() {
           <GooMorph words={endings} />
         </h1>
         <p className="lede">
-          Halo gives your AI tools the components, props and design rules they need through an MCP server, skills and a CLI. Matching Figma library included.
+          React components and a matching Figma library, with an MCP server so your AI tools use them correctly.
         </p>
         <div className="hero-actions">
           <Button size="lg" iconRight={<ArrowRight />} onClick={() => go('/docs/installation')}>Start for free</Button>

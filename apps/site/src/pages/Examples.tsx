@@ -43,7 +43,7 @@ export function Examples() {
       <header className="page-head">
         <p className="eyebrow">Examples</p>
         <h1>Components in real screens</h1>
-        <p className="lede">Seven apps built only from Halo. Click around, switch devices, copy the code.</p>
+        <p className="lede">Seven apps built only from Halo components, on desktop, tablet and phone.</p>
       </header>
 
       <div className="examples-bar">

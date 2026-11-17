@@ -25,7 +25,7 @@ export function BlocksOverview() {
     <section className="overview-group" aria-labelledby="blocks">
       <h2 id="blocks">Blocks</h2>
       <p className="overview-intro">
-        Whole page sections built from these components, like a sign-in screen or a settings page. Copy the code, or add one to your app with a single command, then change the words and data to fit your product.
+        Ready-made pages, like sign-in and settings, built from Halo components.
       </p>
       <div className="overview-grid">
         {blocks.map((b) => (

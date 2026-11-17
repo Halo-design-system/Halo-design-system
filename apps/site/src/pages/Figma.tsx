@@ -100,7 +100,7 @@ function Overview({ entry }: { entry: Entry }) {
           <p className="eyebrow">Figma library</p>
           <h1>Design with the same components you ship</h1>
           <p className="lede">
-            The Figma library mirrors the React package piece for piece: the same names, the same variants and the same tokens. Duplicate it, set your brand colour, and design screens your developers can build as drawn.
+            The same components, variants and tokens as the React package, so designs match the code.
           </p>
           <div className="hero-actions figma-actions">
             <Button iconLeft={<FigmaLogo />} iconRight={<ArrowSquareOut />} onClick={() => window.open(links.figma, '_blank', 'noopener')}>
@@ -156,7 +156,7 @@ function Overview({ entry }: { entry: Entry }) {
 
       <section className="figma-section" id="guide" aria-labelledby="guide-title">
         <h2 id="guide-title">When to use what</h2>
-        <p className="lede">Pick a component to see where it belongs in a real screen, and the mistakes to avoid.</p>
+        <p className="lede">Where each component belongs in a screen, and the mistakes to avoid.</p>
         <div className="docs figma-guide">
           <Sidebar current={entry.slug} base="/figma" />
           <GuidePage entry={entry} />
