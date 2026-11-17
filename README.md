@@ -79,6 +79,32 @@ claude mcp add halo -- npx -y halo-ds mcp
 
 Setup for Cursor, VS Code, Windsurf and others: https://halodesignsystem.dev/docs/ai
 
+### Skills
+
+Four skills teach your assistant Halo's components and rules:
+
+| Skill | What it does |
+| --- | --- |
+| `build-ui` | Builds screens with Halo components, starting from a ready-made block when one fits |
+| `review-ui` | Checks code against Halo's rules and lists what to fix, file by file |
+| `brand-theme` | Applies a brand colour in light and dark mode |
+| `migrate` | Moves screens from shadcn/ui, Ant Design or Material UI to Halo |
+
+In Claude Code, install them as a plugin:
+
+```
+/plugin marketplace add Halo-design-system/halo-claude-plugin
+/plugin install halo-ds@halo-design-system
+```
+
+For any project, including Cursor, Copilot and Codex, add them with the CLI. The skill files go to `.claude/skills` and Halo's rules go into `AGENTS.md`:
+
+```bash
+npx halo-ds skills
+```
+
+The skills are plain Markdown, in [plugins/halo-ds/skills](plugins/halo-ds/skills).
+
 ## Working on Halo
 
 Requirements: [Node.js](https://nodejs.org) 22.12+ and [pnpm](https://pnpm.io) (`npm install -g pnpm`). The project pins its own Node 24 runtime, which pnpm downloads automatically.
