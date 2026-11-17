@@ -384,6 +384,13 @@
   font-weight: var(--halo-font-weight-semibold);
 }
 
+.hs-stats {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+}
+
 .hs-stat {
   display: grid;
   gap: 8px;

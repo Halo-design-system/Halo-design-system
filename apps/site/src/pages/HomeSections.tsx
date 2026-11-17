@@ -340,18 +340,33 @@ export function ChartsSection() {
         <ChartCard title="Orders this week" wide>
           {() => <BarChart label="Orders this week" data={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => ({ d, orders: [42, 58, 51, 66, 73, 38, 30][i] }))} xKey="d" series={[{ key: 'orders', label: 'Orders' }]} height={220} />}
         </ChartCard>
-        <ChartCard title="Revenue">
-          {(run) => (
-            <div className="hs-stat">
-              <strong>
-                $<CountUp to={48920} run={run} format={(n) => Math.round(n).toLocaleString('en-US')} />
-              </strong>
-              <span className="hs-up">
-                Up <CountUp to={12} run={run} format={(n) => `${Math.round(n)}%`} /> on last month
-              </span>
-            </div>
-          )}
-        </ChartCard>
+        {/* Two stat cards stacked in the last slot, each only as tall as its content */}
+        <div className="hs-stats">
+          <ChartCard title="Revenue">
+            {(run) => (
+              <div className="hs-stat">
+                <strong>
+                  $<CountUp to={48920} run={run} format={(n) => Math.round(n).toLocaleString('en-US')} />
+                </strong>
+                <span className="hs-up">
+                  Up <CountUp to={12} run={run} format={(n) => `${Math.round(n)}%`} /> on last month
+                </span>
+              </div>
+            )}
+          </ChartCard>
+          <ChartCard title="New customers">
+            {(run) => (
+              <div className="hs-stat">
+                <strong>
+                  <CountUp to={1284} run={run} format={(n) => Math.round(n).toLocaleString('en-US')} />
+                </strong>
+                <span className="hs-up">
+                  Up <CountUp to={8} run={run} format={(n) => `${Math.round(n)}%`} /> on last month
+                </span>
+              </div>
+            )}
+          </ChartCard>
+        </div>
       </div>
     </section>
   );
