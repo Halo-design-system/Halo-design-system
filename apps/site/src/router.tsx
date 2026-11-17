@@ -49,6 +49,8 @@ export const links = {
   npm: 'https://www.npmjs.com/package/@halo-ds/react',
   // Where people can ask for help
   x: 'https://x.com/chidindufaith_',
-  // Replace with the Figma Community link once the file is published
-  figma: 'https://www.figma.com/community',
+  // The Halo Design System file on Figma Community
+  figma: 'https://www.figma.com/community/file/1704622047377905631',
+  // The Halo UI plugin on Figma Community, once Figma approves it: it places every Halo component in any Figma file
+  figmaPlugin: 'https://www.figma.com/community/plugin/1704522925108468331',
 };
