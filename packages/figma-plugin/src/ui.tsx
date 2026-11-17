@@ -1,7 +1,6 @@
 // The plugin window, built with Halo: a search box and every component as a card,
 // A to Z, showing the component itself and its name. Clicking a card places it.
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { PointerEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, DiamondsFour, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
 import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
@@ -33,28 +32,58 @@ function useMode() {
  * A small label that follows the mouse over a card and says what a click does. It sits just below and right of the
  * pointer, in Halo's tooltip colours, with no arrow. It waits a moment before showing, so moving across the grid
  * doesn't flash it, and stays inside the window.
+ *
+ * One listener for the whole window decides, on every move, whether the pointer is over a card (an element with
+ * data-hover-label). Anywhere else, like the search bar or the light and dark switch, it hides. It also hides on a
+ * click, a scroll, or when the pointer leaves the window, so it can never get stuck on a card the pointer has left.
  */
 function useHoverLabel() {
   const [label, setLabel] = useState<{ text: string; x: number; y: number; on: boolean } | null>(null);
   const timer = useRef<number | undefined>(undefined);
   const box = useRef<HTMLDivElement>(null);
-  const props = (text: string) => ({
-    onPointerMove: (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return;
+  const current = useRef<string | null>(null);
+  useEffect(() => {
+    const hide = () => {
+      window.clearTimeout(timer.current);
+      timer.current = undefined;
+      current.current = null;
+      setLabel(null);
+    };
+    const move = (e: globalThis.PointerEvent) => {
+      if (e.pointerType !== 'mouse') return hide();
+      const card = (e.target as Element | null)?.closest?.('[data-hover-label]');
+      const text = card?.getAttribute('data-hover-label');
+      if (!text) return hide();
       const { clientX: x, clientY: y } = e;
-      setLabel((l) => ({ text, x, y, on: l?.text === text ? l.on : false }));
+      const fresh = current.current !== text;
+      current.current = text;
+      setLabel((l) => ({ text, x, y, on: fresh ? false : (l?.on ?? false) }));
+      // A new card starts the short wait again; moving within the same card just follows the pointer
+      if (fresh) {
+        window.clearTimeout(timer.current);
+        timer.current = window.setTimeout(() => {
+          timer.current = undefined;
+          setLabel((l) => (l ? { ...l, on: true } : l));
+        }, 400);
+      }
+    };
+    const out = (e: MouseEvent) => {
+      if (!e.relatedTarget) hide();
+    };
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerdown', hide);
+    document.addEventListener('scroll', hide, true);
+    document.addEventListener('mouseout', out);
+    window.addEventListener('blur', hide);
+    return () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerdown', hide);
+      document.removeEventListener('scroll', hide, true);
+      document.removeEventListener('mouseout', out);
+      window.removeEventListener('blur', hide);
       window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setLabel((l) => (l ? { ...l, on: true } : l)), 400);
-    },
-    onPointerLeave: () => {
-      window.clearTimeout(timer.current);
-      setLabel(null);
-    },
-    onPointerDown: () => {
-      window.clearTimeout(timer.current);
-      setLabel(null);
-    },
-  });
+    };
+  }, []);
   // Keep it inside the window: flip to the left or above the pointer near the edges
   const w = box.current?.offsetWidth ?? 0;
   const h = box.current?.offsetHeight ?? 0;
@@ -65,7 +94,7 @@ function useHoverLabel() {
       {label.text}
     </div>
   ) : null;
-  return { props, node };
+  return { props: (text: string) => ({ 'data-hover-label': text }), node };
 }
 
 function App() {
