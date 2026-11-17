@@ -11,6 +11,7 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 - **Number input:** the number rolls up or down when you press plus or minus. At the limit, the button shakes "no" and the number nudges. The button keeps the disabled look and is marked `aria-disabled`. Off with reduced motion.
 - **Switch:** springier motion. The thumb stretches toward where it is going, lands with a small bounce and rounds back up, and the track fills with the brand colour as it travels. Off with reduced motion.
 - **Overlay:** softly blurs the page by default and uses the new `surface-overlay` colour: black at 40% in light mode and 60% in dark mode, as in Figma. Modal and Drawer use the blur by default too; pass `overlay="dim"` for no blur.
+- **Figma: Link button icons.** Icons now use the same colour as the link text (`text/link`, `text/link-destructive`), so they match in dark mode. They used the button colour, which stayed bright purple while the text turned light pink. The React component already matched.
 - **Website: footer.** Just the licence, where to ask for help (on X) and the copyright. The links it repeated from the top bar are gone.
 - **Website: plainer words.** Shorter page intros that say what is on the page, and switching example apps no longer flashes white in dark mode.
 - **Website: icon.** Adds ICO, PNG and iPhone versions of the site icon, so Google Search, Safari and link previews show the Halo mark instead of a globe.
