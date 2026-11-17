@@ -2,7 +2,7 @@
 // A to Z, showing the component itself and its name. Clicking a card places it.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, DiamondsFour, MagnifyingGlass } from '@phosphor-icons/react';
+import { ArrowUpRight, DiamondsFour, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
 import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
 import { all } from '../../../apps/site/src/catalog';
 import { loadLibrary, subset } from './snapshot/subset';
@@ -98,8 +98,8 @@ function App() {
                 send({ type: 'mode', mode: value });
               }}
               options={[
-                { value: 'light', label: 'Light' },
-                { value: 'dark', label: 'Dark' },
+                { value: 'light', icon: <Sun />, 'aria-label': 'Light' },
+                { value: 'dark', icon: <Moon />, 'aria-label': 'Dark' },
               ]}
             />
           </span>
@@ -130,7 +130,7 @@ function App() {
                 </div>
               }
               onClick={() => place(c.slug)}
-              title={`Place ${c.name}`}
+              aria-label={`Place ${c.name}`}
             >
               <Text size="sm" weight="semibold" as="span">
                 {c.name}
