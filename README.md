@@ -130,7 +130,6 @@ plugins/
 apps/
   site/       the website, with the live example apps in src/live
   docs/       Storybook (foundations pages + component stories)
-  video/      the launch video (Remotion)
 docs/         design notes (e.g. dark-mode mapping)
 ```
 

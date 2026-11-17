@@ -11,3 +11,6 @@ test-results/
 playwright-report/
 mcp-publisher.exe
 .mcpregistry_*
+
+# The launch and social videos stay on this computer only: their code and renders are not shared
+apps/video/
