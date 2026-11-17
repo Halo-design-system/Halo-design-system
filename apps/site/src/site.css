@@ -116,22 +116,23 @@ main {
 }
 
 .footer-inner p {
+  margin: 0;
+}
+
+/* The licence line takes the free space, so help and the copyright sit on the right */
+.footer-inner p:first-of-type {
   flex: 1;
   min-width: 220px;
 }
 
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  color: var(--halo-text-secondary);
+.footer-help a {
+  color: var(--halo-text-primary);
+  font-weight: var(--halo-font-weight-semibold);
   text-decoration: none;
 }
 
-.footer-links a:hover {
-  color: var(--halo-text-primary);
+.footer-help a:hover {
+  text-decoration: underline;
 }
 
 /* ---------- Shared ---------- */
@@ -2418,14 +2419,9 @@ main {
     text-align: center;
   }
 
-  .footer-inner p {
+  .footer-inner p:first-of-type {
     flex: none;
     min-width: 0;
-  }
-
-  .footer-links {
-    flex-wrap: wrap;
-    justify-content: center;
   }
 }
 

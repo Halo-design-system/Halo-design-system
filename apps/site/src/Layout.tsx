@@ -101,13 +101,11 @@ export function Layout({ children }: { children: ReactNode }) {
       <footer className="footer">
         <div className="footer-inner">
           <Logo />
-          <p>Open source under the MIT licence. Built with its own components.</p>
-          <nav aria-label="Footer" className="footer-links">
-            <a href={links.github}>GitHub</a>
-            <a href={links.npm}>npm</a>
-            <a href={links.storybook}>Storybook</a>
-            <Link to="/figma">Figma</Link>
-          </nav>
+          <p>Open source under the MIT licence.</p>
+          <p className="footer-help">
+            Need help? <a href={links.x}>@chidindufaith_</a> on X
+          </p>
+          <p className="footer-copy">© 2026 Halo</p>
         </div>
       </footer>
     </div>

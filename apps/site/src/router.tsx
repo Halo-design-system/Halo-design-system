@@ -47,6 +47,8 @@ export const links = {
   storybook: 'https://halodesignsystem.dev/storybook/',
   github: 'https://github.com/Halo-design-system/Halo-design-system',
   npm: 'https://www.npmjs.com/package/@halo-ds/react',
+  // Where people can ask for help
+  x: 'https://x.com/chidindufaith_',
   // Replace with the Figma Community link once the file is published
   figma: 'https://www.figma.com/community',
 };
