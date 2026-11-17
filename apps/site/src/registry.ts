@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import { cards } from './cards';
 
 export { all, groups } from './catalog';
 export type { Entry } from './catalog';
@@ -73,9 +74,7 @@ export const blocks: Block[] = Object.keys(blockModules)
     };
   });
 
-const thumbModules =import.meta.glob<{ default: ComponentType }>('./thumbs/*.tsx', { eager: true });
-
-/** What the overview card shows: a still "open" view for overlays, otherwise the main example. */
+/** What a component card shows: one component, in one variant (cards.tsx), or the main example if it has none. */
 export function thumbFor(slug: string): ComponentType | null {
-  return thumbModules[`./thumbs/${slug}.tsx`]?.default ?? exampleFor(slug)?.Example ?? null;
+  return cards[slug] ?? exampleFor(slug)?.Example ?? null;
 }

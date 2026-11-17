@@ -532,8 +532,7 @@ main {
     .features .feature,
     .showcase,
     .cta,
-    .overview-card,
-    .foundation-card,
+    .tile,
     .used-card,
     .variant-card,
     .docs-card,
@@ -897,48 +896,83 @@ main {
   gap: 16px;
 }
 
-/* Like a small window: the name on top, the real component below */
-.overview-card {
+/* Tile.tsx: the one card for components, foundations and blocks. A preview on top, the name under it. */
+.tile {
+  position: relative;
   display: grid;
-  grid-template-rows: auto 1fr;
-  border-radius: var(--halo-radius-5);
-  box-shadow: inset 0 0 0 1px var(--halo-border-secondary);
-  color: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  transition: box-shadow 120ms ease;
+  align-content: start;
+  gap: 16px;
+  padding: 12px 12px 16px;
+  border-radius: 24px;
+  border: 1px solid var(--halo-border-secondary);
+  background: var(--halo-surface-primary);
+  transition: transform 200ms ease, border-color 200ms ease;
 }
 
-.overview-card:hover {
-  box-shadow: inset 0 0 0 1px var(--halo-border-strong);
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--halo-border-strong);
 }
 
-.overview-card:focus-visible {
-  outline: none;
-  box-shadow: inset 0 0 0 1px var(--halo-border-secondary), 0 0 0 3px var(--halo-border-focus);
+.tile:has(.tile-name:focus-visible) {
+  outline: 2px solid var(--halo-border-focus);
+  outline-offset: 2px;
 }
 
-.overview-name {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--halo-border-primary);
-  font-family: var(--halo-font-family-label);
-  font-weight: var(--halo-font-weight-semibold);
-}
-
-/* The example at 65% size, centred, and not clickable (the whole card is the link). Wide ones crop at the edges. */
-.thumb {
+.tile-preview {
   display: grid;
   place-items: center;
-  height: 180px;
+  height: 168px;
   overflow: hidden;
+  border-radius: 16px;
+  background: var(--halo-surface-minimal);
   pointer-events: none;
 }
 
-.thumb-inner {
+.tile-name {
+  padding-inline: 8px;
+  color: inherit;
+  font-weight: var(--halo-font-weight-semibold);
+  text-decoration: none;
+}
+
+/* The name's link covers the whole card */
+.tile-name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.tile-name:focus-visible {
+  outline: none;
+}
+
+/* Fit.tsx: the preview scaled to fit, never spilling out */
+.fit {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.fit-inner {
+  position: absolute;
   display: grid;
-  place-items: center;
-  width: 420px;
-  zoom: 0.65;
+  justify-items: center;
+}
+
+.fit-center .fit-inner {
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+}
+
+.fit-top .fit-inner {
+  top: 0;
+  left: 0;
+  justify-items: stretch;
+  transform-origin: top left;
 }
 
 /* ---------- Blocks ---------- */
@@ -949,50 +983,9 @@ main {
   line-height: 24px;
 }
 
-.block-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
-}
-
-/* The whole block at a quarter of its size, from the top; tall ones crop at the bottom */
-.block-card {
-  position: relative;
-}
-
-.block-card-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.block-card-link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.block-card:hover {
-  box-shadow: inset 0 0 0 1px var(--halo-border-strong);
-}
-
-.block-card:has(.block-card-link:focus-visible) {
-  outline: 2px solid var(--halo-border-focus);
-  outline-offset: 2px;
-}
-
-.block-card-link:focus-visible {
-  outline: none;
-}
-
-.block-thumb {
-  height: 220px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.block-thumb-inner {
-  width: 1000px;
-  zoom: 0.36;
+/* Whole pages fill the card's width from the top, and fade out where the card ends */
+.tile-page .fit {
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
 }
 
 .block-bar {
@@ -2028,9 +2021,7 @@ main {
 
 /* ---------- Foundation ---------- */
 
-.foundation-thumb {
-  display: grid;
-  place-items: center;
+.foundation-tile .tile-preview {
   color: var(--halo-icon-primary);
 }
 

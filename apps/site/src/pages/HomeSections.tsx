@@ -5,6 +5,8 @@ import { Accordion, AccordionItem, AreaChart, BarChart, Button, PieChart, Segmen
 import { ArrowRight, ArrowSquareOut, CheckCircle, GithubLogo, Sparkle, Star } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
 import { ScrollRow } from '../ScrollRow';
+import { Fit } from '../Fit';
+import { Tile } from '../Tile';
 import { all, blocks, thumbFor } from '../registry';
 import { Link, links, useRoute } from '../router';
 import { liveApps, frameUrl } from '../live/registry';
@@ -141,13 +143,9 @@ export function ComponentsSection() {
         {entries.map((e) => {
           const Preview = thumbFor(e.slug);
           return (
-            <Link key={e.slug} to={`/components/${e.slug}`} className="hs-card">
-              <div className="hs-card-preview" inert>
-                <div className="thumb-inner">{Preview && <Preview />}</div>
-              </div>
-              <span className="hs-card-name">{e.name}</span>
-              <span className="hs-card-text">{e.description}</span>
-            </Link>
+            <Tile key={e.slug} to={`/components/${e.slug}`} name={e.name}>
+              <Fit>{Preview && <Preview />}</Fit>
+            </Tile>
           );
         })}
       </ScrollRow>

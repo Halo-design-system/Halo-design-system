@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { Fit } from '../Fit';
+import { Tile } from '../Tile';
 import { SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
 import { DeviceMobile, DeviceTablet, Monitor } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
@@ -25,7 +27,7 @@ export function BlocksOverview() {
       <p className="overview-intro">
         Whole page sections built from these components, like a sign-in screen or a settings page. Copy the code, or add one to your app with a single command, then change the words and data to fit your product.
       </p>
-      <div className="block-grid">
+      <div className="overview-grid">
         {blocks.map((b) => (
           <BlockThumb key={b.slug} block={b} />
         ))}
@@ -37,15 +39,11 @@ export function BlocksOverview() {
 /** A card on the overview: the real block, shrunk and not clickable. */
 function BlockThumb({ block }: { block: Block }) {
   return (
-    // Blocks hold links of their own, so the card is not one big link: its title link stretches over it
-    <div className="overview-card block-card">
-      <Link to={`/components/blocks/${block.slug}`} className="overview-name block-card-link">{block.title}</Link>
-      <div className="block-thumb" inert>
-        <div className="block-thumb-inner">
-          <block.Block />
-        </div>
-      </div>
-    </div>
+    <Tile to={`/components/blocks/${block.slug}`} name={block.title} className="tile-page">
+      <Fit width={1000} align="top">
+        <block.Block />
+      </Fit>
+    </Tile>
   );
 }
 

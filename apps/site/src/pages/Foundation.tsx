@@ -4,9 +4,10 @@ import type { ComponentType, ReactNode } from 'react';
 import { Award, Illustration, SegmentedControl, Spinner, awardNames, illustrationNames, useToast } from '@halo-ds/react';
 import { tokens } from '@halo-ds/tokens';
 import type { Token } from '@halo-ds/tokens';
-import { ArrowRight, Bell, Heart, House, Star } from '@phosphor-icons/react';
+import { Bell, Heart, House, Star } from '@phosphor-icons/react';
 import { SearchBox } from '../SearchBox';
 import { Link } from '../router';
+import { Tile } from '../Tile';
 import { foundations } from '../catalog';
 
 export { foundations } from '../catalog';
@@ -410,12 +411,9 @@ export function FoundationOverview() {
       <h2 id="g-foundation">Foundation</h2>
       <div className="overview-grid">
         {foundations.map((f) => (
-          <Link key={f.slug} to={`/components/foundation/${f.slug}`} className="overview-card foundation-card">
-            <span className="overview-name">
-              {f.title} <ArrowRight aria-hidden="true" />
-            </span>
-            <div className="thumb foundation-thumb">{previews[f.slug]()}</div>
-          </Link>
+          <Tile key={f.slug} to={`/components/foundation/${f.slug}`} name={f.title} className="foundation-tile">
+            {previews[f.slug]()}
+          </Tile>
         ))}
       </div>
     </section>

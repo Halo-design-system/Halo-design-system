@@ -3,6 +3,8 @@ import { Badge, LinkButton, SegmentedControl, Tab, TabList, TabPanel, Tabs } fro
 import { ArrowLeft, ArrowRight, Code } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
 import { SearchBox } from '../SearchBox';
+import { Fit } from '../Fit';
+import { Tile } from '../Tile';
 import { all, blocks, demosFor, exampleFor, groups, thumbFor } from '../registry';
 import type { Demo, Entry } from '../registry';
 import { Link, links, useRoute } from '../router';
@@ -113,12 +115,9 @@ export function Sidebar({ current, base = '/components' }: { current?: string; b
 function Thumb({ entry }: { entry: Entry }) {
   const Preview = thumbFor(entry.slug);
   return (
-    <Link to={`/components/${entry.slug}`} className="overview-card">
-      <span className="overview-name">{entry.name}</span>
-      <div className="thumb" inert>
-        <div className="thumb-inner">{Preview && <Preview />}</div>
-      </div>
-    </Link>
+    <Tile to={`/components/${entry.slug}`} name={entry.name}>
+      <Fit>{Preview && <Preview />}</Fit>
+    </Tile>
   );
 }
 
