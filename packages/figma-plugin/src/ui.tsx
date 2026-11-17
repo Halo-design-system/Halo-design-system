@@ -1,9 +1,10 @@
 // The plugin window, built with Halo: a search box and every component as a card,
 // A to Z, showing the component itself and its name. Clicking a card places it.
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { PointerEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, DiamondsFour, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
-import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, Tooltip, useToast } from '@halo-ds/react';
+import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
 import { all } from '../../../apps/site/src/catalog';
 import { loadLibrary, subset } from './snapshot/subset';
 import { sizes } from './preview-sizes';
@@ -28,6 +29,45 @@ function useMode() {
   return [mode, setMode] as const;
 }
 
+/**
+ * A small label that follows the mouse over a card and says what a click does. It sits just below and right of the
+ * pointer, in Halo's tooltip colours, with no arrow. It waits a moment before showing, so moving across the grid
+ * doesn't flash it, and stays inside the window.
+ */
+function useHoverLabel() {
+  const [label, setLabel] = useState<{ text: string; x: number; y: number; on: boolean } | null>(null);
+  const timer = useRef<number | undefined>(undefined);
+  const box = useRef<HTMLDivElement>(null);
+  const props = (text: string) => ({
+    onPointerMove: (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      const { clientX: x, clientY: y } = e;
+      setLabel((l) => ({ text, x, y, on: l?.text === text ? l.on : false }));
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => setLabel((l) => (l ? { ...l, on: true } : l)), 400);
+    },
+    onPointerLeave: () => {
+      window.clearTimeout(timer.current);
+      setLabel(null);
+    },
+    onPointerDown: () => {
+      window.clearTimeout(timer.current);
+      setLabel(null);
+    },
+  });
+  // Keep it inside the window: flip to the left or above the pointer near the edges
+  const w = box.current?.offsetWidth ?? 0;
+  const h = box.current?.offsetHeight ?? 0;
+  const left = label ? (label.x + 14 + w > window.innerWidth - 8 ? label.x - 10 - w : label.x + 14) : 0;
+  const top = label ? (label.y + 18 + h > window.innerHeight - 8 ? label.y - 10 - h : label.y + 18) : 0;
+  const node = label ? (
+    <div ref={box} className="hover-label" aria-hidden="true" style={{ left, top, opacity: label.on ? 1 : 0 }}>
+      {label.text}
+    </div>
+  ) : null;
+  return { props, node };
+}
+
 function App() {
   const [mode, setMode] = useMode();
   const modeRef = useRef(mode);
@@ -37,6 +77,7 @@ function App() {
   const [query, setQuery] = useState('');
 
   const [busy, setBusy] = useState<string | null>(null);
+  const hover = useHoverLabel();
 
   useEffect(() => {
     const failed = (name: string, message: string) => {
@@ -121,9 +162,9 @@ function App() {
       {shown.length ? (
         <main className="grid">
           {shown.map((c) => (
-            // Halo's own tooltip says what a click does; the card already shows the name
-            <Tooltip key={c.slug} content={`Place ${c.name}`}>
             <Card
+              key={c.slug}
+              {...hover.props(`Place ${c.name}`)}
               classNames={{ media: 'stage', content: 'label' }}
               media={
                 <div className="frame">
@@ -131,17 +172,18 @@ function App() {
                 </div>
               }
               onClick={() => place(c.slug)}
+              aria-label={`Place ${c.name}`}
             >
               <Text size="sm" weight="semibold" as="span">
                 {c.name}
               </Text>
             </Card>
-            </Tooltip>
           ))}
         </main>
       ) : (
         <EmptyState size="sm" icon={<MagnifyingGlass />} title="No components found" description="Try another name." />
       )}
+      {hover.node}
       <footer className="footer">
         <LinkButton
           size="sm"

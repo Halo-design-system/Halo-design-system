@@ -89,3 +89,19 @@ body {
   background: var(--halo-surface-primary);
   border-top: 1px solid var(--halo-border-secondary);
 }
+
+/* The label that follows the mouse over a card (useHoverLabel in ui.tsx): Halo's tooltip colours, no arrow */
+.hover-label {
+  position: fixed;
+  z-index: 10;
+  padding: var(--halo-spacing-2) var(--halo-spacing-4);
+  border-radius: var(--halo-radius-3);
+  background: var(--halo-surface-invert);
+  color: var(--halo-text-invert);
+  font-family: var(--halo-font-family-body);
+  font-size: var(--halo-font-size-sm);
+  line-height: var(--halo-line-height-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 120ms ease-out;
+}
