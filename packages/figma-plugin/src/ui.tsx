@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, DiamondsFour, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
-import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, useToast } from '@halo-ds/react';
+import { Card, EmptyState, Input, LinkButton, SegmentedControl, Spinner, Text, ToastProvider, Tooltip, useToast } from '@halo-ds/react';
 import { all } from '../../../apps/site/src/catalog';
 import { loadLibrary, subset } from './snapshot/subset';
 import { sizes } from './preview-sizes';
@@ -121,8 +121,9 @@ function App() {
       {shown.length ? (
         <main className="grid">
           {shown.map((c) => (
+            // Halo's own tooltip says what a click does; the card already shows the name
+            <Tooltip key={c.slug} content={`Place ${c.name}`}>
             <Card
-              key={c.slug}
               classNames={{ media: 'stage', content: 'label' }}
               media={
                 <div className="frame">
@@ -130,12 +131,12 @@ function App() {
                 </div>
               }
               onClick={() => place(c.slug)}
-              aria-label={`Place ${c.name}`}
             >
               <Text size="sm" weight="semibold" as="span">
                 {c.name}
               </Text>
             </Card>
+            </Tooltip>
           ))}
         </main>
       ) : (
