@@ -261,7 +261,7 @@ function Icons() {
   }, []);
   const shown = useMemo(() => (set ?? []).filter(([name]) => name.toLowerCase().includes(q.trim().toLowerCase().replace(/\s+/g, ''))), [set, q]);
   return (
-    <Section title={set ? `${set.length.toLocaleString('en-US')} icons` : 'Icons'} text={<>From <a href="https://phosphoricons.com">Phosphor</a>, in regular and fill. Click one to copy it.</>}>
+    <Section title={set ? `${set.length.toLocaleString('en-US')} icons` : 'Icons'} text={<>From <a href="https://phosphoricons.com">Phosphor</a>, in regular and fill.</>}>
       <div className="icon-tools">
         <SearchBox label="Search icons" placeholder="Search, like arrow or bell" value={q} onChange={setQ} />
         <SegmentedControl aria-label="Weight" value={weight} onValueChange={(v) => setWeight(v as typeof weight)} options={[{ value: 'regular', label: 'Regular' }, { value: 'fill', label: 'Fill' }]} />

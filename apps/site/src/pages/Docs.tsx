@@ -342,7 +342,7 @@ function Theming() {
     <>
       <Head
         title="Theming"
-        lede="This page shows how to give Halo your brand colour and how to switch between light and dark mode. Every colour, spacing value and corner in Halo is a CSS variable, so changing a few of them restyles every component."
+        lede="Your brand colour, and light and dark mode. Every colour, space and corner is a CSS variable."
       />
       <Section id="brand" title="Brand colour">
         <p>The quick way: one command works out every brand colour from yours, for light and dark mode, and adds them to your app.</p>
@@ -395,7 +395,7 @@ function Ai() {
     <>
       <Head
         title="AI and MCP server"
-        lede="Halo works with AI coding tools like Claude Code, Cursor, VS Code and Windsurf. Connect your tool and it can look up every Halo component's import, props, examples and usage rules while it builds, instead of guessing. This page covers the four ways in: the MCP server, skills, the CLI, and plain-text docs any assistant can read."
+        lede="An MCP server, skills, the CLI and plain-text docs, for Claude Code, Cursor, VS Code and Windsurf."
       />
 
       <Section id="mcp" title="Connect the MCP server">
