@@ -45,4 +45,4 @@ To try it, open the Figma desktop app, choose Plugins, then Development, then Im
 
 ## Publishing the plugin
 
-Publish from Plugins, then Manage plugins, in the Figma desktop app. `manifest.json` holds the plugin's Figma ID; keep it the same for every update, or Figma treats it as a separate plugin. The icon (128 by 128) and cover image (1920 by 1080) are added in Figma's publish form, not here.
+Publish from Plugins, then Manage plugins, in the Figma desktop app. `manifest.json` holds the plugin's Figma ID; keep it the same for every update, or Figma treats it as a separate plugin. The icon (128 by 128) and cover image (1920 by 1080) are in `publish/` and go into Figma's publish form, with the words from `publish/LISTING.md`.
