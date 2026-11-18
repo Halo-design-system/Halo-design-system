@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Alert } from '@halo-ds/react';
 
-figma.connect(Alert, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=9975-179', {
+figma.connect(Alert, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=9975-179', {
   props: {
     type: figma.enum('Type', { Information: 'information', Success: 'success', Warning: 'warning', Error: 'error' }),
     variant: figma.enum('Style', { Soft: 'soft', Outline: 'outline', Filled: 'filled' }),

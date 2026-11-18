@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Checkbox, TableCell, TableExpandedRow, TableExpandToggle, TableHeaderCell } from '@halo-ds/react';
 
-figma.connect(TableHeaderCell, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10160-46', {
+figma.connect(TableHeaderCell, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10160-46', {
   props: {
     label: figma.string('Label'),
     align: figma.enum('Align', { Left: 'left', Right: 'right' }),
@@ -11,7 +11,7 @@ figma.connect(TableHeaderCell, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzz
   example: ({ label, ...props }) => <TableHeaderCell {...props}>{label}</TableHeaderCell>,
 });
 
-figma.connect(TableCell, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10160-477', {
+figma.connect(TableCell, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10160-477', {
   variant: { Type: 'Expand' },
   example: () => (
     <TableCell checkbox>
@@ -20,10 +20,10 @@ figma.connect(TableCell, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Ha
   ),
 });
 
-figma.connect(TableCell, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10160-477', {
+figma.connect(TableCell, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10160-477', {
   example: () => <TableCell />,
 });
 
-figma.connect(TableExpandedRow, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10612-90411', {
+figma.connect(TableExpandedRow, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10612-90411', {
   example: () => <TableExpandedRow colSpan={5}>Details</TableExpandedRow>,
 });

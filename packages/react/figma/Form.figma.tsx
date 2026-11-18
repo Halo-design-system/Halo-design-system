@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Button, FormActions, FormSection, InputField } from '@halo-ds/react';
 
-figma.connect(FormSection, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10613-27', {
+figma.connect(FormSection, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10613-27', {
   props: {
     title: figma.string('Title'),
     description: figma.boolean('Show description', { true: figma.string('Description'), false: undefined }),
@@ -13,7 +13,7 @@ figma.connect(FormSection, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/
   ),
 });
 
-figma.connect(FormActions, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10613-117', {
+figma.connect(FormActions, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10613-117', {
   props: { divider: figma.enum('Divider', { On: true }) },
   example: (props) => (
     <FormActions {...props}>

@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { CompactButton } from '@halo-ds/react';
 
-figma.connect(CompactButton, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=9739-1191', {
+figma.connect(CompactButton, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=9739-1191', {
   props: {
     variant: figma.enum('Style', { Stroke: 'stroke', Ghost: 'ghost', Fill: 'fill' }),
     size: figma.enum('Size', { Large: 'lg', Medium: 'md' }),

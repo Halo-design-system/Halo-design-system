@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Button, Result } from '@halo-ds/react';
 
-figma.connect(Result, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10607-615', {
+figma.connect(Result, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10607-615', {
   props: {
     status: figma.enum('Status', {
       Success: 'success',

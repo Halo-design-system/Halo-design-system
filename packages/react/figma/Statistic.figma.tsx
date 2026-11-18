@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Statistic } from '@halo-ds/react';
 
-figma.connect(Statistic, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10605-167', {
+figma.connect(Statistic, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10605-167', {
   props: {
     value: figma.string('Value'),
     size: figma.enum('Size', { Small: 'sm', Medium: 'md', Large: 'lg' }),

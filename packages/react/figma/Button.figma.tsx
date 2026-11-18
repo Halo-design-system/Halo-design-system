@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Button } from '@halo-ds/react';
 
-figma.connect(Button, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=9697-2459', {
+figma.connect(Button, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=9697-2459', {
   props: {
     label: figma.string('Label'),
     variant: figma.enum('Type', { Primary: 'primary', Secondary: 'secondary', Ghost: 'ghost', Destructive: 'destructive', Premium: 'premium' }),
@@ -15,7 +15,7 @@ figma.connect(Button, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?
   example: ({ label, ...props }) => <Button {...props}>{label}</Button>,
 });
 
-figma.connect(Button, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=9697-2459', {
+figma.connect(Button, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=9697-2459', {
   props: {
     variant: figma.enum('Type', { Primary: 'primary', Secondary: 'secondary', Ghost: 'ghost', Destructive: 'destructive', Premium: 'premium' }),
     size: figma.enum('Size', { 'X small': 'xs', Small: 'sm', Medium: 'md', Large: 'lg' }),

@@ -7,7 +7,7 @@ description: Check that the Halo Figma library, the React package, the tokens an
 
 Compare the four sources of truth and report every difference. Don't fix anything until the user has seen the report.
 
-- **Figma**: file key `LVZSmXHpIl0qR5fKYzzLrK`. Read it with the Figma MCP tools (`use_figma` for variables and component sets). Editing needs the connector signed in with the account that has edit access.
+- **Figma**: file key `QBFNqnfjSu9QfmN5w6VdD5` (the main file, owned by the personal account; the old `LVZSmXHpIl0qR5fKYzzLrK` is a frozen copy). Read it with the Figma MCP tools (`use_figma` for variables and component sets). Editing needs the connector signed in with the account that has edit access.
 - **Tokens**: `packages/tokens/figma/<Collection>/<Mode>.tokens.json` (exported from Figma) and the built `packages/tokens/dist/tokens.json`.
 - **React**: `packages/react/src`. For every component's props, run `pnpm --filter halo-ds build` and read `packages/cli/src/generated/data.json` (`props`).
 - **Website**: `apps/site/src/catalog.ts` (component list), `apps/site/src/guide.ts` (usage guidance), `apps/site/src/examples` and `apps/site/src/demos`.

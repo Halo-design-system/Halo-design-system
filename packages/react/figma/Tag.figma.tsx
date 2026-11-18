@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { Tag } from '@halo-ds/react';
 
-figma.connect(Tag, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10095-221', {
+figma.connect(Tag, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10095-221', {
   props: {
     label: figma.string('Label'),
     color: figma.enum('Colour', { Neutral: 'neutral', Blue: 'blue', Green: 'green', Yellow: 'yellow', Orange: 'orange', Red: 'red', Pink: 'pink', Purple: 'purple' }),

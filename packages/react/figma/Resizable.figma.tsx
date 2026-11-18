@@ -1,7 +1,7 @@
 import figma from '@figma/code-connect';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@halo-ds/react';
 
-figma.connect(ResizableHandle, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10608-170', {
+figma.connect(ResizableHandle, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10608-170', {
   props: {
     withHandle: figma.boolean('Grip'),
     direction: figma.enum('Direction', { Horizontal: 'horizontal', Vertical: 'vertical' }),

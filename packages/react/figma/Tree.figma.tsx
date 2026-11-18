@@ -6,7 +6,7 @@ const nodes = [
   { id: 'operations', label: 'Operations', children: [{ id: 'finance', label: 'Finance' }] },
 ];
 
-figma.connect(Tree, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10610-334', {
+figma.connect(Tree, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10610-334', {
   props: {
     size: figma.enum('Size', { Medium: 'md', Small: 'sm' }),
     checkable: figma.boolean('Checkbox'),
@@ -14,12 +14,12 @@ figma.connect(Tree, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?no
   example: (props) => <Tree nodes={nodes} defaultExpanded={['product']} aria-label="Teams" {...props} />,
 });
 
-figma.connect(TreeSelect, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10610-90177', {
+figma.connect(TreeSelect, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10610-90177', {
   variant: { Type: 'Single' },
   example: () => <TreeSelect nodes={nodes} placeholder="Choose a team" aria-label="Team" />,
 });
 
-figma.connect(TreeSelect, 'https://www.figma.com/design/LVZSmXHpIl0qR5fKYzzLrK/Halo?node-id=10610-90177', {
+figma.connect(TreeSelect, 'https://www.figma.com/design/QBFNqnfjSu9QfmN5w6VdD5/Halo-Design-System?node-id=10610-90177', {
   variant: { Type: 'Multiple' },
   example: () => <TreeSelect nodes={nodes} multiple search placeholder="Choose teams" aria-label="Teams" />,
 });
