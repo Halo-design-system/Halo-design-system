@@ -4,13 +4,13 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--halo-spacing-1);
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .card {
-  padding: var(--halo-spacing-2);
+  padding: var(--halo-spacing-4) var(--halo-spacing-6);
   border-radius: var(--halo-radius-5);
   background: var(--halo-surface-primary);
   box-shadow: inset 0 0 0 1px var(--halo-border-secondary);
@@ -35,8 +35,12 @@
   text-align: left;
   text-decoration: none;
 }
-.md { --gap: var(--halo-spacing-6); --pad-y: var(--halo-spacing-4); --pad-x: var(--halo-spacing-6); --icon: 20px; }
-.sm { --gap: var(--halo-spacing-4); --pad-y: var(--halo-spacing-3); --pad-x: var(--halo-spacing-4); --icon: 16px; }
+/* Rows have no side padding, so icons and text line up with the content around the list; the container gives the inset.
+   `inset` rows (lists people hover or select) get 8px, so the highlight doesn't touch the avatar or icon. */
+.md { --gap: var(--halo-spacing-6); --pad-y: var(--halo-spacing-4); --pad-x: 0; --icon: 20px; }
+.sm { --gap: var(--halo-spacing-4); --pad-y: var(--halo-spacing-3); --pad-x: 0; --icon: 16px; }
+.inset { --pad-x: var(--halo-spacing-4); }
+.card.insetList { padding-inline: var(--halo-spacing-4); }
 
 .interactive { cursor: pointer; }
 .interactive:hover { background: var(--halo-surface-secondary); }

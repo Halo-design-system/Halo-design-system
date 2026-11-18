@@ -16,11 +16,11 @@ const meta = {
     docs: {
       description: {
         component:
-          'A vertical list of rows, like files, settings or people. Give a ListItem `href` or `onClick` to make the whole row clickable. Use `leading` and `trailing` for an Avatar, Badge, Switch or value.',
+          'A vertical list of rows, like files, settings or people. Rows have no side padding, so icons and text line up with the content around the list. Give a ListItem `href` or `onClick` to make the whole row clickable, and set `inset` on lists people hover or select so the highlight has room. Use `leading` and `trailing` for an Avatar, Badge, Switch or value.',
       },
     },
   },
-  args: { variant: 'plain', size: 'md' },
+  args: { variant: 'plain', size: 'md', inset: true },
   decorators: [(Story) => <div style={{ maxWidth: 360 }}><Story /></div>],
 } satisfies Meta<typeof List>;
 
@@ -41,6 +41,25 @@ export const Playground: Story = {
           <ListItem key={f.id} title={f.title} description={f.description} icon={f.icon} trailingIcon={<CaretRight />} selected={chosen === f.id} onClick={() => setChosen(f.id)} />
         ))}
         <ListItem title="Archived notes.txt" description="Read only" icon={<FileText />} disabled onClick={() => {}} />
+      </List>
+    );
+  },
+};
+
+/** `inset` gives rows people hover or select 8px at the sides, so the highlight doesn't touch the avatar. */
+export const Inset: Story = {
+  render: function Render() {
+    const [chosen, setChosen] = useState('ada');
+    const people = [
+      { id: 'ada', name: 'Ada Obi', note: 'See you at 3' },
+      { id: 'kofi', name: 'Kofi Mensah', note: 'Sent the slides' },
+      { id: 'lena', name: 'Lena Park', note: 'Thanks!' },
+    ];
+    return (
+      <List inset>
+        {people.map((p) => (
+          <ListItem key={p.id} title={p.name} description={p.note} leading={<Avatar size="sm" name={p.name} />} selected={chosen === p.id} onClick={() => setChosen(p.id)} />
+        ))}
       </List>
     );
   },
