@@ -493,7 +493,7 @@ export function Home() {
     <>
       <section className="hero">
         <h1>
-          The React design system for <span className="sr-only">{endings.join(', ')}</span>
+          React design system for <span className="sr-only">{endings.join(', ')}</span>
           <GooMorph words={endings} />
         </h1>
         <p className="lede">
