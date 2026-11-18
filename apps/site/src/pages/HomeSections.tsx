@@ -1,8 +1,8 @@
 // The sections under the hero on the home page. Each one shows a part of Halo working, not just described.
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Accordion, AccordionItem, AreaChart, BarChart, Button, PieChart, SegmentedControl, Tab, TabList, Tabs } from '@halo-ds/react';
-import { ArrowRight, ArrowSquareOut, CheckCircle, GithubLogo, Sparkle, Star } from '@phosphor-icons/react';
+import { Accordion, AccordionItem, AreaChart, BarChart, Button, PieChart, Tab, TabList, Tabs } from '@halo-ds/react';
+import { ArrowRight, CheckCircle, GithubLogo, Sparkle, Star } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
 import { ScrollRow } from '../ScrollRow';
 import { Fit } from '../Fit';
@@ -10,8 +10,7 @@ import { Tile } from '../Tile';
 import { all, blocks, thumbFor } from '../registry';
 import { Link, links, useRoute } from '../router';
 import { liveApps, frameUrl } from '../live/registry';
-import { DeviceFrame, devices } from '../live/Viewer';
-import type { Device } from '../live/Viewer';
+import { DeviceFrame } from '../live/Viewer';
 import { mcpConfigs } from './Docs';
 import './HomeSections.css';
 
@@ -216,10 +215,8 @@ export function AiSection() {
 /* ---------- Example apps ---------- */
 
 export function AppsSection() {
-  const { go } = useRoute();
-  const [app, setApp] = useState(liveApps[0]!.id);
-  const [device, setDevice] = useState<Device>('desktop');
-  const current = liveApps.find((a) => a.id === app)!;
+  // One app, running live on a desktop screen. The full set, with phone and tablet sizes, is on the Examples page.
+  const current = liveApps[0]!;
   return (
     <section className="hs">
       <Head eyebrow="Example apps" title="Seven apps, every screen designed" text="29 screens across seven apps, built only from Halo.">
@@ -227,34 +224,8 @@ export function AppsSection() {
           See all examples <ArrowRight aria-hidden="true" />
         </Link>
       </Head>
-      <div className="hs-apps-tools">
-        <Tabs value={app} onValueChange={setApp} variant="pill" size="sm">
-          <ScrollRow>
-          <TabList aria-label="App">
-            {liveApps.map((a) => (
-              <Tab key={a.id} value={a.id}>
-                {a.name}
-              </Tab>
-            ))}
-          </TabList>
-          </ScrollRow>
-        </Tabs>
-        <SegmentedControl
-          aria-label="Device"
-          size="sm"
-          value={device}
-          onValueChange={(v) => setDevice(v as Device)}
-          options={(Object.keys(devices) as Device[]).map((k) => ({ value: k, label: devices[k].label, icon: devices[k].icon }))}
-        />
-        <Button size="sm" variant="secondary" iconRight={<ArrowSquareOut />} onClick={() => window.open(frameUrl(current.id, current.home), '_blank', 'noopener')}>
-          Live preview
-        </Button>
-        <Button size="sm" variant="ghost" onClick={() => go(`/examples/${current.id}`)}>
-          Code
-        </Button>
-      </div>
       {/* The real app, running: click around inside it */}
-      <DeviceFrame key={`${current.id}-${device}`} device={device} src={frameUrl(current.id, current.home)} address={`${current.host}/${current.home}`} />
+      <DeviceFrame device="desktop" src={frameUrl(current.id, current.home)} address={`${current.host}/${current.home}`} />
     </section>
   );
 }

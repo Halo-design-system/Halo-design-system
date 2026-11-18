@@ -243,19 +243,6 @@
 
 /* ---------- Example apps ---------- */
 
-.hs-apps-tools {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.hs-apps-tools > [class] {
-  min-width: 0;
-  max-width: 100%;
-}
-
 .hs-device {
   margin: 0 auto;
   overflow: hidden;
@@ -558,11 +545,6 @@
 
   .tile:hover {
     transform: none;
-  }
-
-  /* The app tabs get their own line, then the device switch and buttons sit centred under them */
-  .hs-apps-tools > :first-child {
-    flex-basis: 100%;
   }
 
   .hs-block-frame {

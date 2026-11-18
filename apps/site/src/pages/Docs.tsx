@@ -122,7 +122,7 @@ function Installation() {
           <span>One command sets everything up, including dark mode and your brand colour.</span>
         </button>
         <button type="button" role="radio" aria-checked={way === 'manual'} className="docs-card" onClick={() => setWay('manual')}>
-          <strong>Install by hand</strong>
+          <strong>Install manually</strong>
           <span>Add the package yourself. It is one install, with nothing to import first.</span>
         </button>
       </div>
@@ -537,11 +537,14 @@ export function Docs() {
     <div className="docs">
       <aside className="docs-side" aria-label="Docs">
         <nav className="docs-nav">
-          {flat.map((p) => (
-            <Link key={p.slug} to={to(p.slug)} className="docs-link" aria-current={p === page ? 'page' : undefined}>
-              {p.title}
-            </Link>
-          ))}
+          {/* One group, so the links sit as close together as in the Components menu */}
+          <div className="docs-group">
+            {flat.map((p) => (
+              <Link key={p.slug} to={to(p.slug)} className="docs-link" aria-current={p === page ? 'page' : undefined}>
+                {p.title}
+              </Link>
+            ))}
+          </div>
         </nav>
       </aside>
       <div className="docs-main docs-page">

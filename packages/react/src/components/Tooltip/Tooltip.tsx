@@ -129,12 +129,21 @@ export function Tooltip({ content, side = 'top', delay = 500, children, classNam
     window.addEventListener('scroll', onScroll, true);
     window.addEventListener('resize', onMove);
     window.addEventListener('keydown', onKey);
+    // When the text changes while open (Copy → Copied), the tooltip changes size, so centre it again
+    const ro = typeof ResizeObserver === 'function' && tipRef.current ? new ResizeObserver(onMove) : null;
+    if (ro && tipRef.current) ro.observe(tipRef.current);
     return () => {
       window.removeEventListener('scroll', onScroll, true);
       window.removeEventListener('resize', onMove);
       window.removeEventListener('keydown', onKey);
+      ro?.disconnect();
     };
   }, [open, place, hide]);
+
+  // A new label re-centres straight away, before the browser paints
+  useLayoutEffect(() => {
+    if (open) place();
+  }, [content, open, place]);
 
   if (!isValidElement(children)) return children;
   const child = children as ReactElement<Handlers>;
