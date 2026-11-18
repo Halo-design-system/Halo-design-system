@@ -25,6 +25,29 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** The settings that change how it looks and works, together. Each mode keeps its own selection. */
+function PlaygroundCalendar({ mode = 'single', months = 1, header = 'picker', weekStartsOn = 1, locale = 'en-GB' }: { mode?: 'single' | 'range' | 'multiple'; months?: 1 | 2; header?: 'arrows' | 'picker'; weekStartsOn?: 0 | 1; locale?: string }) {
+  const [date, setDate] = useState<Date | null>(today);
+  const [range, setRange] = useState<DateRange | null>([addDays(today, 2), addDays(today, 9)]);
+  const [dates, setDates] = useState<Date[]>([addDays(today, 1), addDays(today, 4)]);
+  const shared = { months, header, weekStartsOn, locale };
+  if (mode === 'range') return <Calendar {...shared} mode="range" value={range} onChange={setRange} />;
+  if (mode === 'multiple') return <Calendar {...shared} mode="multiple" value={dates} onChange={setDates} />;
+  return <Calendar {...shared} value={date} onChange={setDate} />;
+}
+
+export const Playground: Story = {
+  args: { mode: 'single', months: 1, header: 'picker', weekStartsOn: 1, locale: 'en-GB' } as never,
+  argTypes: {
+    mode: { control: 'inline-radio', options: ['single', 'range', 'multiple'] },
+    months: { control: 'inline-radio', options: [1, 2] },
+    header: { control: 'inline-radio', options: ['picker', 'arrows'] },
+    weekStartsOn: { control: 'inline-radio', options: [1, 0], labels: { 1: 'Monday', 0: 'Sunday' } },
+    locale: { control: 'select', options: ['en-GB', 'en-US', 'fr-FR', 'de-DE', 'ja-JP'] },
+  } as never,
+  render: (args) => <PlaygroundCalendar {...(args as unknown as Parameters<typeof PlaygroundCalendar>[0])} />,
+};
+
 /** One day. */
 export const Single: Story = {
   render: function Render() {

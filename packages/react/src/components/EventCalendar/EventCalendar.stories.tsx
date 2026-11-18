@@ -39,7 +39,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A full-size calendar for planning. The header jumps to any year and month, and a Month and Year switch changes the view. Events over several days run as one bar; a busy day shows "+2 more". Under 600px wide it switches to dots, with the chosen day\'s events listed underneath. Arrow keys move between days. Use `renderDay` to add your own content to each day.',
+          'A full-size calendar for planning. A Day, Week, Month and Year switch changes the view; in the month view the title opens the months, and in the year view the years. Events over several days run as one bar; a busy day shows "+2 more". Under 600px wide it switches to dots, with the chosen day\'s events listed underneath. Arrow keys move between days. Use `renderDay` to add your own content to each day.',
       },
     },
   },
@@ -48,6 +48,22 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+/** The settings that change how it looks and works, together. */
+export const Playground: Story = {
+  args: { defaultView: 'month', header: 'full', weekStartsOn: 1, maxEvents: 3, startHour: 8, hourHeight: 48, locale: 'en-GB' },
+  argTypes: {
+    defaultView: { control: 'inline-radio', options: ['day', 'week', 'month', 'year'] },
+    header: { control: 'inline-radio', options: ['full', 'simple'] },
+    weekStartsOn: { control: 'inline-radio', options: [1, 0], labels: { 1: 'Monday', 0: 'Sunday' } },
+    maxEvents: { control: { type: 'range', min: 1, max: 6, step: 1 } },
+    startHour: { control: { type: 'range', min: 0, max: 12, step: 1 } },
+    hourHeight: { control: { type: 'range', min: 32, max: 96, step: 8 } },
+    locale: { control: 'select', options: ['en-GB', 'en-US', 'fr-FR', 'de-DE', 'ja-JP'] },
+  },
+  // A new key starts again when the starting view changes, since it only sets where the calendar opens
+  render: (args) => <EventCalendar key={`${args.defaultView}`} {...args} />,
+};
 
 export const Default: Story = {};
 
