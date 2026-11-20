@@ -1,6 +1,6 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment } from 'react';
 import type { ReactNode } from 'react';
-import { Avatar, Badge, SegmentedControl } from '@halo-ds/react';
+import { Avatar, Badge } from '@halo-ds/react';
 import type { BadgeColor } from '@halo-ds/react';
 import { links } from '../router';
 import entries from '../changelog.json';
@@ -10,7 +10,6 @@ type Entry = { version: string; type: Type; title: string; text: string; date: s
 type Type = 'New' | 'Update' | 'Bug fix' | 'Deprecated';
 
 const colour: Record<Type, BadgeColor> = { New: 'success', Update: 'information', 'Bug fix': 'warning', Deprecated: 'error' };
-const filters = ['All', 'New', 'Update', 'Bug fix', 'Deprecated'] as const;
 // Where each person's name links to
 const profiles: Record<string, string> = { 'Chidindu Faith': links.x };
 const repo = 'https://github.com/Halo-design-system/Halo-design-system/blob/main/';
@@ -37,8 +36,7 @@ function inline(text: string): ReactNode[] {
 }
 
 export function Changelog() {
-  const [type, setType] = useState<(typeof filters)[number]>('All');
-  const shown = useMemo(() => (entries as Entry[]).filter((e) => type === 'All' || e.type === type), [type]);
+  const shown = entries as Entry[];
 
   return (
     <>
@@ -48,65 +46,51 @@ export function Changelog() {
         <p className="lede">Every change to the components, tokens and CLI.</p>
       </header>
 
-      <div className="changelog-tools">
-        <SegmentedControl
-          aria-label="Type of change"
-          size="sm"
-          value={type}
-          onValueChange={(v) => setType(v as (typeof filters)[number])}
-          options={filters.map((f) => ({ value: f, label: f }))}
-        />
-      </div>
-
-      {shown.length ? (
-        <div className="docs-table-wrap">
-          <table className="docs-table changelog">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Type</th>
-                <th scope="col">Change</th>
-                <th scope="col">By</th>
-              </tr>
-            </thead>
-            <tbody>
-              {shown.map((e, i) => (
-                <Fragment key={i}>
-                  {/* A row naming the version above its first change */}
-                  {e.version !== shown[i - 1]?.version && (
-                    <tr className="changelog-version">
-                      <th scope="colgroup" colSpan={4}>{e.version}</th>
-                    </tr>
-                  )}
-                  <tr>
-                    <td className="changelog-date">{formatDate(e.date)}</td>
-                    <td><Badge size="sm" color={colour[e.type]}>{e.type}</Badge></td>
-                    <td className="changelog-change">
-                      {e.title && <strong>{inline(e.title)}</strong>}
-                      <span>{inline(e.text)}</span>
-                    </td>
-                    <td>
-                      {profiles[e.author] ? (
-                        <a className="changelog-by" href={profiles[e.author]} target="_blank" rel="noreferrer">
-                          <Avatar size="xs" name={e.author} />
-                          {e.author}
-                        </a>
-                      ) : (
-                        <span className="changelog-by">
-                          <Avatar size="xs" name={e.author} />
-                          {e.author}
-                        </span>
-                      )}
-                    </td>
+      <div className="docs-table-wrap changelog-wrap">
+        <table className="docs-table changelog">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Type</th>
+              <th scope="col">Change</th>
+              <th scope="col">By</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shown.map((e, i) => (
+              <Fragment key={i}>
+                {/* A row naming the version above its first change */}
+                {e.version !== shown[i - 1]?.version && (
+                  <tr className="changelog-version">
+                    <th scope="colgroup" colSpan={4}>{e.version}</th>
                   </tr>
-                </Fragment>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p className="changelog-empty">No changes match.</p>
-      )}
+                )}
+                <tr>
+                  <td className="changelog-date">{formatDate(e.date)}</td>
+                  <td><Badge size="sm" color={colour[e.type]}>{e.type}</Badge></td>
+                  <td className="changelog-change">
+                    {e.title && <strong>{inline(e.title)}</strong>}
+                    <span>{inline(e.text)}</span>
+                  </td>
+                  <td>
+                    {profiles[e.author] ? (
+                      <a className="changelog-by" href={profiles[e.author]} target="_blank" rel="noreferrer">
+                        <Avatar size="xs" name={e.author} />
+                        {e.author}
+                      </a>
+                    ) : (
+                      <span className="changelog-by">
+                        <Avatar size="xs" name={e.author} />
+                        {e.author}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

@@ -2433,12 +2433,8 @@ main {
 
 /* ---------- Changelog ---------- */
 
-.changelog-tools {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  margin: 32px 0 16px;
+.changelog-wrap {
+  margin-top: 32px;
 }
 
 .changelog .changelog-version th {
@@ -2479,11 +2475,6 @@ a.changelog-by {
 
 a.changelog-by:hover {
   text-decoration: underline;
-}
-
-.changelog-empty {
-  margin-top: 24px;
-  color: var(--halo-text-secondary);
 }
 
 /* Narrow screens: each change stacks as date and type, then the words, then who */
