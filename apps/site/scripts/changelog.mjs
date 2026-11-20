@@ -20,12 +20,13 @@ const git = (args) => {
 const me = git(['config', 'user.name']) || 'Halo';
 const today = new Date().toISOString().slice(0, 10);
 
-// One blame of the committed file: each line's text (without its type label) → the commit that last wrote it
+// One blame of the committed file: each line's text (without its type label) → the commit that last wrote it.
+// Commits listed in .git-blame-ignore-revs only reformatted lines, so they are skipped.
 const blamed = new Map();
 {
   const commits = {};
   let sha = '';
-  for (const l of git(['blame', '--line-porcelain', 'HEAD', '--', 'CHANGELOG.md']).split('\n')) {
+  for (const l of git(['blame', '--ignore-revs-file', '.git-blame-ignore-revs', '--line-porcelain', 'HEAD', '--', 'CHANGELOG.md']).split('\n')) {
     const head = l.match(/^([0-9a-f]{40}) /);
     if (head) { sha = head[1]; commits[sha] ??= {}; continue; }
     if (l.startsWith('author ')) commits[sha].author = l.slice(7);
