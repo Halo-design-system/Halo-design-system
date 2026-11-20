@@ -2,7 +2,7 @@ import { Fragment, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Avatar, Badge, SegmentedControl } from '@halo-ds/react';
 import type { BadgeColor } from '@halo-ds/react';
-import { SearchBox } from '../SearchBox';
+import { links } from '../router';
 import entries from '../changelog.json';
 
 // Made from CHANGELOG.md by scripts/changelog.mjs, with the date and person from git
@@ -11,6 +11,8 @@ type Type = 'New' | 'Update' | 'Bug fix' | 'Deprecated';
 
 const colour: Record<Type, BadgeColor> = { New: 'success', Update: 'information', 'Bug fix': 'warning', Deprecated: 'error' };
 const filters = ['All', 'New', 'Update', 'Bug fix', 'Deprecated'] as const;
+// Where each person's name links to
+const profiles: Record<string, string> = { 'Chidindu Faith': links.x };
 const repo = 'https://github.com/Halo-design-system/Halo-design-system/blob/main/';
 
 const day = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
@@ -36,24 +38,17 @@ function inline(text: string): ReactNode[] {
 
 export function Changelog() {
   const [type, setType] = useState<(typeof filters)[number]>('All');
-  const [query, setQuery] = useState('');
-  const shown = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return (entries as Entry[]).filter(
-      (e) => (type === 'All' || e.type === type) && (!q || `${e.title} ${e.text} ${e.version} ${e.author}`.toLowerCase().includes(q)),
-    );
-  }, [type, query]);
+  const shown = useMemo(() => (entries as Entry[]).filter((e) => type === 'All' || e.type === type), [type]);
 
   return (
     <>
       <header className="page-head">
         <p className="eyebrow">Docs</p>
         <h1>Changelog</h1>
-        <p className="lede">Every change to the components, tokens and CLI, newest first.</p>
+        <p className="lede">Every change to the components, tokens and CLI.</p>
       </header>
 
       <div className="changelog-tools">
-        <SearchBox value={query} onChange={setQuery} label="Search changes" placeholder="Tooltip" />
         <SegmentedControl
           aria-label="Type of change"
           size="sm"
@@ -91,10 +86,17 @@ export function Changelog() {
                       <span>{inline(e.text)}</span>
                     </td>
                     <td>
-                      <span className="changelog-by">
-                        <Avatar size="xs" name={e.author} />
-                        {e.author}
-                      </span>
+                      {profiles[e.author] ? (
+                        <a className="changelog-by" href={profiles[e.author]} target="_blank" rel="noreferrer">
+                          <Avatar size="xs" name={e.author} />
+                          {e.author}
+                        </a>
+                      ) : (
+                        <span className="changelog-by">
+                          <Avatar size="xs" name={e.author} />
+                          {e.author}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 </Fragment>

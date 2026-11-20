@@ -2441,11 +2441,6 @@ main {
   margin: 32px 0 16px;
 }
 
-.changelog-tools > :first-child {
-  flex: 1 1 240px;
-  max-width: 320px;
-}
-
 .changelog .changelog-version th {
   padding-top: 32px;
   color: var(--halo-text-primary);
@@ -2475,6 +2470,15 @@ main {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+}
+
+a.changelog-by {
+  color: var(--halo-text-primary);
+  text-decoration: none;
+}
+
+a.changelog-by:hover {
+  text-decoration: underline;
 }
 
 .changelog-empty {
