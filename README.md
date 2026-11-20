@@ -19,7 +19,7 @@ An open-source design system for designers and developers: a Figma library and a
 - **8 ready-made blocks** and **7 example apps** you can click through on the site
 - **An MCP server, a CLI and a Claude Code plugin**, so AI assistants build with Halo correctly
 
-Free and open source under the MIT licence. Current version: 0.6.0 on [npm](https://www.npmjs.com/package/@halo-ds/react).
+Free and open source under the MIT licence. Current version: 1.0.0 on [npm](https://www.npmjs.com/package/@halo-ds/react).
 
 ## Packages
 

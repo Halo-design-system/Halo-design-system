@@ -6,6 +6,10 @@ New work collects under **Unreleased** and goes live in Storybook straight away.
 
 ## Unreleased
 
+## 1.0.0
+
+The first stable release, launched with the website at halodesignsystem.dev and the Figma file on the Figma Community.
+
 - **Tooltip:** no longer opens from a tap on touch screens, where nothing would close it, and closes when the page scrolls instead of following along.
 - **Round buttons inside fields:** the compact buttons inside Input (show password), Number input, Rich text editor, Color picker and the field info button are fully round, to match the round fields. Figma matches.
 - **Number input:** the number rolls up or down when you press plus or minus. At the limit, the button shakes "no" and the number nudges. The button keeps the disabled look and is marked `aria-disabled`. Off with reduced motion.
