@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Alert, SegmentedControl, Tab, TabList, TabPanel, Tabs } from '@halo-ds/react';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { CodeBlock } from '../CodeBlock';
+import { Changelog } from './Changelog';
 import { Link, links, useRoute } from '../router';
 
 // ---------- Shared bits ----------
@@ -519,6 +520,7 @@ const flat = [
   { slug: 'cli', title: 'CLI', Page: Cli },
   { slug: 'theming', title: 'Theming', Page: Theming },
   { slug: 'ai', title: 'AI and MCP server', Page: Ai },
+  { slug: 'changelog', title: 'Changelog', Page: Changelog },
 ];
 // Older links that now live on another page
 const moved: Record<string, string> = { 'dark-mode': 'theming' };

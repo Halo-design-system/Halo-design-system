@@ -16,6 +16,7 @@ export const docsPages = [
   { slug: 'cli', title: 'CLI', description: 'The halo-ds command line tool: set up a project, apply a brand colour, add ready-made blocks, add AI skills and read the docs.' },
   { slug: 'theming', title: 'Theming', description: 'Use your brand colour across Halo in light and dark mode, and switch between light, dark and system themes.' },
   { slug: 'ai', title: 'AI and MCP server', description: "Connect Claude Code, Cursor, VS Code and other AI tools to Halo's MCP server, skills and plain-text docs, so they use real props instead of guessing." },
+  { slug: 'changelog', title: 'Changelog', description: 'Every change to the Halo React components, design tokens and CLI, with the date, the type of change and who made it.' },
 ];
 
 export const exampleApps = [

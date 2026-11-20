@@ -2430,3 +2430,87 @@ main {
   color: var(--halo-text-secondary);
   font-size: 14px;
 }
+
+/* ---------- Changelog ---------- */
+
+.changelog-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 16px;
+}
+
+.changelog-tools > :first-child {
+  flex: 1 1 240px;
+  max-width: 320px;
+}
+
+.changelog .changelog-version th {
+  padding-top: 32px;
+  color: var(--halo-text-primary);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.changelog tbody > .changelog-version:first-child th {
+  padding-top: 12px;
+}
+
+.changelog td:first-child.changelog-date {
+  color: var(--halo-text-secondary);
+}
+
+.changelog-change strong {
+  display: block;
+  color: var(--halo-text-primary);
+}
+
+.changelog-change span {
+  color: var(--halo-text-secondary);
+}
+
+.changelog-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.changelog-empty {
+  margin-top: 24px;
+  color: var(--halo-text-secondary);
+}
+
+/* Narrow screens: each change stacks as date and type, then the words, then who */
+@media (max-width: 1080px) {
+  .changelog thead {
+    display: none;
+  }
+  .changelog,
+  .changelog tbody,
+  .changelog tr,
+  .changelog td,
+  .changelog th {
+    display: block;
+  }
+  .changelog tr:not(.changelog-version) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--halo-border-primary);
+  }
+  .changelog tr td {
+    padding: 0;
+    border: 0;
+  }
+  .changelog td.changelog-change,
+  .changelog td:last-child {
+    grid-column: 1 / -1;
+  }
+  .changelog .changelog-version th {
+    padding: 24px 0 0;
+    border: 0;
+  }
+}

@@ -14,6 +14,9 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
+        # Full history, so the Changelog page can date each change
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v6
 

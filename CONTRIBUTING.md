@@ -70,6 +70,14 @@ One-time setup:
 
 Releases are batched. Pushing to `main` only updates Storybook; nothing goes to npm until someone runs `pnpm release`. Add each change to the **Unreleased** section of [CHANGELOG.md](CHANGELOG.md) as you make it, and release when there is a worthwhile batch, such as a few new components, a breaking change, or a fix people are waiting for.
 
+Start each entry with its type, then the part that changed in bold. The [Changelog page](https://halodesignsystem.dev/docs/changelog) reads these, and takes the date and the person from git:
+
+```md
+- [Bug fix] **Tooltip:** no longer opens from a tap on touch screens.
+```
+
+The types are `[New]`, `[Update]`, `[Bug fix]` and `[Deprecated]`.
+
 Each release:
 
 1. In `CHANGELOG.md`, rename **Unreleased** to the new version and add a fresh empty **Unreleased** section above it.
